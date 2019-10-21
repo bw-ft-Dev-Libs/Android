@@ -11,8 +11,8 @@ class Prefs(context: Context) {
         private const val LOGIN_USER_ID_KEY = "LoginUserId"
         private const val LOGIN_USER_NAME_KEY = "LoginUserName"
         private const val LOGIN_TOKEN_KEY = "LoginToken"
-        private const val INVALID_STRING = "INVALID"
-        private const val INVALID_INT = -1
+        const val INVALID_STRING = "INVALID"
+        const val INVALID_INT = -1
     }
 
     private val sharedPrefs: SharedPreferences =
@@ -45,6 +45,8 @@ class Prefs(context: Context) {
         }
 
         return if (userId != INVALID_INT && username != INVALID_STRING && token != INVALID_STRING) {
+            LoginSuccess(userId, username, token)
+        } else if (userId == INVALID_INT && username != INVALID_STRING && token == INVALID_STRING) {
             LoginSuccess(userId, username, token)
         } else {
             null
