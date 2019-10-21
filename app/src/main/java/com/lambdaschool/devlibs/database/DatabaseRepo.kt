@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.room.Room
 import com.lambdaschool.devlibs.DatabaseRepoInterface
+import com.lambdaschool.devlibs.Prefs
 import com.lambdaschool.devlibs.model.*
 import com.lambdaschool.devlibs.prefs
 import com.lambdaschool.devlibs.retrofit.DevLibsAPI
@@ -40,6 +41,11 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
                     when (body) {
                         is RegistrationSuccess -> {
                             registrationSuccessful.value = CallBackState.RESPONSE_SUCCESS
+                            prefs.createLoginCredentialEntry(
+                                LoginSuccess(
+                                    Prefs.INVALID_INT,
+                                    body.username,
+                                    Prefs.INVALID_STRING))
                         }
                         is RegistrationFail -> {
                             registrationSuccessful.value = CallBackState.RESPONSE_FAIL
