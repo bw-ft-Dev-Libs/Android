@@ -7,10 +7,30 @@ import android.view.ViewGroup
 import com.lambdaschool.devlibs.AUTH_STRING_KEY
 import com.lambdaschool.devlibs.R
 import work.beltran.conductorviewmodel.ViewModelController
+import android.app.ProgressDialog
+import android.R
+import android.widget.ProgressBar
+
 
 class LoginController (bundle: Bundle?) : ViewModelController(bundle)  {
+    var mProgressDialog: ProgressDialog? = null
 
-    constructor(communicatedString: String? = null) : this(Bundle().apply {
+    fun showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = ProgressBar()
+            mProgressDialog!!.setMessage("Loading ...")
+            mProgressDialog!!.isIndeterminate = true
+        }
+
+        mProgressDialog!!.show()
+    }
+
+
+    fun hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog!!.isShowing) {
+            mProgressDialog!!.dismiss()
+        }
+    }    constructor(communicatedString: String? = null) : this(Bundle().apply {
         putString(AUTH_STRING_KEY, communicatedString)
     })
 
