@@ -1,14 +1,14 @@
 package com.lambdaschool.devlibs
 
 import androidx.lifecycle.LiveData
-import com.lambdaschool.devlibs.model.LoginReturnedAPI
-import com.lambdaschool.devlibs.model.RegistrationReturnedAPI
+import com.lambdaschool.devlibs.model.CallBackState
+import com.lambdaschool.devlibs.model.RegistrationLoginSendAPI
 
 interface DatabaseRepoInterface {
 
     // DevLibsAPI
-    fun registerUser(creds: RegistrationReturnedAPI): LiveData<Boolean>
+    fun registerUser(registrationLoginInfo: RegistrationLoginSendAPI): LiveData<CallBackState>
 
-    fun loginUser(creds: LoginReturnedAPI): LiveData<Boolean>
+    fun loginUser(registrationLoginInfo: RegistrationLoginSendAPI): LiveData<CallBackState>
 
 }
