@@ -1,10 +1,7 @@
 package com.lambdaschool.devlibs.retrofit
 
 import com.google.gson.Gson
-import com.lambdaschool.devlibs.model.LoginSendAPI
-import com.lambdaschool.devlibs.model.LoginReturnedAPI
-import com.lambdaschool.devlibs.model.RegistrationReturnedAPI
-import com.lambdaschool.devlibs.model.RegistrationSendAPI
+import com.lambdaschool.devlibs.model.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -17,10 +14,10 @@ import java.util.concurrent.TimeUnit
 interface DevLibsAPI {
 
     @POST("register")
-    fun registerUser(@Body registrationInfo: RegistrationSendAPI): Call<RegistrationReturnedAPI>
+    fun registerUser(@Body registrationLoginInfo: RegistrationLoginSendAPI): Call<RegistrationReturnedAPI>
 
     @POST("login")
-    fun loginUser(@Body loginInfo: LoginSendAPI): Call<LoginReturnedAPI>
+    fun loginUser(@Body registrationLoginInfo: RegistrationLoginSendAPI): Call<LoginReturnedAPI>
 
     class Factory {
 
