@@ -56,3 +56,13 @@ data class LoginSuccess(
 data class LoginFail(
     val message: String
 ) : LoginReturnedAPI()
+
+/**
+ * 3 states exist with the callback; onFailure, onResponse LoginSuccess (or RegistrationSuccess), &&
+ * onResponse LoginFail (or RegistrationSuccess)...
+ *
+ * Because of this we cannot use booleans if returning live data, so we must use an enum
+ * */
+enum class CallBackState {
+    ONFAIL, RESPONSE_FAIL, RESPONSE_SUCCESS
+}
