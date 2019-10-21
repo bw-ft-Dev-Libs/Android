@@ -1,6 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:id="@+id/login_layout"
+    >
 
-</LinearLayout>
+
+
+
+        <TextView
+app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/login_level2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DEV LIBS"
+            android:textColor="@color/colorAccent"
+            android:textSize="50sp" />
+
+
+    <ImageView
+        android:layout_width="225dp"
+        android:layout_height="225dp"
+        android:src="@drawable/ic_launcher_background"
+        app:layout_constraintBottom_toTopOf="@+id/input_group"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_level2"
+       />
+
+    <LinearLayout
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/input_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <EditText
+            android:textColor="@color/colorAccent"
+            android:id="@+id/et_login_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Username"
+            android:textColorHint="@color/colorAccent"
+            android:inputType="textPersonName"
+            android:padding="12dp"
+
+            android:layout_marginEnd="12dp"
+            android:layout_marginStart="12dp"
+            android:elevation="4dp"
+            android:background="@drawable/rounded_rect" />
+
+        <EditText
+            android:textColor="@color/colorAccent"
+            android:id="@+id/et_login_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:textColorHint="@color/colorAccent"
+            android:inputType="textPassword"
+            android:padding="12dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="12dp"
+            android:elevation="4dp"
+            android:background="@drawable/rounded_rect"    />
+
+
+        <Button
+            android:layout_margin="15dp"
+            android:padding="15dp"
+            android:id="@+id/btb_login_signin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_rect"
+            android:text="Sign in"
+            android:textAllCaps="true"
+            android:textColor="@color/colorAccent"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:fontFamily="sans-serif"
+            android:padding="10dp"
+            android:text="or Register an account"
+            android:textAllCaps="true"
+            android:textColor="@color/colorPrimary"
+            android:textSize="15sp"
+            android:textStyle="italic" />
+
+
+
+
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
