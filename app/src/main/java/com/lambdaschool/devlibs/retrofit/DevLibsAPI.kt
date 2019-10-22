@@ -13,16 +13,16 @@ import java.util.concurrent.TimeUnit
 
 interface DevLibsAPI {
 
-    @POST("register")
+    @POST("auth/register")
     fun registerUser(@Body registrationLoginInfo: RegistrationLoginSendAPI): Call<RegistrationReturnedAPI>
 
-    @POST("login")
+    @POST("auth/login")
     fun loginUser(@Body registrationLoginInfo: RegistrationLoginSendAPI): Call<LoginReturnedAPI>
 
     class Factory {
 
         companion object {
-            val BASE_URL = "https://dev-libs-test.herokuapp.com/"
+            val BASE_URL = "https://dev-libs-test.herokuapp.com/api/"
             val gson = Gson()
             val logger = HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BASIC
