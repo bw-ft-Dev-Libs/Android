@@ -13,19 +13,16 @@ import java.util.*
 
 
 class LoginActivityViewModel(application: Application) : AndroidViewModel(application) {
-    val repo =DatabaseRepo(application)
-    val selected = MutableLiveData<String>()
+    val repo = DatabaseRepo(application)
 
-   var loginLiveData =MutableLiveData<CallBackState>()
 
-    private val liveData = MutableLiveData<String>()
-    init {
-        liveData.value = Date().toString()
+    fun tryLogin(username: String, password: String): LiveData<CallBackState> {
+        return repo.loginUser(RegistrationLoginSendAPI(username, password))
     }
 
-    fun tryLogin(username:String,password:String):LiveData<CallBackState>{
-       return repo.loginUser(RegistrationLoginSendAPI(username,password))
-    }
+    fun tryTokenLogin(authToken: String): LiveData<CallBackState> {
+        return repo.getDevLibs(authToken)
+}
 
 
 }

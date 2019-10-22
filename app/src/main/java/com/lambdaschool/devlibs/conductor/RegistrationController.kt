@@ -28,11 +28,15 @@ import work.beltran.conductorviewmodel.ViewModelController
 *
 *
 * */
-class RegistrationController (bundle: Bundle?) : ViewModelController(bundle)  {
+class RegistrationController (bundle: Bundle?) : ViewModelController(bundle) {
+
+    constructor(communicatedString: String? = null) : this(Bundle().apply {
+        putString(AUTH_STRING_KEY, communicatedString)
+
+    })
     val viewGroup: Group by lazy {
         view!!.findViewById<Group>(R.id.registration_group)
     }
-   /* lateinit var viewModel:SharedConductorViewModel*/
     lateinit var mProgressDialog: ProgressBar
 
 
@@ -42,16 +46,13 @@ class RegistrationController (bundle: Bundle?) : ViewModelController(bundle)  {
     }
 
     fun hideLoading() {
-        viewGroup.visibility =View.VISIBLE
+        viewGroup.visibility = View.VISIBLE
         mProgressDialog.visibility = View.GONE
         // viewGroup.visibility = View.VISIBLE
     }
 
 
-    constructor(communicatedString: String? = null) : this(Bundle().apply {
-        putString(AUTH_STRING_KEY, communicatedString)
 
-    })
 
 
     val communicatedString by lazy {
@@ -62,29 +63,14 @@ class RegistrationController (bundle: Bundle?) : ViewModelController(bundle)  {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         val view = inflater.inflate(R.layout.registration_controller_layout, container, false)
         view.registration_btn_submit.setOnClickListener { showLoading() }
-        mProgressDialog=view.findViewById(R.id.registration_progressbar)
+        mProgressDialog = view.findViewById(R.id.registration_progressbar)
         mProgressDialog.setOnClickListener { hideLoading() }
-/*        viewModel =activity?.run {
-            viewModelProvider(LiveDataVMFactory).get(SharedConductorViewModel::class.java)
-        } ?: throw Exception("Invalid Activity")*/
-     /*   btn.setOnClickListener {
-            val logUserName = view.login_et_username.text.toString()
-            val logPassword = view.login_et_password.text.toString()
-            if (logUserName.isNotEmpty() && logPassword.isNotEmpty()) {
 
-                viewModel.tryLogin(logUserName, logPassword).observe(this, Observer {
-                    if (it == CallBackState.RESPONSE_SUCCESS) {
-                        val intent = Intent(view.context, MainActivity::class.java)
-                        startActivity(intent)
-                    } else {
-                        Toast.makeText(view.context, "Login Success", Toast.LENGTH_SHORT).show()
-                    }
-                })
-            } else {
-                Toast.makeText(view.context, "Failed", Toast.LENGTH_SHORT)
-                        .show()
-            }
-        return view*/
-  //  }
 
+
+        return view
+
+    }
 }
+
+

@@ -18,6 +18,7 @@ import com.lambdaschool.devlibs.AUTH_STRING_KEY
 import com.lambdaschool.devlibs.Prefs
 import com.lambdaschool.devlibs.R
 import com.lambdaschool.devlibs.model.CallBackState
+import com.lambdaschool.devlibs.model.LoginSuccess
 import com.lambdaschool.devlibs.ui.MainActivity
 import com.lambdaschool.devlibs.viewmodel.LiveDataVMFactory
 import com.lambdaschool.devlibs.viewmodel.LoginActivityViewModel
@@ -39,11 +40,11 @@ import work.beltran.conductorviewmodel.ViewModelController
 * */
 class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
 
-             val viewGroup: Group by lazy {
+    val viewGroup: Group by lazy {
         view!!.findViewById<Group>(R.id.login_group)
     }
-    lateinit var mProgressDialog:ProgressBar
-    lateinit var viewModel:LoginActivityViewModel
+    lateinit var mProgressDialog: ProgressBar
+    lateinit var viewModel: LoginActivityViewModel
 
 
     fun showLoading() {
@@ -52,9 +53,9 @@ class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
     }
 
     fun hideLoading() {
-        viewGroup.visibility =View.VISIBLE
+        viewGroup.visibility = View.VISIBLE
         mProgressDialog.visibility = View.GONE
-       // viewGroup.visibility = View.VISIBLE
+        // viewGroup.visibility = View.VISIBLE
     }
 
     constructor(communicatedString: String? = null) : this(Bundle().apply {
@@ -62,10 +63,9 @@ class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
     })
 
 
-val communicatedString by lazy {
-    args.getString(AUTH_STRING_KEY)
-}
-
+    val communicatedString by lazy {
+        args.getString(AUTH_STRING_KEY)
+    }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
@@ -100,7 +100,7 @@ val communicatedString by lazy {
             if (loginCredentials.username != "") {
                 editTextUserName.hint = loginCredentials.username
             }
-
+        }
             btn.setOnClickListener {
 
                 // get username and password from edittexts and try to login
@@ -112,24 +112,24 @@ val communicatedString by lazy {
                         if (it == CallBackState.RESPONSE_SUCCESS) {
                             val intent = Intent(view.context, MainActivity::class.java)
                             startActivity(intent)
-                        } else {
                             Toast.makeText(view.context, "Login Success", Toast.LENGTH_SHORT).show()
                         }
+                        else {
+                            Toast.makeText(view.context, "Failed", Toast.LENGTH_SHORT)
+                                    .show()
+                        }
                     })
-                } else {
-                    Toast.makeText(view.context, "Failed", Toast.LENGTH_SHORT)
-                            .show()
                 }
             }
-        }
-            tvfoot.setOnClickListener {
-                router.pushController(RouterTransaction.with(RegistrationController())
-                        .pushChangeHandler(HorizontalChangeHandler())
-                        .popChangeHandler(HorizontalChangeHandler()))
+        
+        tvfoot.setOnClickListener {
+            router.pushController(RouterTransaction.with(RegistrationController())
+                    .pushChangeHandler(HorizontalChangeHandler())
+                    .popChangeHandler(HorizontalChangeHandler()))
 
-            }
-            return view
         }
+        return view
+    }
 
 }     /*val loginObserver = Observer<CallBackState> { state ->
             if (state == null){

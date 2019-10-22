@@ -17,7 +17,6 @@ import com.lambdaschool.devlibs.model.CallBackState
 import com.lambdaschool.devlibs.ui.MainActivity
 import com.lambdaschool.devlibs.viewmodel.LiveDataVMFactory
 import com.lambdaschool.devlibs.viewmodel.LoginActivityViewModel
-import kotlinx.android.synthetic.main.login_controller_layout.view.*
 import kotlinx.android.synthetic.main.splash_controller_layout.view.*
 import work.beltran.conductorviewmodel.ViewModelController
 
@@ -67,8 +66,30 @@ class SplashController (bundle: Bundle) : ViewModelController(bundle) {
 
                 // TODO 1: get creds, get madlibs via retro and intent over to main activity
                 //via on onAuthDecision(context,true)
+
+                viewModel.tryTokenLogin(loginCredentials.token).observe(this, Observer {
+                    if (it == CallBackState.RESPONSE_SUCCESS) {
+                        val intent = Intent(view.context, MainActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        onAuthDecision(view.context, false)
+                        Toast.makeText(view.context, "Failed to login with token", Toast.LENGTH_SHORT)
+                                .show()
+                    }
+                })
+            }
+        }
+        else {
+            onAuthDecision(view.context, false)
+            Toast.makeText(view.context, "Failed to login with token", Toast.LENGTH_SHORT)
+                    .show()
+        }
+
+            view.splash_img_view.setOnClickListener {
                 onAuthDecision(view.context, false)
-                //       onAuthDecision(view.context, true)
+            }
+
+            return view
 
 
                 //    startActivity(intent)
@@ -84,16 +105,8 @@ class SplashController (bundle: Bundle) : ViewModelController(bundle) {
                   Toast.makeText(view.context, "Failed", Toast.LENGTH_SHORT)
                           .show()
               }*/
-            } else {
-                onAuthDecision(view.context, false)
-            }
-        }
 
-        view.splash_img_view.setOnClickListener {
-            onAuthDecision(view.context, false)
-        }
 
-        return view
     }
 
 
