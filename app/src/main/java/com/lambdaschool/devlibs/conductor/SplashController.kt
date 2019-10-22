@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
-import com.lambdaschool.devlibs.AUTH_STRING_KEY
 import com.lambdaschool.devlibs.Prefs
 import com.lambdaschool.devlibs.R
 import com.lambdaschool.devlibs.model.CallBackState
@@ -39,17 +38,9 @@ import work.beltran.conductorviewmodel.ViewModelController
 
 
 
-class SplashController (bundle: Bundle) : ViewModelController(bundle) {
+class SplashController() : ViewModelController() {
     /*  lateinit var viewModel:SharedConductorViewModel*/
     lateinit var viewModel: LoginActivityViewModel
-
-    constructor(communicatedString: String? = null) : this(Bundle().apply {
-        putString(AUTH_STRING_KEY, communicatedString)
-    })
-
-    val communicatedString by lazy {
-        args.getString(AUTH_STRING_KEY)
-    }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
@@ -61,91 +52,94 @@ class SplashController (bundle: Bundle) : ViewModelController(bundle) {
 
 
         //TESTING PLEASE DELETE OR COMMMENT OUT
-           val  fakecreds = LoginSuccess(token=
-           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoxMywidXNlcm5hbWUiOiJ0aGlyZHRpb" +
-                   "WUiLCJpYXQiOjE1NzE3NzQ2MjgsImV4cCI6MTU3MTg2MTAyOH0.-Kpa9U_NxTWb-rTdlI" +
-                   "UCRMYMUWHHkTPkr3sOvy-d13E",
+        val fakecreds = LoginSuccess(token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoxMywidXNlcm5hbWUiOiJ0aGlyZHRpb" +
+                "WUiLCJpYXQiOjE1NzE3NzQ2MjgsImV4cCI6MTU3MTg2MTAyOH0.-Kpa9U_NxTWb-rTdlI" +
+                "UCRMYMUWHHkTPkr3sOvy-d13E",
 
-                   userId=1,
-                   username = "thirdtime" )
+                userId = 1,
+                username = "thirdtime")
+        val prefs = Prefs(view!!.context)
+        val loginCredentials = prefs.getLoginCredentials()
+
+
+        view.splash_img_view.setOnClickListener {
+            onAuthDecision(view.context, false)
+        }
+
+
+
+        fun tryLoginToken() {
+            if (loginCredentials != null) {
+                if (loginCredentials.username != "" && loginCredentials.token != "") {
+                    // TODO 1: get creds, get madlibs via retro and intent over to main activity
+                    //via on onAuthDecision(context,true)
+                    viewModel.tryTokenLogin(loginCredentials.token).observe(this, Observer {
+                        when (it) {
+                            CallBackState.RESPONSE_SUCCESS -> {
+                                val intent = Intent(view.context, MainActivity::class.java)
+                                startActivity(intent)
+                            }
+                            CallBackState.RESPONSE_FAIL -> {
+                                onAuthDecision(view.context, false)
+                                Toast.makeText(view.context, "Failed to login with toke (response fail)", Toast.LENGTH_SHORT)
+                                        .show()
+                            }
+                            else -> {
+                                onAuthDecision(view.context, false)
+                                Toast.makeText(view.context, "Failed to login with token", Toast.LENGTH_SHORT)
+                                        .show()
+                            }
+                        }
+                    })
+            }
+        } else {
+            onAuthDecision(view.context, false)
+            Toast.makeText(view.context, "Welcome back!", Toast.LENGTH_SHORT)
+                    .show()
+        }
+    }
+
+   fun fakeLoginToken() {
         viewModel.tryTokenLogin(fakecreds.token).observe(this, Observer {
             if (it == CallBackState.RESPONSE_SUCCESS) {
                 val intent = Intent(view.context, MainActivity::class.java)
                 startActivity(intent)
+            } else if (it == CallBackState.RESPONSE_FAIL) {
+                onAuthDecision(view.context, false)
+                Toast.makeText(view.context, "Failed to login with toke (response fail)", Toast.LENGTH_SHORT)
+                        .show()
             } else {
                 onAuthDecision(view.context, false)
                 Toast.makeText(view.context, "Failed to login with token", Toast.LENGTH_SHORT)
                         .show()
             }
         })
-
-//                          uncomment this block of code (prefs to else onAuth)
-
-   /*     val prefs = Prefs(view!!.context)
-        val loginCredentials = prefs.getLoginCredentials()
-        if (loginCredentials != null) {
-            if (loginCredentials.username != "" && loginCredentials.token != "") {
-
-                // TODO 1: get creds, get madlibs via retro and intent over to main activity
-                //via on onAuthDecision(context,true)
-
-                viewModel.tryTokenLogin(loginCredentials.token).observe(this, Observer {
-                    if (it == CallBackState.RESPONSE_SUCCESS) {
-                        val intent = Intent(view.context, MainActivity::class.java)
-                        startActivity(intent)
-                    } else {
-                        onAuthDecision(view.context, false)
-                        Toast.makeText(view.context, "Failed to login with token", Toast.LENGTH_SHORT)
-                                .show()
-                    }
-                })
-            }
-        }
-        else {
-            onAuthDecision(view.context, false)
-            Toast.makeText(view.context, "Failed to login with token", Toast.LENGTH_SHORT)
-                    .show()
-        }
-*/
-            view.splash_img_view.setOnClickListener {
-                onAuthDecision(view.context, false)
-            }
-
-            return view
-
-
-                //    startActivity(intent)
-                /*  viewModel.tryLogin(logUserName, loginCredentials.).observe(this, Observer {
-                      if (it == CallBackState.RESPONSE_SUCCESS) {
-                          val intent = Intent(view.context, MainActivity::class.java)
-                          startActivity(intent)
-                      } else {
-                          Toast.makeText(view.context, "Login Success", Toast.LENGTH_SHORT).show()
-                      }
-                  })
-              } else {
-                  Toast.makeText(view.context, "Failed", Toast.LENGTH_SHORT)
-                          .show()
-              }*/
-
-
     }
 
+        fakeLoginToken()
+        // or tryLoginToken()
 
-    fun onAuthDecision(context: Context, boolean: Boolean) {
-        // if bool is true, redirect to activity
-        if (boolean) {
-            val intent = Intent(context, MainActivity::class.java).apply {
-                //whatever extras   putExtra(, message)
-            }
-            startActivity(intent)
-        }
-        // if false, advance to login controller
-        else {
-            router.pushController(RouterTransaction.with(LoginController())
-                    .pushChangeHandler(HorizontalChangeHandler())
-                    .popChangeHandler(HorizontalChangeHandler()))
 
+
+
+    return view
+}
+
+
+fun onAuthDecision(context: Context, boolean: Boolean) {
+    // if bool is true, redirect to activity
+    if (boolean) {
+        val intent = Intent(context, MainActivity::class.java).apply {
+            //whatever extras   putExtra(, message)
         }
+        startActivity(intent)
     }
+    // if false, advance to login controller
+    else {
+        router.pushController(RouterTransaction.with(LoginController())
+                .pushChangeHandler(HorizontalChangeHandler())
+                .popChangeHandler(HorizontalChangeHandler()))
+
+    }
+}
 }

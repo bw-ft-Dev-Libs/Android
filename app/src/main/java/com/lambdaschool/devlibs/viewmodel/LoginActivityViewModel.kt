@@ -15,12 +15,14 @@ import java.util.*
 class LoginActivityViewModel(application: Application) : AndroidViewModel(application) {
     val repo = DatabaseRepo(application)
 
+// val test = MutableLiveData<CallBackState>(CallBackState.RESPONSE_FAIL)
+
 
     fun tryLogin(username: String, password: String): LiveData<CallBackState> {
         return repo.loginUser(RegistrationLoginSendAPI(username=username, password=password))
     }
 
-    fun tryTokenLogin(authToken: String): LiveData<CallBackState> {
+    fun tryTokenLogin(authToken: String): LiveData<CallBackState>{
         return repo.getDevLibs(authToken)
 }
     fun tryToRegister(username: String,password: String): LiveData<CallBackState> {

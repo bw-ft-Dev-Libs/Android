@@ -17,9 +17,7 @@ import java.lang.Thread.sleep
 *  Login activity should
 *  1. begin trying to get auth token from sharedprefs/keystore
 *  2. immediately open the SplashController within loginChangeFrameLayout
-*  3. if auth token is retrieved, begin running getAuthResultFromRetro Method
-*  4. getAuthResults will notify splashController
-*
+   3. chill and let controllers do the work
 * */
 
 
