@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
 import com.lambdaschool.devlibs.AUTH_STRING_KEY
-import com.lambdaschool.devlibs.MainActivity
+import com.lambdaschool.devlibs.LoginActivity
 import com.lambdaschool.devlibs.R
 import kotlinx.android.synthetic.main.splash_controller_layout.view.*
 import work.beltran.conductorviewmodel.ViewModelController
@@ -57,7 +57,7 @@ class SplashController (bundle: Bundle) : ViewModelController(bundle)  {
     fun onAuthDecision(context: Context, boolean:Boolean) {
             // if bool is true, redirect to activity
         if (boolean) {
-            val intent = Intent(context, MainActivity::class.java).apply {
+            val intent = Intent(context, LoginActivity::class.java).apply {
              //whatever extras   putExtra(, message)
             }
             startActivity(intent)

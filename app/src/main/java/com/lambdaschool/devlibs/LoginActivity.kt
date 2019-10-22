@@ -11,7 +11,7 @@ import java.lang.Thread.sleep
 
 /*
 *
-*  onCreate should
+*  Login activity should
 *  1. begin trying to get auth token from sharedprefs/keystore
 *  2. immediately open the SplashController within loginChangeFrameLayout
 *  3. if auth token is retrieved, begin running getAuthResultFromRetro Method
@@ -20,9 +20,7 @@ import java.lang.Thread.sleep
 * */
 
 
-class MainActivity : AppCompatActivity() {
-
-
+class LoginActivity : AppCompatActivity() {
 
     private lateinit var router: Router
     val controller:SplashController = SplashController()
@@ -98,7 +96,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
+    override fun onBackPressed() {
+        if(!router.handleBack()) {
+            super.onBackPressed()
+        }
+    }
 
 
 }

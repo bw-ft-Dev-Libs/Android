@@ -7,6 +7,18 @@
     android:background="@color/colorBackground"
     android:id="@+id/login_layout"
     >
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/registration_progressbar"
+        android:visibility="gone"
+        />
+    <androidx.constraintlayout.widget.Group
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="registration_btn_submit,registration_et_name,registration_et_password,registration_tv_title,registration_tv_footer"
+        android:id="@+id/registration_group"
+        />
 
     <TextView
         app:layout_constraintTop_toTopOf="parent"
@@ -80,7 +92,7 @@
             app:layout_constraintTop_toBottomOf="@id/registration_btn_submit"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:id="@+id/tv_register"
+            android:id="@+id/registration_tv_footer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"

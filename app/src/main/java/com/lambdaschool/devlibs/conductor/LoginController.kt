@@ -5,43 +5,70 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.lambdaschool.devlibs.AUTH_STRING_KEY
-import com.lambdaschool.devlibs.R
 import work.beltran.conductorviewmodel.ViewModelController
 import android.app.ProgressDialog
-import android.R
 import android.widget.ProgressBar
+import android.widget.TextView
+import androidx.constraintlayout.widget.Group
+import com.bluelinelabs.conductor.RouterTransaction
+import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
+import com.lambdaschool.devlibs.R
+import kotlinx.android.synthetic.main.login_controller_layout.view.*
+
+/*
+*
+* login controller should:
+* 1: ask for info
+* 2: display a loading indicator showLoading()
+* 3: indicate to user errors when logging in after hideLoading()
+* 4: and allow the user to move on to the registration
+*
+*
+*
+*
+* */
+class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
+    val viewGroup: Group by lazy {
+        view!!.findViewById<Group>(R.id.login_group)
+    }
+    lateinit var mProgressDialog:ProgressBar
 
 
-class LoginController (bundle: Bundle?) : ViewModelController(bundle)  {
-    var mProgressDialog: ProgressDialog? = null
 
-    fun showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = ProgressBar()
-            mProgressDialog!!.setMessage("Loading ...")
-            mProgressDialog!!.isIndeterminate = true
-        }
-
-        mProgressDialog!!.show()
+    fun showLoading() {
+        viewGroup.visibility = View.INVISIBLE
+        mProgressDialog.visibility = View.VISIBLE
     }
 
+    fun hideLoading() {
+        viewGroup.visibility =View.VISIBLE
+        mProgressDialog.visibility = View.GONE
+       // viewGroup.visibility = View.VISIBLE
+    }
 
-    fun hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-            mProgressDialog!!.dismiss()
-        }
-    }    constructor(communicatedString: String? = null) : this(Bundle().apply {
+    constructor(communicatedString: String? = null) : this(Bundle().apply {
         putString(AUTH_STRING_KEY, communicatedString)
     })
 
-    val communicatedString by lazy {
-        args.getString(AUTH_STRING_KEY)
-    }
+
+val communicatedString by lazy {
+    args.getString(AUTH_STRING_KEY)
+}
 
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         val view = inflater.inflate(R.layout.login_controller_layout, container, false)
+        mProgressDialog=view!!.findViewById<ProgressBar>(R.id.login_progressbar)
+        view.login_btn_signin.setOnClickListener { showLoading() }
+        mProgressDialog.setOnClickListener { hideLoading() }
+            val tvfoot=view.findViewById<TextView>(R.id.login_tv_footer)
+        tvfoot.setOnClickListener {
+            router.pushController(RouterTransaction.with(RegistrationController())
+                    .pushChangeHandler(HorizontalChangeHandler())
+                    .popChangeHandler(HorizontalChangeHandler()))
+
+        }
         return view
     }
 

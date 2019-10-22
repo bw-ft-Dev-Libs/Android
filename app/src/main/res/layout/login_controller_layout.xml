@@ -13,13 +13,15 @@
    android:id="@+id/login_progressbar"
     android:visibility="gone"
     />
-    <android.support.constraint.Group
+    <androidx.constraintlayout.widget.Group
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="btn_login_signin,login_tv_title,login_et_username,login_et_password,login_input,"
-        android:id="@+id/group" />
-        <TextView
-app:layout_constraintTop_toTopOf="parent"
+        app:constraint_referenced_ids="login_btn_signin,login_tv_title,login_et_username,login_et_password,login_img_logo,login_tv_footer"
+        android:id="@+id/login_group"
+        />
+
+    <TextView
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:id="@+id/login_tv_title"
@@ -113,7 +115,7 @@ app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="3dp"
             android:fontFamily="sans-serif"
             android:padding="10dp"
-            android:text="or Register an account"
+            android:text="Or\nRegister an account"
             android:textAllCaps="true"
             android:textColor="@color/colorPrimary"
             android:textSize="15sp"
