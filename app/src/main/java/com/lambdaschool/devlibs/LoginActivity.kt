@@ -30,7 +30,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var authString: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.login_activity)
 
         getAuthStringFromFS()
 
