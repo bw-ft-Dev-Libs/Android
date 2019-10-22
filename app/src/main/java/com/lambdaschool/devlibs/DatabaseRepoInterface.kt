@@ -1,16 +1,17 @@
 package com.lambdaschool.devlibs
 
 import androidx.lifecycle.LiveData
-import com.lambdaschool.devlibs.model.CallBackState
-import com.lambdaschool.devlibs.model.DevLibBackend
-import com.lambdaschool.devlibs.model.DevLibLocal
-import com.lambdaschool.devlibs.model.RegistrationLoginSendAPI
+import com.lambdaschool.devlibs.model.*
 
 interface DatabaseRepoInterface {
 
     // DevLibsAPI
     fun registerUser(registrationLoginInfo: RegistrationLoginSendAPI): LiveData<CallBackState>
     fun loginUser(registrationLoginInfo: RegistrationLoginSendAPI): LiveData<CallBackState>
+    fun createDevLib(devLibCreate: DevLibCreate, authToken: String): LiveData<CallBackState>
+    fun updateDevLib(devLibUpdate: DevLibBackend, authToken: String): LiveData<CallBackState>
+    fun deleteDevLib(devLibDelete: DevLibDelete, authToken: String): LiveData<CallBackState>
+    fun getDevLibs(authToken: String): LiveData<CallBackState>
 
     // dev_lib_backend database table
     fun createDevLibBackend(devLibBackend: DevLibBackend)

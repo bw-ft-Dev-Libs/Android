@@ -7,9 +7,14 @@ import com.google.gson.annotations.SerializedName
 
 class DevLibCreate(
     val lib: String,
-    @SerializedName ("user_id") val userId: Int,
-    @SerializedName ("category_id") val categoryId: Int
+    @SerializedName("user_id") val userId: Int,
+    @SerializedName("category_id") val categoryId: Int
 )
+
+class DevLibDelete(
+    @SerializedName("id") val devLibBackendId: Int,
+    @SerializedName("user_id") val userId: Int
+    )
 
 @Entity(tableName = "dev_lib_backend")
 data class DevLibBackend(
@@ -18,8 +23,8 @@ data class DevLibBackend(
     var id: Int,
 
     var lib: String,
-    @SerializedName ("user_id") val userId: Int,
-    @SerializedName ("category_id") var categoryId: Int
+    @SerializedName("user_id") val userId: Int,
+    @SerializedName("category_id") var categoryId: Int
 )
 
 /**
@@ -32,10 +37,15 @@ data class DevLibBackend(
 @Entity(tableName = "dev_lib_local")
 class DevLibLocal(
 
-    @PrimaryKey(autoGenerate = true) @NonNull
-    val id: Int = 0,
-
     var lib: String,
     val userId: Int,
-    var categoryId: Int
+    var categoryId: Int,
+
+    @PrimaryKey(autoGenerate = true) @NonNull
+    val id: Int = 0
 )
+
+// TODO: add to dev_lib_local schema an additional string paramater to hold an enum
+//  key for operation that needs to happen with backend (create, update, delete)
+
+// TODO: make an enum class for CREATE, UPDATE, DELETE
