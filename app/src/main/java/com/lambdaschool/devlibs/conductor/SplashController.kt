@@ -14,6 +14,7 @@ import com.lambdaschool.devlibs.AUTH_STRING_KEY
 import com.lambdaschool.devlibs.Prefs
 import com.lambdaschool.devlibs.R
 import com.lambdaschool.devlibs.model.CallBackState
+import com.lambdaschool.devlibs.model.LoginSuccess
 import com.lambdaschool.devlibs.ui.MainActivity
 import com.lambdaschool.devlibs.viewmodel.LiveDataVMFactory
 import com.lambdaschool.devlibs.viewmodel.LoginActivityViewModel
@@ -59,7 +60,28 @@ class SplashController (bundle: Bundle) : ViewModelController(bundle) {
         }
 
 
-        val prefs = Prefs(view!!.context)
+        //TESTING PLEASE DELETE OR COMMMENT OUT
+           val  fakecreds = LoginSuccess(token=
+           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoxMywidXNlcm5hbWUiOiJ0aGlyZHRpb" +
+                   "WUiLCJpYXQiOjE1NzE3NzQ2MjgsImV4cCI6MTU3MTg2MTAyOH0.-Kpa9U_NxTWb-rTdlI" +
+                   "UCRMYMUWHHkTPkr3sOvy-d13E",
+
+                   userId=1,
+                   username = "thirdtime" )
+        viewModel.tryTokenLogin(fakecreds.token).observe(this, Observer {
+            if (it == CallBackState.RESPONSE_SUCCESS) {
+                val intent = Intent(view.context, MainActivity::class.java)
+                startActivity(intent)
+            } else {
+                onAuthDecision(view.context, false)
+                Toast.makeText(view.context, "Failed to login with token", Toast.LENGTH_SHORT)
+                        .show()
+            }
+        })
+
+//                          uncomment this block of code (prefs to else onAuth)
+
+   /*     val prefs = Prefs(view!!.context)
         val loginCredentials = prefs.getLoginCredentials()
         if (loginCredentials != null) {
             if (loginCredentials.username != "" && loginCredentials.token != "") {
@@ -84,7 +106,7 @@ class SplashController (bundle: Bundle) : ViewModelController(bundle) {
             Toast.makeText(view.context, "Failed to login with token", Toast.LENGTH_SHORT)
                     .show()
         }
-
+*/
             view.splash_img_view.setOnClickListener {
                 onAuthDecision(view.context, false)
             }

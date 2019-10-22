@@ -17,13 +17,15 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
 
     fun tryLogin(username: String, password: String): LiveData<CallBackState> {
-        return repo.loginUser(RegistrationLoginSendAPI(username, password))
+        return repo.loginUser(RegistrationLoginSendAPI(username=username, password=password))
     }
 
     fun tryTokenLogin(authToken: String): LiveData<CallBackState> {
         return repo.getDevLibs(authToken)
 }
-
+    fun tryToRegister(username: String,password: String): LiveData<CallBackState> {
+        return repo.registerUser(RegistrationLoginSendAPI(username, password))
+    }
 
 }
 

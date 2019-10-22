@@ -109,6 +109,7 @@ class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
                 if (logUserName.isNotEmpty() && logPassword.isNotEmpty()) {
 
                     viewModel.tryLogin(logUserName, logPassword).observe(this, Observer {
+
                         if (it == CallBackState.RESPONSE_SUCCESS) {
                             val intent = Intent(view.context, MainActivity::class.java)
                             startActivity(intent)
@@ -121,7 +122,7 @@ class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
                     })
                 }
             }
-        
+
         tvfoot.setOnClickListener {
             router.pushController(RouterTransaction.with(RegistrationController())
                     .pushChangeHandler(HorizontalChangeHandler())
