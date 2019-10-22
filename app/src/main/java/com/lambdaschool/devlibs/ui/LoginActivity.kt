@@ -37,7 +37,6 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.acitivty_login)
 
 
-        checkAuthStringFromFS()
 
 
         // start conductor with splash screen
@@ -58,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun checkAuthStringFromFS() {
+ /*   private fun checkAuthStringFromFS() {
        // if user has local stored data, try to use that, otherwise send to login
         if (login != null){
             if(login.token !="")
@@ -110,7 +109,7 @@ class LoginActivity : AppCompatActivity() {
 
 
 
-    }
+    }*/
 
     override fun onBackPressed() {
         if(!router.handleBack()) {

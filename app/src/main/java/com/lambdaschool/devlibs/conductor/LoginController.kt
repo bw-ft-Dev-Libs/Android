@@ -70,10 +70,10 @@ val communicatedString by lazy {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         val view = inflater.inflate(R.layout.login_controller_layout, container, false)
-                //delete this TODO:
+        //delete this TODO:
 
 
-        mProgressDialog=view!!.findViewById<ProgressBar>(R.id.login_progressbar)
+        mProgressDialog = view!!.findViewById<ProgressBar>(R.id.login_progressbar)
         view.login_btn_signin.setOnClickListener { showLoading() }
         mProgressDialog.setOnClickListener { hideLoading() }
 
@@ -83,87 +83,53 @@ val communicatedString by lazy {
         val editTextPassword = view.login_et_password
 
 
-
-
-
-            val tvfoot=view.findViewById<TextView>(R.id.login_tv_footer)
-
-
-
-
+        val tvfoot = view.findViewById<TextView>(R.id.login_tv_footer)
 
 
         val viewModelFactory = LiveDataVMFactory(this.activity!!.application)
-        viewModel =activity.run {
+        viewModel = activity.run {
             viewModelProvider(viewModelFactory).get(LoginActivityViewModel::class.java)
         }
 
-      //get preferences and try to login,
+
+        //get preferences and try to login,
         val prefs = Prefs(view!!.context)
         val loginCredentials = prefs.getLoginCredentials()
-        if (loginCredentials !=null){
-            if (loginCredentials.username !="") {
-                editTextUserName.hint = loginCredentials.username
-            }
-            if (loginCredentials.username !="" && loginCredentials.token !="") {
 
-                // TODO 1: get creds, get madlibs via retro and intent over to main activity
-
-                 val intent = Intent(view.context, MainActivity::class.java)
-            //    startActivity(intent)
-              /*  viewModel.tryLogin(logUserName, loginCredentials.).observe(this, Observer {
-                    if (it == CallBackState.RESPONSE_SUCCESS) {
-                        val intent = Intent(view.context, MainActivity::class.java)
-                        startActivity(intent)
-                    } else {
-                        Toast.makeText(view.context, "Login Success", Toast.LENGTH_SHORT).show()
-                    }
-                })
-            } else {
-                Toast.makeText(view.context, "Failed", Toast.LENGTH_SHORT)
-                        .show()
-            }*/
-        }
-    }
-        if (loginCredentials !=null){
-            if (loginCredentials.username !="") {
+        if (loginCredentials != null) {
+            if (loginCredentials.username != "") {
                 editTextUserName.hint = loginCredentials.username
             }
 
-        btn.setOnClickListener {
-            val logUserName = view.login_et_username.text.toString()
-            val logPassword = view.login_et_password.text.toString()
-            if (logUserName.isNotEmpty() && logPassword.isNotEmpty()) {
+            btn.setOnClickListener {
 
-                viewModel.tryLogin(logUserName, logPassword).observe(this, Observer {
-                            if (it == CallBackState.RESPONSE_SUCCESS) {
-                                val intent = Intent(view.context, MainActivity::class.java)
-                                startActivity(intent)
-                            } else {
-                                Toast.makeText(view.context, "Login Success", Toast.LENGTH_SHORT).show()
-                            }
-                        })
-            } else {
-                Toast.makeText(view.context, "Failed", Toast.LENGTH_SHORT)
-                        .show()
+                // get username and password from edittexts and try to login
+                val logUserName = view.login_et_username.text.toString()
+                val logPassword = view.login_et_password.text.toString()
+                if (logUserName.isNotEmpty() && logPassword.isNotEmpty()) {
+
+                    viewModel.tryLogin(logUserName, logPassword).observe(this, Observer {
+                        if (it == CallBackState.RESPONSE_SUCCESS) {
+                            val intent = Intent(view.context, MainActivity::class.java)
+                            startActivity(intent)
+                        } else {
+                            Toast.makeText(view.context, "Login Success", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+                } else {
+                    Toast.makeText(view.context, "Failed", Toast.LENGTH_SHORT)
+                            .show()
+                }
             }
         }
+            tvfoot.setOnClickListener {
+                router.pushController(RouterTransaction.with(RegistrationController())
+                        .pushChangeHandler(HorizontalChangeHandler())
+                        .popChangeHandler(HorizontalChangeHandler()))
 
-
-
-
-        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
-
-
-
-        tvfoot.setOnClickListener {
-            router.pushController(RouterTransaction.with(RegistrationController())
-                    .pushChangeHandler(HorizontalChangeHandler())
-                    .popChangeHandler(HorizontalChangeHandler()))
-
+            }
+            return view
         }
-        return view
-    }
 
 }     /*val loginObserver = Observer<CallBackState> { state ->
             if (state == null){
