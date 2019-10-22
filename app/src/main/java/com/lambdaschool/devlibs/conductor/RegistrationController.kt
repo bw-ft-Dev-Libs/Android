@@ -80,11 +80,19 @@ class RegistrationController (bundle: Bundle?) : ViewModelController(bundle) {
                     showLoading()
                 viewModel.tryToRegister(logUserName, logPassword).observe(this, Observer {
 
+                        // response is successful so notify user and return to login screen,
                     if (it == CallBackState.RESPONSE_SUCCESS) {
                         hideLoading()
                         router.popController(this)
                         Toast.makeText(view.context, "Registration Successful, please log in!", Toast.LENGTH_SHORT).show()
                     }
+                        //repsonse failed due to user already existing
+                    else if (it == CallBackState.RESPONSE_FAIL){
+                        hideLoading()
+                        Toast.makeText(view.context, "User already exists, please try again", Toast.LENGTH_SHORT).show()
+
+                    }
+                    //site unreachable or other errror
                     else {
                         hideLoading()
                         Toast.makeText(view.context, "Failed, please try again", Toast.LENGTH_SHORT)

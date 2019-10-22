@@ -6,11 +6,13 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.room.Room
+import com.google.gson.Gson
 import com.lambdaschool.devlibs.DatabaseRepoInterface
 import com.lambdaschool.devlibs.Prefs
 import com.lambdaschool.devlibs.model.*
 import com.lambdaschool.devlibs.prefs
 import com.lambdaschool.devlibs.retrofit.DevLibsAPI
+import okhttp3.internal.http.hasBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,33 +35,63 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
         val registrationSuccessful = MutableLiveData<CallBackState>()
 
         retrofitInstance.registerUser(registrationLoginInfo)
-            .enqueue(object : Callback<RegistrationReturnedAPI> {
+            .enqueue(object : Callback<RegistrationSuccess> {
 
-                override fun onFailure(call: Call<RegistrationReturnedAPI>, t: Throwable) {
+                override fun onFailure(call: Call<RegistrationSuccess>, t: Throwable) {
                     registrationSuccessful.value = CallBackState.ONFAIL
                     Log.i(TAG_REGISTRATION, "no response from backend...", t)
+                    registrationSuccessful.value = CallBackState.RESPONSE_FAIL
                 }
 
+
+
+
+                /*
+                *
+                * this strategy allows us to assume that the response will be successful and then set the body
+                * to a Success object. if the body is not a response object, we then convert it to a RegistrationFail
+                * and send Response_fail back to the method.
+                *
+                * we don't have to do things this way, but it's an option
+                *
+                *
+                * */
+
                 override fun onResponse(
-                    call: Call<RegistrationReturnedAPI>,
-                    response: Response<RegistrationReturnedAPI>
+                    call: Call<RegistrationSuccess>,
+                    response: Response<RegistrationSuccess>
                 ) {
-                    val body = response.body()
-                    when (body) {
-                        is RegistrationSuccess -> {
-                            registrationSuccessful.value = CallBackState.RESPONSE_SUCCESS
-                            prefs.createLoginCredentialEntry(
+                    val gsonBuilder = Gson()
+                if(response.body() is RegistrationSuccess){
+                        val body =response.body()
+                        registrationSuccessful.value = CallBackState.RESPONSE_SUCCESS
+                        prefs.createLoginCredentialEntry(
                                 LoginSuccess(
-                                    Prefs.INVALID_INT,
-                                    body.username,
-                                    Prefs.INVALID_STRING))
+                                        Prefs.INVALID_INT,
+                                        body?.username?:"",
+                                        Prefs.INVALID_STRING))
+                }
+                    else {
+                    // we also have to option to not even check if we can convert the object and merely
+                    // write response.body() to the log.
+
+                        if (response.body() != null) {
+                            val body = gsonBuilder.fromJson(response.body().toString(), RegistrationFail::class.java)
+                            val message = body.message
+                            Log.i("User aready exist", message)
                         }
-                        is RegistrationFail -> {
+                    registrationSuccessful.value = CallBackState.RESPONSE_FAIL
+                }
+
+
+
+                        }
+                   /*     is RegistrationFail -> {
                             registrationSuccessful.value = CallBackState.RESPONSE_FAIL
                             Log.i(TAG_LOGIN, body.message)
-                        }
-                    }
-                }
+                        }*/
+
+
             })
         return registrationSuccessful
     }
