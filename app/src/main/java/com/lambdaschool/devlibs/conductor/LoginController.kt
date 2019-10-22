@@ -1,24 +1,29 @@
 package com.lambdaschool.devlibs.conductor
 
+import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.lambdaschool.devlibs.AUTH_STRING_KEY
-import work.beltran.conductorviewmodel.ViewModelController
-import android.app.ProgressDialog
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.Group
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
+import com.lambdaschool.devlibs.AUTH_STRING_KEY
+import com.lambdaschool.devlibs.Prefs
 import com.lambdaschool.devlibs.R
-import com.lambdaschool.devlibs.database.DatabaseRepo
-import com.lambdaschool.devlibs.retrofit.DevLibsAPI
+import com.lambdaschool.devlibs.model.CallBackState
+import com.lambdaschool.devlibs.ui.MainActivity
 import com.lambdaschool.devlibs.viewmodel.LiveDataVMFactory
 import com.lambdaschool.devlibs.viewmodel.LoginActivityViewModel
+import com.lambdaschool.devlibs.viewmodel.MainActivityViewModel
 import kotlinx.android.synthetic.main.login_controller_layout.view.*
+import work.beltran.conductorviewmodel.ViewModelController
 
 /*
 *
@@ -34,7 +39,7 @@ import kotlinx.android.synthetic.main.login_controller_layout.view.*
 * */
 class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
 
-    val viewGroup: Group by lazy {
+             val viewGroup: Group by lazy {
         view!!.findViewById<Group>(R.id.login_group)
     }
     lateinit var mProgressDialog:ProgressBar
@@ -65,19 +70,89 @@ val communicatedString by lazy {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         val view = inflater.inflate(R.layout.login_controller_layout, container, false)
+                //delete this TODO:
+
+
         mProgressDialog=view!!.findViewById<ProgressBar>(R.id.login_progressbar)
         view.login_btn_signin.setOnClickListener { showLoading() }
         mProgressDialog.setOnClickListener { hideLoading() }
+
+
+        val btn = view.login_btn_signin
+        val editTextUserName = view.login_et_username
+        val editTextPassword = view.login_et_password
+
+
+
+
+
             val tvfoot=view.findViewById<TextView>(R.id.login_tv_footer)
 
-      /*  viewModel =activity?.run {
-            viewModelProvider(LiveDataVMFactory).get(SharedConductorViewModel::class.java)
-        } ?: throw Exception("Invalid Activity")*/
+
+
+
+
+
         val viewModelFactory = LiveDataVMFactory(this.activity!!.application)
         viewModel =activity.run {
             viewModelProvider(viewModelFactory).get(LoginActivityViewModel::class.java)
         }
 
+      //get preferences and try to login,
+        val prefs = Prefs(view!!.context)
+        val loginCredentials = prefs.getLoginCredentials()
+        if (loginCredentials !=null){
+            if (loginCredentials.username !="") {
+                editTextUserName.hint = loginCredentials.username
+            }
+            if (loginCredentials.username !="" && loginCredentials.token !="") {
+
+                // TODO 1: get creds, get madlibs via retro and intent over to main activity
+
+                 val intent = Intent(view.context, MainActivity::class.java)
+            //    startActivity(intent)
+              /*  viewModel.tryLogin(logUserName, loginCredentials.).observe(this, Observer {
+                    if (it == CallBackState.RESPONSE_SUCCESS) {
+                        val intent = Intent(view.context, MainActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(view.context, "Login Success", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            } else {
+                Toast.makeText(view.context, "Failed", Toast.LENGTH_SHORT)
+                        .show()
+            }*/
+        }
+    }
+        if (loginCredentials !=null){
+            if (loginCredentials.username !="") {
+                editTextUserName.hint = loginCredentials.username
+            }
+
+        btn.setOnClickListener {
+            val logUserName = view.login_et_username.text.toString()
+            val logPassword = view.login_et_password.text.toString()
+            if (logUserName.isNotEmpty() && logPassword.isNotEmpty()) {
+
+                viewModel.tryLogin(logUserName, logPassword).observe(this, Observer {
+                            if (it == CallBackState.RESPONSE_SUCCESS) {
+                                val intent = Intent(view.context, MainActivity::class.java)
+                                startActivity(intent)
+                            } else {
+                                Toast.makeText(view.context, "Login Success", Toast.LENGTH_SHORT).show()
+                            }
+                        })
+            } else {
+                Toast.makeText(view.context, "Failed", Toast.LENGTH_SHORT)
+                        .show()
+            }
+        }
+
+
+
+
+        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
 
 
 
@@ -90,4 +165,19 @@ val communicatedString by lazy {
         return view
     }
 
-}
+}     /*val loginObserver = Observer<CallBackState> { state ->
+            if (state == null){
+                        Toast.makeText(view.context,"null",Toast.LENGTH_SHORT).show()
+                        Log.i("Jackdebug","state=null")
+                    }
+            if(state == CallBackState.ONFAIL) {
+                Toast.makeText(view.context,"fail",Toast.LENGTH_SHORT).show()
+                Log.i("Jackdebug","state=fail")
+            }
+            else if(state==CallBackState.RESPONSE_SUCCESS){
+                Toast.makeText(view.context,"success",Toast.LENGTH_SHORT).show()
+                Log.i("Jackdebug","state=success")
+            }
+
+
+        }*/

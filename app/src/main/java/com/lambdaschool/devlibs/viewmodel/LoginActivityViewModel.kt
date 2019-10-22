@@ -2,6 +2,7 @@ package com.lambdaschool.devlibs.viewmodel
 
 
 import android.app.Application
+import android.os.AsyncTask
 import androidx.lifecycle.*
 import com.lambdaschool.devlibs.database.Database
 import com.lambdaschool.devlibs.database.DatabaseRepo
@@ -17,26 +18,18 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
    var loginLiveData =MutableLiveData<CallBackState>()
 
-    fun select(string:String) {
-        selected.value = string
-    }
-
     private val liveData = MutableLiveData<String>()
     init {
         liveData.value = Date().toString()
     }
 
-    fun getLiveData(): LiveData<String> {
-        return selected
-    }
-
-    fun tryLogin(username:String,password:String) {
-       val user = repo.loginUser(RegistrationLoginSendAPI(username,password))
-        loginLiveData = user as MutableLiveData<CallBackState>
+    fun tryLogin(username:String,password:String):LiveData<CallBackState>{
+       return repo.loginUser(RegistrationLoginSendAPI(username,password))
     }
 
 
 }
+
 class LiveDataVMFactory(val application: Application) : ViewModelProvider.Factory {
 
     //  private val dataSource = DefaultDataSource(Dispatchers.IO)
@@ -59,8 +52,6 @@ class LiveDataVMFactory(val application: Application) : ViewModelProvider.Factor
             }
         }
         throw IllegalArgumentException("Unknown ViewModel class")
-        /*     return SharedViewModel() as T
 
-    }*/
     }
 }
