@@ -22,7 +22,7 @@ interface DevLibsAPI {
     class Factory {
 
         companion object {
-            val BASE_URL = ""
+            val BASE_URL = "https://dev-libs-test.herokuapp.com/"
             val gson = Gson()
             val logger = HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BASIC
