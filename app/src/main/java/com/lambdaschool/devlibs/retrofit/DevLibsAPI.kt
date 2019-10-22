@@ -7,17 +7,34 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.POST
+import retrofit2.http.*
 import java.util.concurrent.TimeUnit
 
 interface DevLibsAPI {
 
     @POST("auth/register")
-    fun registerUser(@Body registrationLoginInfo: RegistrationLoginSendAPI): Call<RegistrationReturnedAPI>
+    fun registerUser(@Body registrationLoginInfo: RegistrationLoginSendAPI)
+            : Call<RegistrationReturnedAPI>
 
     @POST("auth/login")
-    fun loginUser(@Body registrationLoginInfo: RegistrationLoginSendAPI): Call<LoginReturnedAPI>
+    fun loginUser(@Body registrationLoginInfo: RegistrationLoginSendAPI)
+            : Call<LoginReturnedAPI>
+
+    @POST("devLib")
+    fun createDevLib(@Body devLibCreate: DevLibCreate, @Header("authorization") Value: String)
+            : Call<DevLibBackend>
+
+    @PUT("devLib")
+    fun updateDevLib(@Body devLibUpdate: DevLibBackend, @Header("authorization") Value: String)
+            : Call<DevLibBackend>
+
+    @DELETE("devLib")
+    fun deleteDevLib(@Body devLibDelete: DevLibDelete, @Header("authorization") Value: String)
+            : Call<DevLibBackend>
+
+    @GET("devLib")
+    fun getDevLibs(@Header("authorization") Value: String)
+            : Call<List<DevLibBackend>>
 
     class Factory {
 

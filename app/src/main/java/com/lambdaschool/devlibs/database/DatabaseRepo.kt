@@ -19,9 +19,15 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
 
     private val TAG_REGISTRATION = "REGISTRATION"
     private val TAG_LOGIN = "LOGIN"
+    private val TAG_CREATE = "CREATE"
+    private val TAG_UPDATE = "UPDATE"
+    private val TAG_DELETE = "DELETE"
+    private val TAG_GET = "GET"
 
-    var retrofitInstance = DevLibsAPI.Factory.create()
-    val context = contxt.applicationContext
+    private var retrofitInstance = DevLibsAPI.Factory.create()
+    private val context = contxt.applicationContext
+
+    lateinit var contents: DevLibBackend
 
     override fun registerUser(registrationLoginInfo: RegistrationLoginSendAPI): LiveData<CallBackState> {
         val registrationSuccessful = MutableLiveData<CallBackState>()
@@ -92,6 +98,127 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
                 }
             })
         return loginSuccessful
+    }
+
+    override fun createDevLib(devLibCreate: DevLibCreate, authToken: String): LiveData<CallBackState> {
+        val createSuccessful = MutableLiveData<CallBackState>()
+
+        retrofitInstance.createDevLib(devLibCreate, authToken)
+            .enqueue(object : Callback<DevLibBackend> {
+
+                override fun onFailure(call: Call<DevLibBackend>, t: Throwable) {
+
+                    // Create the Dev Lib locally so that the user can still use the application
+                    /*createDevLibLocal(DevLibLocal(
+                        devLibCreate.lib,
+                        devLibCreate.userId,
+                        devLibCreate.categoryId
+                        // TODO: enum class key CREATE
+                    ))*/
+
+                    createSuccessful.value = CallBackState.ONFAIL
+                    Log.i(TAG_CREATE, "no response from backend...", t)
+                }
+
+                override fun onResponse(
+                    call: Call<DevLibBackend>,
+                    response: Response<DevLibBackend>
+                ) {
+                    val body = response.body() as DevLibBackend
+                    createDevLibBackend(body)
+                    createSuccessful.value = CallBackState.RESPONSE_SUCCESS
+                }
+            })
+        return createSuccessful
+    }
+
+    override fun updateDevLib(devLibUpdate: DevLibBackend, authToken: String): LiveData<CallBackState> {
+        val updateSuccessful = MutableLiveData<CallBackState>()
+
+        retrofitInstance.updateDevLib(devLibUpdate, authToken)
+            .enqueue(object : Callback<DevLibBackend> {
+
+                override fun onFailure(call: Call<DevLibBackend>, t: Throwable) {
+
+                    // Create the Dev Lib locally so that the user can still use the application
+                    /*createDevLibLocal(DevLibUpdate (
+                        devLibCreate.lib,
+                        devLibCreate.userId,
+                        devLibCreate.categoryId
+                        // TODO: enum class key UPDATE
+                    ))*/
+
+                    updateSuccessful.value = CallBackState.ONFAIL
+                    Log.i(TAG_CREATE, "no response from backend...", t)
+                }
+
+                override fun onResponse(
+                    call: Call<DevLibBackend>,
+                    response: Response<DevLibBackend>
+                ) {
+                    val body = response.body() as DevLibBackend
+                    updateDevLibBackend(body)
+                    updateSuccessful.value = CallBackState.RESPONSE_SUCCESS
+                }
+            })
+        return updateSuccessful
+    }
+
+    override fun deleteDevLib(devLibDelete: DevLibDelete, authToken: String): LiveData<CallBackState> {
+        val deleteSuccessful = MutableLiveData<CallBackState>()
+
+        retrofitInstance.deleteDevLib(devLibDelete, authToken)
+            .enqueue(object : Callback<DevLibBackend> {
+
+                override fun onFailure(call: Call<DevLibBackend>, t: Throwable) {
+
+                    // Create the Dev Lib locally so that the user can still use the application
+                    /*createDevLibLocal(DevLibUpdate (
+                        devLibCreate.lib,
+                        devLibCreate.userId,
+                        devLibCreate.categoryId
+                        // TODO: enum class key DELETE
+                    ))*/
+
+                    deleteSuccessful.value = CallBackState.ONFAIL
+                    Log.i(TAG_CREATE, "no response from backend...", t)
+                }
+
+                override fun onResponse(
+                    call: Call<DevLibBackend>,
+                    response: Response<DevLibBackend>
+                ) {
+                    val body = response.body() as DevLibBackend
+                    deleteDevLibBackend(body)
+                    deleteSuccessful.value = CallBackState.RESPONSE_SUCCESS
+                }
+            })
+        return deleteSuccessful
+    }
+
+    override fun getDevLibs(authToken: String): LiveData<CallBackState> {
+        val getSuccessful = MutableLiveData<CallBackState>()
+
+        retrofitInstance.getDevLibs(authToken)
+            .enqueue(object : Callback<List<DevLibBackend>> {
+
+                override fun onFailure(call: Call<List<DevLibBackend>>, t: Throwable) {
+                    // nothing needs to happen as all our views will be using data from our
+                    //  database with Observers set on them.
+                    getSuccessful.value = CallBackState.ONFAIL
+                    Log.i(TAG_CREATE, "no response from backend...", t)
+                }
+
+                override fun onResponse(
+                    call: Call<List<DevLibBackend>>,
+                    response: Response<List<DevLibBackend>>
+                ) {
+                    val body = response.body()
+                    // TODO: check agains dev_lib_backend schema && update appropriately
+                    getSuccessful.value = CallBackState.RESPONSE_SUCCESS
+                }
+            })
+        return getSuccessful
     }
 
     // Table: dev_lib_backend
