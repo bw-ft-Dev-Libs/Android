@@ -59,10 +59,11 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.1.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.1.0'
 
+    implementation 'com.bluelinelabs:conductor-support:3.0.0-rc2'
+    implementation "com.github.miquelbeltran:conductor-viewmodel:1.0.3"
+
     // Testing
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
-
 }
