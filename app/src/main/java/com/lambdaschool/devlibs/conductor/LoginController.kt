@@ -13,6 +13,8 @@ import androidx.constraintlayout.widget.Group
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
 import com.lambdaschool.devlibs.R
+import com.lambdaschool.devlibs.database.DatabaseRepo
+import com.lambdaschool.devlibs.retrofit.DevLibsAPI
 import kotlinx.android.synthetic.main.login_controller_layout.view.*
 
 /*
@@ -28,6 +30,7 @@ import kotlinx.android.synthetic.main.login_controller_layout.view.*
 *
 * */
 class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
+
     val viewGroup: Group by lazy {
         view!!.findViewById<Group>(R.id.login_group)
     }
@@ -67,6 +70,10 @@ val communicatedString by lazy {
         viewModel =activity?.run {
             viewModelProvider(LiveDataVMFactory).get(SharedConductorViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
+
+
+
+
 
         tvfoot.setOnClickListener {
             router.pushController(RouterTransaction.with(RegistrationController())
