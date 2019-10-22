@@ -37,7 +37,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
 
 }
-object LiveDataVMFactory : ViewModelProvider.Factory {
+class LiveDataVMFactory(val application: Application) : ViewModelProvider.Factory {
 
     //  private val dataSource = DefaultDataSource(Dispatchers.IO)
     val hashMapViewModel = HashMap<String, ViewModel>()
@@ -54,7 +54,7 @@ object LiveDataVMFactory : ViewModelProvider.Factory {
             if (hashMapViewModel.containsKey(key)) {
                 return getViewModel(key) as T
             } else {
-                addViewModel(key, LoginActivityViewModel())
+                addViewModel(key, LoginActivityViewModel(application))
                 return getViewModel(key) as T
             }
         }

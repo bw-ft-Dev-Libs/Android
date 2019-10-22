@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import java.util.*
 
+/*
 
 class SharedConductorViewModel : ViewModel() {
     val selected = MutableLiveData<String>()
@@ -46,8 +47,10 @@ object LiveDataVMFactory : ViewModelProvider.Factory {
             }
         }
         throw IllegalArgumentException("Unknown ViewModel class")
-        /*     return SharedViewModel() as T
+        */
+/*     return SharedViewModel() as T
 
-    }*/
+    }*//*
+
     }
-}
+}*/

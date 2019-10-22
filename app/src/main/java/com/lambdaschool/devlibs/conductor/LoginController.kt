@@ -10,11 +10,14 @@ import android.app.ProgressDialog
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.Group
+import androidx.lifecycle.ViewModelProviders
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
 import com.lambdaschool.devlibs.R
 import com.lambdaschool.devlibs.database.DatabaseRepo
 import com.lambdaschool.devlibs.retrofit.DevLibsAPI
+import com.lambdaschool.devlibs.viewmodel.LiveDataVMFactory
+import com.lambdaschool.devlibs.viewmodel.LoginActivityViewModel
 import kotlinx.android.synthetic.main.login_controller_layout.view.*
 
 /*
@@ -35,7 +38,7 @@ class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
         view!!.findViewById<Group>(R.id.login_group)
     }
     lateinit var mProgressDialog:ProgressBar
-    lateinit var viewModel:SharedConductorViewModel
+    lateinit var viewModel:LoginActivityViewModel
 
 
     fun showLoading() {
@@ -67,10 +70,13 @@ val communicatedString by lazy {
         mProgressDialog.setOnClickListener { hideLoading() }
             val tvfoot=view.findViewById<TextView>(R.id.login_tv_footer)
 
-        viewModel =activity?.run {
+      /*  viewModel =activity?.run {
             viewModelProvider(LiveDataVMFactory).get(SharedConductorViewModel::class.java)
-        } ?: throw Exception("Invalid Activity")
-
+        } ?: throw Exception("Invalid Activity")*/
+        val viewModelFactory = LiveDataVMFactory(this.activity!!.application)
+        viewModel =activity.run {
+            viewModelProvider(viewModelFactory).get(LoginActivityViewModel::class.java)
+        }
 
 
 
