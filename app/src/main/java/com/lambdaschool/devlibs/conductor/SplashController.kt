@@ -33,6 +33,8 @@ import work.beltran.conductorviewmodel.ViewModelController
 
 
 class SplashController (bundle: Bundle) : ViewModelController(bundle)  {
+    lateinit var viewModel:SharedConductorViewModel
+
 
     constructor(communicatedString: String? = null) : this(Bundle().apply {
         putString(AUTH_STRING_KEY, communicatedString)
@@ -48,6 +50,10 @@ class SplashController (bundle: Bundle) : ViewModelController(bundle)  {
         view.splash_img_view.setOnClickListener {
             onAuthDecision(view.context,false)
         }
+        viewModel =activity?.run {
+            viewModelProvider(LiveDataVMFactory).get(SharedConductorViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
+
         return view
     }
 

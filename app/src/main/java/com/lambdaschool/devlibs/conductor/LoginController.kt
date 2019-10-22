@@ -32,7 +32,7 @@ class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
         view!!.findViewById<Group>(R.id.login_group)
     }
     lateinit var mProgressDialog:ProgressBar
-
+    lateinit var viewModel:SharedConductorViewModel
 
 
     fun showLoading() {
@@ -63,6 +63,11 @@ val communicatedString by lazy {
         view.login_btn_signin.setOnClickListener { showLoading() }
         mProgressDialog.setOnClickListener { hideLoading() }
             val tvfoot=view.findViewById<TextView>(R.id.login_tv_footer)
+
+        viewModel =activity?.run {
+            viewModelProvider(LiveDataVMFactory).get(SharedConductorViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
+
         tvfoot.setOnClickListener {
             router.pushController(RouterTransaction.with(RegistrationController())
                     .pushChangeHandler(HorizontalChangeHandler())

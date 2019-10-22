@@ -27,6 +27,7 @@ class RegistrationController (bundle: Bundle?) : ViewModelController(bundle)  {
     val viewGroup: Group by lazy {
         view!!.findViewById<Group>(R.id.registration_group)
     }
+    lateinit var viewModel:SharedConductorViewModel
     lateinit var mProgressDialog: ProgressBar
 
 
@@ -58,6 +59,9 @@ class RegistrationController (bundle: Bundle?) : ViewModelController(bundle)  {
         view.registration_btn_submit.setOnClickListener { showLoading() }
         mProgressDialog=view.findViewById(R.id.registration_progressbar)
         mProgressDialog.setOnClickListener { hideLoading() }
+        viewModel =activity?.run {
+            viewModelProvider(LiveDataVMFactory).get(SharedConductorViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
         return view
     }
 
