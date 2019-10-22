@@ -78,13 +78,15 @@ class RegistrationController (bundle: Bundle?) : ViewModelController(bundle) {
             val logPassword = view.registration_et_password.text.toString()
             if (logUserName.isNotEmpty() && logPassword.isNotEmpty()) {
                     showLoading()
-                viewModel.tryToRegister(logUserName, logPassword).observe(this, Observer<CallBackState> {
+                viewModel.tryToRegister(logUserName, logPassword).observe(this, Observer {
+
                     if (it == CallBackState.RESPONSE_SUCCESS) {
+                        hideLoading()
                         router.popController(this)
                         Toast.makeText(view.context, "Registration Successful, please log in!", Toast.LENGTH_SHORT).show()
                     }
                     else {
-
+                        hideLoading()
                         Toast.makeText(view.context, "Failed, please try again", Toast.LENGTH_SHORT)
                                 .show()
                     }
