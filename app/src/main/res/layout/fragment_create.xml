@@ -33,7 +33,7 @@
         android:id="@+id/frag_create_center_holder"
         android:name="com.lambdaschool.devlibs.ui.ui.create.CreateSubFragment"
         android:layout_width="298dp"
-        android:layout_height="186dp"
+        android:layout_height="233dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"

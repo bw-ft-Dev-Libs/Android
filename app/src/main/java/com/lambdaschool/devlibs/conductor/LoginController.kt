@@ -60,8 +60,7 @@ class LoginController() : ViewModelController() {
         val view = inflater.inflate(R.layout.login_controller_layout, container, false)
 
         mProgressDialog = view!!.findViewById<ProgressBar>(R.id.login_progressbar)
-        view.login_btn_signin.setOnClickListener { showLoading() }
-        mProgressDialog.setOnClickListener { hideLoading() }
+
 
 
         val btn = view.login_btn_signin

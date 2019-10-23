@@ -3,23 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <androidx.constraintlayout.widget.Group
+    <!--<androidx.constraintlayout.widget.Group
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="create_sub_frag_ev"
+        app:constraint_referenced_ids="create_sub_frag_et"
         android:id="@+id/create_sub_group"
-        android:visibility="gone"
-        />
+        android:visibility="Invisible"
+        />-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/create_sub_frag_tv"
         app:layout_constraintTop_toTopOf="parent"
         android:textSize="12sp"
-        android:text="enter a"
+        android:text="Choose a category"
         app:layout_constraintBottom_toBottomOf="@id/create_sub_frag_et"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_goneMarginBottom="12sp"
         />
 <androidx.appcompat.widget.AppCompatSpinner
     android:layout_width="wrap_content"
@@ -35,11 +36,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/create_sub_frag_et"
-        android:hint="default"
+        android:hint="show"
         app:layout_constraintBottom_toTopOf="@id/create_sub_frag_btn"
-
+        android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+
         />
 
 

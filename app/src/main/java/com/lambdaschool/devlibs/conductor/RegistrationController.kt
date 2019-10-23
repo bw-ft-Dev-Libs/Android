@@ -55,7 +55,7 @@ class RegistrationController() : ViewModelController() {
         val view = inflater.inflate(R.layout.registration_controller_layout, container, false)
         val btn = view.registration_btn_submit
         mProgressDialog = view.findViewById(R.id.registration_progressbar)
-        mProgressDialog.setOnClickListener { hideLoading() }
+
 
         btn.setOnClickListener {
 

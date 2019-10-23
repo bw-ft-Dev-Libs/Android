@@ -7,18 +7,14 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.lambdaschool.devlibs.CATEGORIES
 import com.lambdaschool.devlibs.R
 import com.lambdaschool.devlibs.tempWordNeeds
 import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.arrayOfNeeded
 import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.vmPosition
-import kotlinx.android.synthetic.*
-import kotlinx.android.synthetic.main.fragment_create_sub.*
 
 class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :Fragment() {
-
 
     /*
   *
@@ -37,6 +33,7 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
   * */
     lateinit var createViewModel:CreateViewModel
     lateinit var supportFragmentManager:FragmentManager
+    var init =true
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?, savedInstanceState: Bundle?
@@ -46,9 +43,11 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
         } ?: throw Exception("Invalid Activity")
         supportFragmentManager=fragmentManager as FragmentManager
         val root = inflater.inflate(R.layout.fragment_create_sub, container, false)
-        val textView = root.findViewById<EditText>(R.id.create_sub_frag_ev)
-
-
+        val editView = root.findViewById<EditText>(R.id.create_sub_frag_et)
+        val textView = root.findViewById<TextView>(R.id.create_sub_frag_tv)
+        val button = root.findViewById<Button>(R.id.create_sub_frag_btn)
+        editView.visibility=View.INVISIBLE
+        button.visibility=View.INVISIBLE
 
 
 
@@ -59,19 +58,24 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
 
             spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-
-                // set the position in the viewmodel
+                if (init) {
+                    init=false
+                }
+                    else {
+                    // set the position in the viewmodel
                     vmPosition = position
 
-                   // sett the words needed in the viewmodel
-
+                    // sett the words needed in the viewmodel
                     arrayOfNeeded = tempWordNeeds[position]
-
                     // hide the spinner and reveal the edit text
                     spinner.visibility=View.GONE
-                    create_sub_frag_et
-                    Toast.makeText(view.context, arrayOfNeeded[position], Toast.LENGTH_SHORT).show()
-
+                    editView.visibility=View.VISIBLE
+                    button.visibility=View.VISIBLE
+                   //set text/edit view text appropiately
+                    textView.text= "Enter a:"
+                            editView.setText(arrayOfNeeded[0])
+                    Toast.makeText(view.context, arrayOfNeeded[position].toString(), Toast.LENGTH_SHORT).show()
+                }
 
 
                 }
