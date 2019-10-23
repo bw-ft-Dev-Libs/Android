@@ -34,7 +34,7 @@ interface DevLibsAPI {
 
     @GET("devLib")
     fun getDevLibs(@Header("authorization") Value: String)
-            : Call<List<DevLibBackend>>
+            : Call<DevLibListDataObject>
 
     class Factory {
 
