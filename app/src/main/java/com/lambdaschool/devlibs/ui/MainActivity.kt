@@ -1,17 +1,31 @@
 package com.lambdaschool.devlibs.ui
 
+import android.content.Intent
 import android.os.Bundle
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lambdaschool.devlibs.R
 
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import com.lambdaschool.devlibs.ui.ui.home.HomeFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), HomeFragment.OnHomeFragmentInteractionListener {
+
+    enum class MainActivityFragmentActionKeys {
+        LOG_OUT
+    }
+
+    override fun onHomeFragmentInteractionListener(enumKey: MainActivityFragmentActionKeys) {
+        when (enumKey) {
+            MainActivityFragmentActionKeys.LOG_OUT -> {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

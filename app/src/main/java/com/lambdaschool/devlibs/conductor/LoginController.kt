@@ -2,8 +2,6 @@ package com.lambdaschool.devlibs.conductor
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,11 +16,10 @@ import com.lambdaschool.devlibs.AUTH_STRING_KEY
 import com.lambdaschool.devlibs.Prefs
 import com.lambdaschool.devlibs.R
 import com.lambdaschool.devlibs.model.CallBackState
-import com.lambdaschool.devlibs.model.LoginSuccess
+import com.lambdaschool.devlibs.openSoftKeyboard
 import com.lambdaschool.devlibs.ui.MainActivity
 import com.lambdaschool.devlibs.viewmodel.LiveDataVMFactory
 import com.lambdaschool.devlibs.viewmodel.LoginActivityViewModel
-import com.lambdaschool.devlibs.viewmodel.MainActivityViewModel
 import kotlinx.android.synthetic.main.login_controller_layout.view.*
 import work.beltran.conductorviewmodel.ViewModelController
 
@@ -40,19 +37,19 @@ import work.beltran.conductorviewmodel.ViewModelController
 * */
 class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
 
-    val viewGroup: Group by lazy {
+    private val viewGroup: Group by lazy {
         view!!.findViewById<Group>(R.id.login_group)
     }
-    lateinit var mProgressDialog: ProgressBar
+    private lateinit var mProgressDialog: ProgressBar
     lateinit var viewModel: LoginActivityViewModel
 
 
-    fun showLoading() {
+    private fun showLoading() {
         viewGroup.visibility = View.INVISIBLE
         mProgressDialog.visibility = View.VISIBLE
     }
 
-    fun hideLoading() {
+    private fun hideLoading() {
         viewGroup.visibility = View.VISIBLE
         mProgressDialog.visibility = View.GONE
         // viewGroup.visibility = View.VISIBLE
@@ -66,8 +63,6 @@ class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         val view = inflater.inflate(R.layout.login_controller_layout, container, false)
-        //delete this TODO:
-
 
         mProgressDialog = view!!.findViewById<ProgressBar>(R.id.login_progressbar)
         view.login_btn_signin.setOnClickListener { showLoading() }
@@ -79,7 +74,7 @@ class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
         val editTextPassword = view.login_et_password
 
 
-        val tvfoot = view.findViewById<TextView>(R.id.login_tv_footer)
+        val tvFoot = view.findViewById<TextView>(R.id.login_tv_footer)
 
 
         val viewModelFactory = LiveDataVMFactory(this.activity!!.application)
@@ -87,6 +82,7 @@ class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
             viewModelProvider(viewModelFactory).get(LoginActivityViewModel::class.java)
         }
 
+        this.applicationContext?.openSoftKeyboard(editTextUserName)
 
         //get preferences and try to login,
         val prefs = Prefs(view.context)
@@ -104,7 +100,7 @@ class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
                 val logPassword = view.login_et_password.text.toString()
                 if (logUserName.isNotEmpty() && logPassword.isNotEmpty()) {
 
-                    viewModel.tryLogin(logUserName, logPassword).observe(this, Observer {
+                    viewModel.loginUser(logUserName, logPassword).observe(this, Observer {
 
                         if (it == CallBackState.RESPONSE_SUCCESS) {
                             val intent = Intent(view.context, MainActivity::class.java)
@@ -119,13 +115,15 @@ class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
                 }
             }
 
-        tvfoot.setOnClickListener {
+        tvFoot.setOnClickListener {
             router.pushController(RouterTransaction.with(RegistrationController())
                     .pushChangeHandler(HorizontalChangeHandler())
                     .popChangeHandler(HorizontalChangeHandler()))
 
         }
+
         return view
+
     }
 
 }     /*val loginObserver = Observer<CallBackState> { state ->
