@@ -12,6 +12,19 @@ import androidx.navigation.ui.NavigationUI
 
 class MainActivity : AppCompatActivity() {
 
+    /*
+    * Main activity should
+    * 1. set up nav bar.
+    *
+    * 2 ???????
+    *
+    *
+    *
+    *
+    *
+    * */
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

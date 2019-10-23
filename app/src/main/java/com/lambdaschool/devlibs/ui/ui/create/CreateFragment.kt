@@ -12,7 +12,23 @@ import androidx.lifecycle.ViewModelProviders
 import com.lambdaschool.devlibs.R
 
 class CreateFragment : Fragment() {
-
+/*
+*
+*
+*   create fragment should
+*
+*   1. prompt users to select a catagory
+*   2. be prompted for word by word input
+*   3. attempt to save locally and remotely
+*   4. either show user finished madlib
+*                  or
+*        redirect to a view fragment
+*
+*
+*
+*
+*
+* */
     private var notificationsViewModel: NotificationsViewModel? = null
 
     override fun onCreateView(

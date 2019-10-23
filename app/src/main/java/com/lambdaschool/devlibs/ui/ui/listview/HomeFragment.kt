@@ -13,7 +13,20 @@ import com.lambdaschool.devlibs.R
 
 
 class HomeFragment : Fragment() {
-
+    /*
+    *
+    *
+    *   Home fragment should
+    *
+    *   maybe uneccessary, but if not
+    *   1 should show user data
+    *   2 or perhaps the last madlib made
+    *   3 or something
+    *
+    *
+    *
+    *
+    * */
     private var homeViewModel: HomeViewModel? = null
 
     override fun onCreateView(

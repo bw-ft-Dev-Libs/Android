@@ -12,7 +12,19 @@ import androidx.lifecycle.ViewModelProviders
 import com.lambdaschool.devlibs.R
 
 class ListFragment : Fragment() {
-
+    /*
+    *
+    *
+    *   list fragment should
+    *
+    *   1. display a list of madlibs to the user
+    *   2. may also be able to sort list by category or user or similar
+    *
+    *
+    *
+    *
+    *
+    * */
     private var dashboardViewModel: DashboardViewModel? = null
 
     override fun onCreateView(
