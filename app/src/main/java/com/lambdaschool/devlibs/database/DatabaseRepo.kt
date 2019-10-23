@@ -12,7 +12,6 @@ import com.lambdaschool.devlibs.Prefs
 import com.lambdaschool.devlibs.model.*
 import com.lambdaschool.devlibs.prefs
 import com.lambdaschool.devlibs.retrofit.DevLibsAPI
-import okhttp3.internal.http.hasBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -236,8 +235,25 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
                     call: Call<DevLibListDataObject>,
                     response: Response<DevLibListDataObject>
                 ) {
-                    val body = response.body()
-                    // TODO: check agains dev_lib_backend schema && update appropriately
+                    val body = response.body()?.data as List<DevLibBackend>
+
+                    GetDevLibListBackendAsyncTask(
+                        database.databaseDao(), object: ReturnGetDevLibList {
+
+                            override fun returnGetDevLibList(list: List<DevLibBackend>?) {
+                            list?.forEach {
+                                deleteDevLibBackend(it)
+                                Log.i(TAG_DELETE, "Deleted Dev Lib ${it.id}")
+                            }
+
+                            body.forEach {
+                                createDevLibBackend(it)
+                                Log.i(TAG_CREATE, "Created Dev Lib ${it.id}")
+                            }
+                        }
+
+                    }).execute()
+
                     getSuccessful.value = CallBackState.RESPONSE_SUCCESS
                 }
             })
@@ -307,6 +323,26 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
                     dbDao.createDevLibBackend(it)
                 }
             }
+        }
+
+        class GetDevLibListBackendAsyncTask(
+            private val dbDao: DatabaseDAO,
+            private val returnList: ReturnGetDevLibList
+        ) :
+            AsyncTask<Unit, Unit, List<DevLibBackend>>() {
+
+            override fun doInBackground(vararg p0: Unit?): List<DevLibBackend>? {
+                return dbDao.getAllDevLibsBackendList()
+            }
+
+            override fun onPostExecute(result: List<DevLibBackend>?) {
+                super.onPostExecute(result)
+                returnList.returnGetDevLibList(result)
+            }
+        }
+
+        interface ReturnGetDevLibList {
+            fun returnGetDevLibList(list: List<DevLibBackend>?)
         }
 
         class UpdateDevLibBackendAsyncTask(private val dbDao: DatabaseDAO) :
