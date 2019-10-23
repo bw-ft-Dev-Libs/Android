@@ -33,34 +33,34 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
         val registrationSuccessful = MutableLiveData<CallBackState>()
 
         retrofitInstance.registerUser(registrationLoginInfo)
-            .enqueue(object : Callback<RegistrationReturnedAPI> {
+                .enqueue(object : Callback<RegistrationReturnedAPI> {
 
-                override fun onFailure(call: Call<RegistrationReturnedAPI>, t: Throwable) {
-                    registrationSuccessful.value = CallBackState.ONFAIL
-                    Log.i(TAG_REGISTRATION, "no response from backend...", t)
-                }
+                    override fun onFailure(call: Call<RegistrationReturnedAPI>, t: Throwable) {
+                        registrationSuccessful.value = CallBackState.ONFAIL
+                        Log.i(TAG_REGISTRATION, "no response from backend...", t)
+                    }
 
-                override fun onResponse(
-                    call: Call<RegistrationReturnedAPI>,
-                    response: Response<RegistrationReturnedAPI>
-                ) {
-                    val body = response.body()
-                    when (body) {
-                        is RegistrationSuccess -> {
-                            registrationSuccessful.value = CallBackState.RESPONSE_SUCCESS
-                            prefs.createLoginCredentialEntry(
-                                LoginSuccess(
-                                    Prefs.INVALID_INT,
-                                    body.username,
-                                    Prefs.INVALID_STRING))
-                        }
-                        is RegistrationFail -> {
-                            registrationSuccessful.value = CallBackState.RESPONSE_FAIL
-                            Log.i(TAG_LOGIN, body.message)
+                    override fun onResponse(
+                            call: Call<RegistrationReturnedAPI>,
+                            response: Response<RegistrationReturnedAPI>
+                    ) {
+                        val body = response.body()
+                        when (body) {
+                            is RegistrationSuccess -> {
+                                registrationSuccessful.value = CallBackState.RESPONSE_SUCCESS
+                                prefs.createLoginCredentialEntry(
+                                        LoginSuccess(
+                                                Prefs.INVALID_INT,
+                                                body.username,
+                                                Prefs.INVALID_STRING))
+                            }
+                            is RegistrationFail -> {
+                                registrationSuccessful.value = CallBackState.RESPONSE_FAIL
+                                Log.i(TAG_LOGIN, body.message)
+                            }
                         }
                     }
-                }
-            })
+                })
         return registrationSuccessful
     }
 
@@ -68,35 +68,35 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
         val loginSuccessful = MutableLiveData<CallBackState>()
 
         retrofitInstance.loginUser(registrationLoginInfo)
-            .enqueue(object : Callback<LoginReturnedAPI> {
-                override fun onFailure(call: Call<LoginReturnedAPI>, t: Throwable) {
-                    loginSuccessful.value = CallBackState.ONFAIL
-                    Log.i(TAG_LOGIN, "no response from backend...", t)
-                }
-
-                override fun onResponse(
-                    call: Call<LoginReturnedAPI>,
-                    response: Response<LoginReturnedAPI>
-                ) {
-                    val body = response.body()
-                    when (body) {
-                        is LoginSuccess -> {
-                            prefs.createLoginCredentialEntry(
-                                LoginSuccess(
-                                    body.userId,
-                                    body.username,
-                                    body.token
-                                )
-                            )
-                            loginSuccessful.value = CallBackState.RESPONSE_SUCCESS
-                        }
-                        is LoginFail -> {
-                            loginSuccessful.value = CallBackState.RESPONSE_FAIL
-                            Log.i(TAG_LOGIN, body.message)
-                            }
+                .enqueue(object : Callback<LoginReturnedAPI> {
+                    override fun onFailure(call: Call<LoginReturnedAPI>, t: Throwable) {
+                        loginSuccessful.value = CallBackState.ONFAIL
+                        Log.i(TAG_LOGIN, "no response from backend...", t)
                     }
-                }
-            })
+
+                    override fun onResponse(
+                            call: Call<LoginReturnedAPI>,
+                            response: Response<LoginReturnedAPI>
+                    ) {
+                        val body = response.body()
+                        when (body) {
+                            is LoginSuccess -> {
+                                prefs.createLoginCredentialEntry(
+                                        LoginSuccess(
+                                                body.userId,
+                                                body.username,
+                                                body.token
+                                        )
+                                )
+                                loginSuccessful.value = CallBackState.RESPONSE_SUCCESS
+                            }
+                            is LoginFail -> {
+                                loginSuccessful.value = CallBackState.RESPONSE_FAIL
+                                Log.i(TAG_LOGIN, body.message)
+                            }
+                        }
+                    }
+                })
         return loginSuccessful
     }
 
@@ -104,31 +104,31 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
         val createSuccessful = MutableLiveData<CallBackState>()
 
         retrofitInstance.createDevLib(devLibCreate, authToken)
-            .enqueue(object : Callback<DevLibBackend> {
+                .enqueue(object : Callback<DevLibBackend> {
 
-                override fun onFailure(call: Call<DevLibBackend>, t: Throwable) {
+                    override fun onFailure(call: Call<DevLibBackend>, t: Throwable) {
 
-                    // Create the Dev Lib locally so that the user can still use the application
-                    /*createDevLibLocal(DevLibLocal(
-                        devLibCreate.lib,
-                        devLibCreate.userId,
-                        devLibCreate.categoryId
-                        // TODO: enum class key CREATE
-                    ))*/
+                        // Create the Dev Lib locally so that the user can still use the application
+                        /*createDevLibLocal(DevLibLocal(
+                            devLibCreate.lib,
+                            devLibCreate.userId,
+                            devLibCreate.categoryId
+                            // TODO: enum class key CREATE
+                        ))*/
 
-                    createSuccessful.value = CallBackState.ONFAIL
-                    Log.i(TAG_CREATE, "no response from backend...", t)
-                }
+                        createSuccessful.value = CallBackState.ONFAIL
+                        Log.i(TAG_CREATE, "no response from backend...", t)
+                    }
 
-                override fun onResponse(
-                    call: Call<DevLibBackend>,
-                    response: Response<DevLibBackend>
-                ) {
-                    val body = response.body() as DevLibBackend
-                    createDevLibBackend(body)
-                    createSuccessful.value = CallBackState.RESPONSE_SUCCESS
-                }
-            })
+                    override fun onResponse(
+                            call: Call<DevLibBackend>,
+                            response: Response<DevLibBackend>
+                    ) {
+                        val body = response.body() as DevLibBackend
+                        createDevLibBackend(body)
+                        createSuccessful.value = CallBackState.RESPONSE_SUCCESS
+                    }
+                })
         return createSuccessful
     }
 
@@ -136,31 +136,31 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
         val updateSuccessful = MutableLiveData<CallBackState>()
 
         retrofitInstance.updateDevLib(devLibUpdate, authToken)
-            .enqueue(object : Callback<DevLibBackend> {
+                .enqueue(object : Callback<DevLibBackend> {
 
-                override fun onFailure(call: Call<DevLibBackend>, t: Throwable) {
+                    override fun onFailure(call: Call<DevLibBackend>, t: Throwable) {
 
-                    // Create the Dev Lib locally so that the user can still use the application
-                    /*createDevLibLocal(DevLibUpdate (
-                        devLibCreate.lib,
-                        devLibCreate.userId,
-                        devLibCreate.categoryId
-                        // TODO: enum class key UPDATE
-                    ))*/
+                        // Create the Dev Lib locally so that the user can still use the application
+                        /*createDevLibLocal(DevLibUpdate (
+                            devLibCreate.lib,
+                            devLibCreate.userId,
+                            devLibCreate.categoryId
+                            // TODO: enum class key UPDATE
+                        ))*/
 
-                    updateSuccessful.value = CallBackState.ONFAIL
-                    Log.i(TAG_CREATE, "no response from backend...", t)
-                }
+                        updateSuccessful.value = CallBackState.ONFAIL
+                        Log.i(TAG_CREATE, "no response from backend...", t)
+                    }
 
-                override fun onResponse(
-                    call: Call<DevLibBackend>,
-                    response: Response<DevLibBackend>
-                ) {
-                    val body = response.body() as DevLibBackend
-                    updateDevLibBackend(body)
-                    updateSuccessful.value = CallBackState.RESPONSE_SUCCESS
-                }
-            })
+                    override fun onResponse(
+                            call: Call<DevLibBackend>,
+                            response: Response<DevLibBackend>
+                    ) {
+                        val body = response.body() as DevLibBackend
+                        updateDevLibBackend(body)
+                        updateSuccessful.value = CallBackState.RESPONSE_SUCCESS
+                    }
+                })
         return updateSuccessful
     }
 
@@ -168,31 +168,31 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
         val deleteSuccessful = MutableLiveData<CallBackState>()
 
         retrofitInstance.deleteDevLib(devLibDelete, authToken)
-            .enqueue(object : Callback<DevLibBackend> {
+                .enqueue(object : Callback<DevLibBackend> {
 
-                override fun onFailure(call: Call<DevLibBackend>, t: Throwable) {
+                    override fun onFailure(call: Call<DevLibBackend>, t: Throwable) {
 
-                    // Create the Dev Lib locally so that the user can still use the application
-                    /*createDevLibLocal(DevLibUpdate (
-                        devLibCreate.lib,
-                        devLibCreate.userId,
-                        devLibCreate.categoryId
-                        // TODO: enum class key DELETE
-                    ))*/
+                        // Create the Dev Lib locally so that the user can still use the application
+                        /*createDevLibLocal(DevLibUpdate (
+                            devLibCreate.lib,
+                            devLibCreate.userId,
+                            devLibCreate.categoryId
+                            // TODO: enum class key DELETE
+                        ))*/
 
-                    deleteSuccessful.value = CallBackState.ONFAIL
-                    Log.i(TAG_CREATE, "no response from backend...", t)
-                }
+                        deleteSuccessful.value = CallBackState.ONFAIL
+                        Log.i(TAG_CREATE, "no response from backend...", t)
+                    }
 
-                override fun onResponse(
-                    call: Call<DevLibBackend>,
-                    response: Response<DevLibBackend>
-                ) {
-                    val body = response.body() as DevLibBackend
-                    deleteDevLibBackend(body)
-                    deleteSuccessful.value = CallBackState.RESPONSE_SUCCESS
-                }
-            })
+                    override fun onResponse(
+                            call: Call<DevLibBackend>,
+                            response: Response<DevLibBackend>
+                    ) {
+                        val body = response.body() as DevLibBackend
+                        deleteDevLibBackend(body)
+                        deleteSuccessful.value = CallBackState.RESPONSE_SUCCESS
+                    }
+                })
         return deleteSuccessful
     }
 
@@ -200,24 +200,24 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
         val getSuccessful = MutableLiveData<CallBackState>()
 
         retrofitInstance.getDevLibs(authToken)
-            .enqueue(object : Callback<List<DevLibBackend>> {
+                .enqueue(object : Callback<List<DevLibBackend>> {
 
-                override fun onFailure(call: Call<List<DevLibBackend>>, t: Throwable) {
-                    // nothing needs to happen as all our views will be using data from our
-                    //  database with Observers set on them.
-                    getSuccessful.value = CallBackState.ONFAIL
-                    Log.i(TAG_CREATE, "no response from backend...", t)
-                }
+                    override fun onFailure(call: Call<List<DevLibBackend>>, t: Throwable) {
+                        // nothing needs to happen as all our views will be using data from our
+                        //  database with Observers set on them.
+                        getSuccessful.value = CallBackState.ONFAIL
+                        Log.i(TAG_CREATE, "no response from backend...", t)
+                    }
 
-                override fun onResponse(
-                    call: Call<List<DevLibBackend>>,
-                    response: Response<List<DevLibBackend>>
-                ) {
-                    val body = response.body()
-                    // TODO: check agains dev_lib_backend schema && update appropriately
-                    getSuccessful.value = CallBackState.RESPONSE_SUCCESS
-                }
-            })
+                    override fun onResponse(
+                            call: Call<List<DevLibBackend>>,
+                            response: Response<List<DevLibBackend>>
+                    ) {
+                        val body = response.body()
+                        // TODO: check agains dev_lib_backend schema && update appropriately
+                        getSuccessful.value = CallBackState.RESPONSE_SUCCESS
+                    }
+                })
         return getSuccessful
     }
 
@@ -266,11 +266,11 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
 
     private val database by lazy {
         Room.databaseBuilder(
-            context,
-            Database::class.java,
-            "dev_lib_database"
+                context,
+                Database::class.java,
+                "dev_lib_database"
         ).fallbackToDestructiveMigration()
-            .build()
+                .build()
     }
 
     companion object {
