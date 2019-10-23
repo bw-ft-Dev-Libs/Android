@@ -30,7 +30,6 @@ repositories {
         url "https://jitpack.io"
     }
 }
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -44,7 +43,7 @@ dependencies {
 
     implementation 'com.bluelinelabs:conductor:3.0.0-rc2'
     implementation 'com.bluelinelabs:conductor-support:3.0.0-rc2'
-
+    implementation "com.github.miquelbeltran:conductor-viewmodel:1.0.3"
     def room_version = "2.2.0"
     def aac_version = "1.1.1"
     implementation "androidx.room:room-runtime:$room_version"
@@ -59,11 +58,13 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.1.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.1.0'
 
-    implementation 'com.bluelinelabs:conductor-support:3.0.0-rc2'
-    implementation "com.github.miquelbeltran:conductor-viewmodel:1.0.3"
 
     // Testing
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    // these may be the issue as when enabled kicks back duplicated class
+
+/*    implementation 'android.arch.navigation:navigation-fragment-ktx:1.0.0'
+    implementation 'android.arch.navigation:navigation-ui-ktx:1.0.0'*/
 }

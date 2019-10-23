@@ -14,11 +14,11 @@ interface DevLibsAPI {
 
     @POST("auth/register")
     fun registerUser(@Body registrationLoginInfo: RegistrationLoginSendAPI)
-            : Call<RegistrationReturnedAPI>
+            : Call<RegistrationSuccess>
 
     @POST("auth/login")
     fun loginUser(@Body registrationLoginInfo: RegistrationLoginSendAPI)
-            : Call<LoginReturnedAPI>
+            : Call<LoginSuccess>
 
     @POST("devLib")
     fun createDevLib(@Body devLibCreate: DevLibCreate, @Header("authorization") Value: String)
