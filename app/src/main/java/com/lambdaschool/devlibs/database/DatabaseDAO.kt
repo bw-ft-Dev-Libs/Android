@@ -15,6 +15,9 @@ interface DatabaseDAO {
     @Query("SELECT * FROM dev_lib_backend")
     fun getAllDevLibsBackend(): LiveData<List<DevLibBackend>>
 
+    @Query("SELECT * FROM dev_lib_backend")
+    fun getAllDevLibsBackendList(): List<DevLibBackend>
+
     @Query("SELECT * FROM dev_lib_backend WHERE categoryId = :categoryId")
     fun getDevLibsBackendForCategory(categoryId: Int): LiveData<List<DevLibBackend>>
 
