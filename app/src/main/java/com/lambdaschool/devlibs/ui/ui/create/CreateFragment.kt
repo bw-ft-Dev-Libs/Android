@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 
 import com.lambdaschool.devlibs.R
@@ -52,7 +51,7 @@ class CreateFragment : Fragment() {
         createViewModel.settext("orig")
 
         supportFragmentManager.beginTransaction()
-                .add(R.id.frag_create_center_holder, CreateSubFragment()).commit()
+                .add(R.id.frag_create_center_holder, CreateEntryFragment()).commit()
 
 
 

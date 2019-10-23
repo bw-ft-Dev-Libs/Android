@@ -6,8 +6,38 @@ package com.lambdaschool.devlibs
 
 
 
-//the following are temporary dependencies for create fragments
+//fake ol mock fake datas
+// somet of these things could probably just get filled out
+// more better data
 
 const val tempMadlibCategory = "a Category"
-val tempListOfNeededWords = listOf<String> ("Noun", "Verb","Noun","Verb","Adjective")
+val CATEGORIES = listOf<String> (
+        "category 1",
+        "category 2",
+        "category 3"
+
+
+)
+val tempWordNeeds = listOf<List<String>>(
+      //cat 1
+        listOf("Noun", "Verb","Noun","Verb","Adjective"),
+     //cat 1
+    listOf("Adjective", "Noun", "Verb","Verb","Noun"),
+    //cat 1
+    listOf("Verb","Adjective","Noun", "Verb","Noun"))
+
+
 //what is an adjective... descriptive word? maybe
+
+val tempTemplatesToInject = listOf<List<String>>(
+        //cat 1
+        listOf("Noun Verb Noun Adjective Adjective Noun Adjective Noun ",
+                "VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun",
+                "Noun Verb Noun Adjective Adjective Noun Adjective Noun",
+                "Verb","AdjectiveVerb Noun Adjective Adjective"),
+
+        //cat 1
+        listOf("Adjective","Verb","Noun", "Noun", "Verb","Verb","Noun"),
+        //cat 1
+        listOf("Verb","Verb","Adjective","Noun", "Verb","Noun"))
+

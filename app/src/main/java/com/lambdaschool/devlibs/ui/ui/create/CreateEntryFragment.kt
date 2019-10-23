@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.lambdaschool.devlibs.R
 
-class CreateSubFragment(list: MutableList<String> = mutableListOf<String>()) :Fragment() {
+class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :Fragment() {
 
 
     /*
@@ -20,7 +20,7 @@ class CreateSubFragment(list: MutableList<String> = mutableListOf<String>()) :Fr
   *   create sub fragment should
   *
   *   1. if created without arguments, should prompt user to select a devlibs category
-  *   2. then pass to a new instance of itself the category
+  *   2. then pass on to requesting words based on catergory chosen,
   *   3.  then just keep doing this til we've got a full list
   *    4. finally redirect to view fragment
   *
