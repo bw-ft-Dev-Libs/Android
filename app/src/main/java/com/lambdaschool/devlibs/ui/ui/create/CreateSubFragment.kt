@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.lambdaschool.devlibs.R
 
-class CreateSubFragment(list: MutableList<String>?) :Fragment() {
+class CreateSubFragment(list: MutableList<String> = mutableListOf<String>()) :Fragment() {
 
 
     /*
@@ -29,17 +30,18 @@ class CreateSubFragment(list: MutableList<String>?) :Fragment() {
   *
   * */
     lateinit var createViewModel:CreateViewModel
-
+    lateinit var supportFragmentManager:FragmentManager
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        createViewModel = ViewModelProviders.of(this).get(CreateViewModel::class.java)
+        createViewModel =activity?.run {
+            ViewModelProviders.of(this,CreateVMFactory).get(CreateViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
+        supportFragmentManager=fragmentManager as FragmentManager
         val root = inflater.inflate(R.layout.fragment_create_sub, container, false)
-        val textView = root.findViewById<TextView>(R.id.text_notifications)
+        val textView = root.findViewById<TextView>(R.id.test)
         createViewModel.text.observe(this, Observer { s -> textView.text = s })
-
-
 
         return root
     }
