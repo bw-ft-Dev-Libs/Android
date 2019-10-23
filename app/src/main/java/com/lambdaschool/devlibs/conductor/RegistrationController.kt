@@ -9,7 +9,6 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.constraintlayout.widget.Group
 import androidx.lifecycle.Observer
-import com.lambdaschool.devlibs.AUTH_STRING_KEY
 import com.lambdaschool.devlibs.R
 import com.lambdaschool.devlibs.model.CallBackState
 import com.lambdaschool.devlibs.viewmodel.LiveDataVMFactory
@@ -25,12 +24,8 @@ import work.beltran.conductorviewmodel.ViewModelController
 * 3: indicate to user errors with registration after hideLoading()
 * 4: finally let user know they're registered and offer a way to click
 * */
-class RegistrationController(bundle: Bundle?) : ViewModelController(bundle) {
+class RegistrationController() : ViewModelController() {
 
-    constructor(communicatedString: String? = null) : this(Bundle().apply {
-        putString(AUTH_STRING_KEY, communicatedString)
-
-    })
 
     val viewGroup: Group by lazy {
         view!!.findViewById<Group>(R.id.registration_group)
@@ -60,7 +55,7 @@ class RegistrationController(bundle: Bundle?) : ViewModelController(bundle) {
         val view = inflater.inflate(R.layout.registration_controller_layout, container, false)
         val btn = view.registration_btn_submit
         mProgressDialog = view.findViewById(R.id.registration_progressbar)
-        mProgressDialog.setOnClickListener { hideLoading() }
+
 
         btn.setOnClickListener {
 

@@ -11,18 +11,30 @@ import androidx.lifecycle.ViewModelProviders
 
 import com.lambdaschool.devlibs.R
 
-class DashboardFragment : Fragment() {
-
-    private var dashboardViewModel: DashboardViewModel? = null
+class ListFragment : Fragment() {
+    /*
+    *
+    *
+    *   list fragment should
+    *
+    *   1. display a list of madlibs to the user
+    *   2. may also be able to sort list by category or user or similar
+    *
+    *
+    *
+    *
+    *
+    * */
+    private var listViewModel: ListViewModel? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
+        listViewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_list, container, false)
         val textView = root.findViewById<TextView>(R.id.text_dashboard)
-        dashboardViewModel!!.text.observe(this, Observer { s -> textView.text = s })
+        listViewModel!!.text.observe(this, Observer { s -> textView.text = s })
         return root
     }
 }

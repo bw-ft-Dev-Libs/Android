@@ -34,9 +34,9 @@
 
     <ImageView
         android:id="@+id/login_img_logo"
-        android:layout_width="225dp"
-        android:layout_height="225dp"
-        android:src="@drawable/ic_notifications_black_24dp"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:src="@drawable/ic_task_splash"
         app:layout_constraintBottom_toTopOf="@+id/login_et_username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

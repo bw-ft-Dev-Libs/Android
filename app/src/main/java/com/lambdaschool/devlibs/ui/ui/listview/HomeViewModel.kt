@@ -1,4 +1,4 @@
-package com.lambdaschool.devlibs.ui.ui.home
+package com.lambdaschool.devlibs.ui.ui.listview
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,6 +13,6 @@ class HomeViewModel : ViewModel() {
 
     init {
         mText = MutableLiveData()
-        mText.value = "This is home fragment"
+        mText.value = "Some Introductory text about madlibs"
     }
 }

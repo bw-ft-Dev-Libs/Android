@@ -1,4 +1,4 @@
-package com.lambdaschool.devlibs.ui.ui.home
+package com.lambdaschool.devlibs.ui.ui.listview
 
 import android.content.Context
 import android.os.Bundle
@@ -17,7 +17,20 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class HomeFragment : Fragment() {
-
+    /*
+    *
+    *
+    *   Home fragment should
+    *
+    *   maybe uneccessary, but if not
+    *   1 should show user data
+    *   2 or perhaps the last madlib made
+    *   3 or something
+    *
+    *
+    *
+    *
+    * */
     private var homeViewModel: HomeViewModel? = null
     private var listener: OnHomeFragmentInteractionListener? = null
     var prefs: Prefs? = null
