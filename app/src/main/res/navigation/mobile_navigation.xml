@@ -9,7 +9,14 @@
         android:id="@+id/navigation_home"
         android:name="com.lambdaschool.devlibs.ui.ui.listview.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home"/>
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_list"
+            app:destination="@id/navigation_list" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_create"
+            app:destination="@id/navigation_create" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_create"

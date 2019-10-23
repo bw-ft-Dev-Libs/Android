@@ -15,4 +15,7 @@ class NotificationsViewModel : ViewModel() {
         mText = MutableLiveData()
         mText.value = "This is notifications fragment"
     }
+    fun settext(string: String) {
+        mText.value=string
+    }
 }
