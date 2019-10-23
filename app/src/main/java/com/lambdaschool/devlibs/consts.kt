@@ -22,9 +22,9 @@ val tempWordNeeds = listOf<List<String>>(
       //cat 1
         listOf("Noun", "Verb","Noun","Verb","Adjective"),
      //cat 1
-    listOf("Adjective", "Noun", "Verb","Verb","Noun"),
+    listOf("Adjective", "Noun", "Verb","Verb","Noun","Adjective", "Noun"),
     //cat 1
-    listOf("Verb","Adjective","Noun", "Verb","Noun"))
+    listOf("Verb","Adjective","Noun", "Verb","Noun","Noun"))
 
 
 //what is an adjective... descriptive word? maybe
@@ -34,10 +34,22 @@ val tempTemplatesToInject = listOf<List<String>>(
         listOf("Noun Verb Noun Adjective Adjective Noun Adjective Noun ",
                 "VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun",
                 "Noun Verb Noun Adjective Adjective Noun Adjective Noun",
-                "Verb","AdjectiveVerb Noun Adjective Adjective"),
+                "Verb",
+                "AdjectiveVerb Noun Adjective Adjective"),
 
         //cat 1
-        listOf("Adjective","Verb","Noun", "Noun", "Verb","Verb","Noun"),
+        listOf("Noun Verb Noun Adjective Adjective Noun Adjective Noun",
+                "Noun Verb Noun Adjective Adjective Noun Adjective Noun",
+                "VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun",
+                "VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun",
+                "Verb",
+                "Verb",
+                "Noun"),
         //cat 1
-        listOf("Verb","Verb","Adjective","Noun", "Verb","Noun"))
+        listOf("Noun Verb Noun Adjective Adjective Noun Adjective Noun"
+                ,"Verb",
+                "VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun",
+                "VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun",
+                "VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun",
+                "Noun"))
 

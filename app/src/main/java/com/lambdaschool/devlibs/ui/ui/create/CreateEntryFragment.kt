@@ -40,8 +40,8 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
         } ?: throw Exception("Invalid Activity")
         supportFragmentManager=fragmentManager as FragmentManager
         val root = inflater.inflate(R.layout.fragment_create_sub, container, false)
-        val textView = root.findViewById<TextView>(R.id.test)
-        createViewModel.text.observe(this, Observer { s -> textView.text = s })
+        val textView = root.findViewById<TextView>(R.id.create_sub_frag_tv)
+        createViewModel.createString.observe(this, Observer { s -> textView.text = s })
 
         return root
     }

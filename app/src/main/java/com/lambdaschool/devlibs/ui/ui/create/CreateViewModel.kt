@@ -12,7 +12,7 @@ class CreateViewModel : ViewModel() {
 
     private val mText: MutableLiveData<String>
 
-    val text: LiveData<String>
+    val createString: LiveData<String>
         get() = mText
 
     init {
