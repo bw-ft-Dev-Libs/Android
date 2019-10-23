@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 
 import com.lambdaschool.devlibs.R
-import kotlinx.android.synthetic.main.fragment_create.*
 
 class CreateFragment : Fragment() {
 /*
@@ -30,25 +29,19 @@ class CreateFragment : Fragment() {
 *
 *
 * */
-   lateinit var notificationsViewModel:NotificationsViewModel
+   lateinit var createViewModel:CreateViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        notificationsViewModel = ViewModelProviders.of(this).get(NotificationsViewModel::class.java)
+        createViewModel = ViewModelProviders.of(this).get(CreateViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_create, container, false)
         val textView = root.findViewById<TextView>(R.id.text_notifications)
-        notificationsViewModel.text.observe(this, Observer { s -> textView.text = s })
-  notificationsViewModel.settext("blah")
+        createViewModel.text.observe(this, Observer { s -> textView.text = s })
 
 
 
         return root
-    }
-
-    override fun onStart() {
-
-        super.onStart()
     }
 }
