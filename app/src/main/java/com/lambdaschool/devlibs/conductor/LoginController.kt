@@ -1,5 +1,6 @@
 package com.lambdaschool.devlibs.conductor
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -97,28 +98,14 @@ class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
                 editTextUserName.setText(loginCredentials.username)
             }
         }
-            btn.setOnClickListener {
 
-                // get username and password from edittexts and try to login
-                val logUserName = view.login_et_username.text.toString()
-                val logPassword = view.login_et_password.text.toString()
-                if (logUserName.isNotEmpty() && logPassword.isNotEmpty()) {
 
-                    viewModel.tryLogin(logUserName, logPassword).observe(this, Observer {
 
-                        if (it == CallBackState.RESPONSE_SUCCESS) {
-                            val intent = Intent(view.context, MainActivity::class.java)
-                            startActivity(intent)
-                            Toast.makeText(view.context, "Login Success", Toast.LENGTH_SHORT).show()
-                        }
-                        else {
-                            Toast.makeText(view.context, "Failed", Toast.LENGTH_SHORT)
-                                    .show()
-                        }
-                    })
-                }
-            }
 
+        btn.setOnClickListener {
+            // get username and password from edittexts and try to login
+            trylogin(editTextUserName.text.toString(),editTextPassword.text.toString(),view.context)
+        }
         tvfoot.setOnClickListener {
             router.pushController(RouterTransaction.with(RegistrationController())
                     .pushChangeHandler(HorizontalChangeHandler())
@@ -127,7 +114,29 @@ class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
         }
         return view
     }
+    fun trylogin(logUserName:String,logPassword:String,context: Context):Boolean{
+        var result =false
 
+
+        if (logUserName.isNotEmpty() && logPassword.isNotEmpty()) {
+
+            viewModel.tryLogin(logUserName, logPassword).observe(this, Observer {
+
+                if (it == CallBackState.RESPONSE_SUCCESS) {
+                    val intent = Intent(context, MainActivity::class.java)
+                    startActivity(intent)
+                    Toast.makeText(context, "Login Success", Toast.LENGTH_SHORT).show()
+                    result=true
+                }
+                else {
+                    Toast.makeText(context, "Failed", Toast.LENGTH_SHORT)
+                            .show()
+                    result=false
+                }
+            })
+        }
+        return result
+    }
 }     /*val loginObserver = Observer<CallBackState> { state ->
             if (state == null){
                         Toast.makeText(view.context,"null",Toast.LENGTH_SHORT).show()
