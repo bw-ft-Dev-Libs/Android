@@ -14,7 +14,6 @@ import androidx.constraintlayout.widget.Group
 import androidx.lifecycle.Observer
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
-import com.lambdaschool.devlibs.AUTH_STRING_KEY
 import com.lambdaschool.devlibs.Prefs
 import com.lambdaschool.devlibs.R
 import com.lambdaschool.devlibs.model.CallBackState
@@ -38,7 +37,7 @@ import work.beltran.conductorviewmodel.ViewModelController
 *
 *
 * */
-class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
+class LoginController() : ViewModelController() {
 
     val viewGroup: Group by lazy {
         view!!.findViewById<Group>(R.id.login_group)
@@ -57,10 +56,6 @@ class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
         mProgressDialog.visibility = View.GONE
         // viewGroup.visibility = View.VISIBLE
     }
-
-    constructor(communicatedString: String? = null) : this(Bundle().apply {
-        putString(AUTH_STRING_KEY, communicatedString)
-    })
 
 
 

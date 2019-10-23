@@ -1,7 +1,6 @@
 package com.lambdaschool.devlibs.conductor
 
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,13 +9,10 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.constraintlayout.widget.Group
 import androidx.lifecycle.Observer
-import com.lambdaschool.devlibs.AUTH_STRING_KEY
 import com.lambdaschool.devlibs.R
 import com.lambdaschool.devlibs.model.CallBackState
-import com.lambdaschool.devlibs.ui.MainActivity
 import com.lambdaschool.devlibs.viewmodel.LiveDataVMFactory
 import com.lambdaschool.devlibs.viewmodel.LoginActivityViewModel
-import kotlinx.android.synthetic.main.login_controller_layout.view.*
 import kotlinx.android.synthetic.main.registration_controller_layout.view.*
 import work.beltran.conductorviewmodel.ViewModelController
 
@@ -31,12 +27,8 @@ import work.beltran.conductorviewmodel.ViewModelController
 *
 *
 * */
-class RegistrationController(bundle: Bundle?) : ViewModelController(bundle) {
+class RegistrationController() : ViewModelController() {
 
-    constructor(communicatedString: String? = null) : this(Bundle().apply {
-        putString(AUTH_STRING_KEY, communicatedString)
-
-    })
 
     val viewGroup: Group by lazy {
         view!!.findViewById<Group>(R.id.registration_group)

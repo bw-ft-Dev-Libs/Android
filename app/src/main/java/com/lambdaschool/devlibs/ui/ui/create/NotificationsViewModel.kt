@@ -1,10 +1,10 @@
-package com.lambdaschool.devlibs.ui.ui.home
+package com.lambdaschool.devlibs.ui.ui.create
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class HomeViewModel : ViewModel() {
+class NotificationsViewModel : ViewModel() {
 
     private val mText: MutableLiveData<String>
 
@@ -13,6 +13,6 @@ class HomeViewModel : ViewModel() {
 
     init {
         mText = MutableLiveData()
-        mText.value = "This is home fragment"
+        mText.value = "This is notifications fragment"
     }
 }

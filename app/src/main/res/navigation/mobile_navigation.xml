@@ -7,9 +7,11 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.lambdaschool.devlibs.ui.ui.home.HomeFragment"
+        android:name="com.lambdaschool.devlibs.ui.ui.listview.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -19,7 +21,7 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.lambdaschool.devlibs.ui.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:name="com.lambdaschool.devlibs.ui.ui.create.NotificationsFragment"
+        android:label="@string/list_madlibs"
         tools:layout="@layout/fragment_notifications" />
 </navigation>

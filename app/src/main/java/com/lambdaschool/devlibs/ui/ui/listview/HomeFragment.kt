@@ -1,4 +1,4 @@
-package com.lambdaschool.devlibs.ui.ui.home
+package com.lambdaschool.devlibs.ui.ui.listview
 
 import android.os.Bundle
 import android.view.LayoutInflater
