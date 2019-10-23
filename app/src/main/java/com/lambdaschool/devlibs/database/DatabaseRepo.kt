@@ -98,6 +98,7 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
                                 body.token
                             )
                         )
+                        getDevLibs(body.token)
                     } else {
                         if (response.body() != null) {
                             val body = gsonBuilder.fromJson(
