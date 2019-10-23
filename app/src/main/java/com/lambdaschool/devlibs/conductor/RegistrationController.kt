@@ -31,12 +31,13 @@ import work.beltran.conductorviewmodel.ViewModelController
 *
 *
 * */
-class RegistrationController (bundle: Bundle?) : ViewModelController(bundle) {
+class RegistrationController(bundle: Bundle?) : ViewModelController(bundle) {
 
     constructor(communicatedString: String? = null) : this(Bundle().apply {
         putString(AUTH_STRING_KEY, communicatedString)
 
     })
+
     val viewGroup: Group by lazy {
         view!!.findViewById<Group>(R.id.registration_group)
     }
@@ -55,7 +56,6 @@ class RegistrationController (bundle: Bundle?) : ViewModelController(bundle) {
     }
 
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         val viewModelFactory = LiveDataVMFactory(this.activity!!.application)
         viewModel = activity.run {
@@ -63,11 +63,8 @@ class RegistrationController (bundle: Bundle?) : ViewModelController(bundle) {
         }
 
 
-
-
-
         val view = inflater.inflate(R.layout.registration_controller_layout, container, false)
-        val btn=  view.registration_btn_submit
+        val btn = view.registration_btn_submit
         mProgressDialog = view.findViewById(R.id.registration_progressbar)
         mProgressDialog.setOnClickListener { hideLoading() }
 
@@ -77,7 +74,7 @@ class RegistrationController (bundle: Bundle?) : ViewModelController(bundle) {
             val logUserName = view.registration_et_name.text.toString()
             val logPassword = view.registration_et_password.text.toString()
             if (logUserName.isNotEmpty() && logPassword.isNotEmpty()) {
-                    showLoading()
+                showLoading()
                 viewModel.tryToRegister(logUserName, logPassword).observe(this, Observer {
 
                     if (it == CallBackState.RESPONSE_SUCCESS) {
@@ -85,19 +82,33 @@ class RegistrationController (bundle: Bundle?) : ViewModelController(bundle) {
                         router.popController(this)
                         Toast.makeText(view.context, "Registration Successful, please log in!", Toast.LENGTH_SHORT).show()
                     }
-                    else {
-                        hideLoading()
-                        Toast.makeText(view.context, "Failed, please try again", Toast.LENGTH_SHORT)
-                                .show()
-                    }
+                    viewModel.tryToRegister(logUserName, logPassword).observe(this, Observer {
+
+                        // response is successful so notify user and return to login screen,
+                        if (it == CallBackState.RESPONSE_SUCCESS) {
+                            hideLoading()
+                            router.popController(this)
+                            Toast.makeText(view.context, "Registration Successful, please log in!", Toast.LENGTH_SHORT).show()
+                        }
+                        //repsonse failed due to user already existing
+                        else if (it == CallBackState.RESPONSE_FAIL) {
+                            hideLoading()
+                            Toast.makeText(view.context, "User already exists, please try again", Toast.LENGTH_SHORT).show()
+
+                        }
+                        //site unreachable or other errror
+                        else {
+                            hideLoading()
+                            Toast.makeText(view.context, "Failed, please try again", Toast.LENGTH_SHORT).show()
+                        }
+                    })
                 })
+
             }
         }
-
-
         return view
-
     }
+
 }
 
 

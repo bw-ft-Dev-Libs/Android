@@ -63,10 +63,6 @@ class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
     })
 
 
-    val communicatedString by lazy {
-        args.getString(AUTH_STRING_KEY)
-    }
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         val view = inflater.inflate(R.layout.login_controller_layout, container, false)
@@ -93,7 +89,7 @@ class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
 
 
         //get preferences and try to login,
-        val prefs = Prefs(view!!.context)
+        val prefs = Prefs(view.context)
         val loginCredentials = prefs.getLoginCredentials()
 
         if (loginCredentials != null) {
