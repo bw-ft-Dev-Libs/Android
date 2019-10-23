@@ -47,8 +47,6 @@ class CreateFragment : Fragment() {
 
 
 
-        createViewModel.createString.observe(this, Observer { s -> textView.text = s })
-        createViewModel.settext("orig")
 
         supportFragmentManager.beginTransaction()
                 .add(R.id.frag_create_center_holder, CreateEntryFragment()).commit()

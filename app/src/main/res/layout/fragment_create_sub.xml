@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:textSize="12sp"
         android:text="enter a"
-        app:layout_constraintBottom_toBottomOf="@id/create_sub_frag_ev"
+        app:layout_constraintBottom_toBottomOf="@id/create_sub_frag_et"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         />
@@ -34,7 +34,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/create_sub_frag_ev"
+        android:id="@+id/create_sub_frag_et"
         android:hint="default"
         app:layout_constraintBottom_toTopOf="@id/create_sub_frag_btn"
 

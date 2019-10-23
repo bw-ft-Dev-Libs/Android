@@ -9,9 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.lambdaschool.devlibs.CATEGORIES
 import com.lambdaschool.devlibs.R
 import com.lambdaschool.devlibs.tempWordNeeds
+import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.arrayOfNeeded
+import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.vmPosition
 import kotlinx.android.synthetic.*
+import kotlinx.android.synthetic.main.fragment_create_sub.*
 
 class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :Fragment() {
 
@@ -43,16 +47,33 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
         supportFragmentManager=fragmentManager as FragmentManager
         val root = inflater.inflate(R.layout.fragment_create_sub, container, false)
         val textView = root.findViewById<EditText>(R.id.create_sub_frag_ev)
-        createViewModel.createString.observe(this, Observer { s -> textView.setText(s) })
-        val personNames = arrayOf("Rahul", "Jack", "Rajeev", "Aryan", "Rashmi", "Jaspreet", "Akbar")
+
+
+
+
+
         val spinner = root.findViewById<Spinner>(R.id.create_sub_spinner)
         if (spinner != null) {
-            val arrayAdapter = ArrayAdapter(root.context, R.layout.support_simple_spinner_dropdown_item ,personNames)
+            val arrayAdapter = ArrayAdapter(root.context, R.layout.support_simple_spinner_dropdown_item ,CATEGORIES)
             spinner.adapter = arrayAdapter
 
             spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                    Toast.makeText(view.context, position.toString(), Toast.LENGTH_SHORT).show()
+
+                // set the position in the viewmodel
+                    vmPosition = position
+
+                   // sett the words needed in the viewmodel
+
+                    arrayOfNeeded = tempWordNeeds[position]
+
+                    // hide the spinner and reveal the edit text
+                    spinner.visibility=View.GONE
+                    create_sub_frag_et
+                    Toast.makeText(view.context, arrayOfNeeded[position], Toast.LENGTH_SHORT).show()
+
+
+
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {

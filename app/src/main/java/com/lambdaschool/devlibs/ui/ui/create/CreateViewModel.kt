@@ -5,23 +5,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.lambdaschool.devlibs.tempWordNeeds
 import com.lambdaschool.devlibs.viewmodel.LoginActivityViewModel
 import java.util.HashMap
 
 class CreateViewModel : ViewModel() {
 
-    private val mText: MutableLiveData<String>
+    companion object {
+        var text = "init"
+        var vmPosition = 0
+        var arrayOfNeeded = arrayOf<String>()
+        var arrayOfProvided = arrayOf<String>()
 
-    val createString: LiveData<String>
-        get() = mText
 
-    init {
-        mText = MutableLiveData()
-        mText.value = "This is notifications fragment"
     }
-    fun settext(string: String) {
-        mText.value=string
-    }
+
 }
 
 object CreateVMFactory : ViewModelProvider.Factory {
@@ -49,3 +47,25 @@ object CreateVMFactory : ViewModelProvider.Factory {
 
     }
 }
+
+/*  private val mText: MutableLiveData<String>
+    private val mInt: MutableLiveData<Int>
+    lateinit var workingMadLib: MutableLiveData<Array<String>>
+
+    val createString: LiveData<String>
+        get() = mText
+    val createInt: LiveData<Int>
+        get() = mInt
+
+    init {
+        mText = MutableLiveData()
+        mInt= MutableLiveData()
+        workingMadLib =MutableLiveData()
+            fun settext(string: String) {
+        mText.value=string
+    }
+    fun setInt(int: Int) {
+        mInt.value=int
+        workingMadLib.value = tempWordNeeds[int]
+    }
+    }*/

@@ -11,7 +11,7 @@ package com.lambdaschool.devlibs
 // more better data
 
 const val tempMadlibCategory = "a Category"
-val CATEGORIES = listOf<String> (
+val CATEGORIES = arrayOf<String> (
         "category 1",
         "category 2",
         "category 3"
