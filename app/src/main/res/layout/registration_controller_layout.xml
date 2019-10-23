@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:id="@+id/login_layout"
+    >
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/registration_progressbar"
+        android:visibility="gone"
+        />
+    <androidx.constraintlayout.widget.Group
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="registration_btn_submit,registration_et_name,registration_et_password,registration_tv_title,registration_tv_footer"
+        android:id="@+id/registration_group"
+        />
+
+    <TextView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/registration_tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="Register\n for \nDEV LIBS"
+        android:textColor="@color/colorAccent"
+        android:textSize="50sp" />
+
+
+        <EditText
+            app:layout_constraintTop_toTopOf="parent"
+           app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="@color/colorAccent"
+            android:id="@+id/registration_et_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Email Address"
+            android:textColorHint="@color/colorAccent"
+            android:inputType="textPersonName"
+            android:padding="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginStart="12dp"
+            android:elevation="4dp"
+            android:background="@drawable/rounded_rect" />
+
+        <EditText
+            app:layout_constraintTop_toBottomOf="@id/registration_et_name"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textColor="@color/colorAccent"
+            android:id="@+id/registration_et_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:textColorHint="@color/colorAccent"
+            android:inputType="textPassword"
+            android:padding="12dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="12dp"
+            android:elevation="4dp"
+            android:background="@drawable/rounded_rect"    />
+
+
+        <Button
+            app:layout_constraintTop_toBottomOf="@id/registration_et_password"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_margin="15dp"
+            android:padding="15dp"
+            android:id="@+id/registration_btn_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_rect"
+            android:text="Register"
+            android:textAllCaps="true"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            app:layout_constraintTop_toBottomOf="@id/registration_btn_submit"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/registration_tv_footer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:fontFamily="sans-serif"
+            android:padding="10dp"
+            android:text="Some Verbiage about length of passwords or whatever here"
+            android:textAllCaps="true"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            android:textStyle="italic" />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
