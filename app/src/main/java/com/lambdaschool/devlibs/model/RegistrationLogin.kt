@@ -22,15 +22,13 @@ class RegistrationLoginSendAPI(
  *   Failure:
  *   @param message: String
  * */
-abstract class RegistrationReturnedAPI
-
 data class RegistrationSuccess(
     val username: String
-) : RegistrationReturnedAPI()
+)
 
 data class RegistrationFail(
     val message: String
-) : RegistrationReturnedAPI()
+)
 
 
 /**
@@ -45,17 +43,15 @@ data class RegistrationFail(
  *   Failure:
  *   @param message: String
  * */
-abstract class LoginReturnedAPI
-
 data class LoginSuccess(
     val userId: Int,
     val username: String,
     val token: String
-) : LoginReturnedAPI()
+)
 
 data class LoginFail(
     val message: String
-) : LoginReturnedAPI()
+)
 
 /**
  * 3 states exist with the callback; onFailure, onResponse LoginSuccess (or RegistrationSuccess), &&

@@ -40,58 +40,35 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
                 override fun onFailure(call: Call<RegistrationSuccess>, t: Throwable) {
                     registrationSuccessful.value = CallBackState.ONFAIL
                     Log.i(TAG_REGISTRATION, "no response from backend...", t)
-                    registrationSuccessful.value = CallBackState.RESPONSE_FAIL
                 }
-
-
-
-
-                /*
-                *
-                * this strategy allows us to assume that the response will be successful and then set the body
-                * to a Success object. if the body is not a response object, we then convert it to a RegistrationFail
-                * and send Response_fail back to the method.
-                *
-                * we don't have to do things this way, but it's an option
-                *
-                *
-                * */
 
                 override fun onResponse(
                     call: Call<RegistrationSuccess>,
                     response: Response<RegistrationSuccess>
                 ) {
                     val gsonBuilder = Gson()
-                if(response.body() is RegistrationSuccess){
-                        val body =response.body()
+
+                    if (response.body() is RegistrationSuccess) {
+                        val body = response.body() as RegistrationSuccess
                         registrationSuccessful.value = CallBackState.RESPONSE_SUCCESS
                         prefs.createLoginCredentialEntry(
-                                LoginSuccess(
-                                        Prefs.INVALID_INT,
-                                        body?.username?:"",
-                                        Prefs.INVALID_STRING))
-                }
-                    else {
-                    // we also have to option to not even check if we can convert the object and merely
-                    // write response.body() to the log.
-
+                            LoginSuccess(
+                                Prefs.INVALID_INT,
+                                body.username,
+                                Prefs.INVALID_STRING
+                            )
+                        )
+                    } else {
                         if (response.body() != null) {
-                            val body = gsonBuilder.fromJson(response.body().toString(), RegistrationFail::class.java)
-                            val message = body.message
-                            Log.i("User aready exist", message)
+                            val body = gsonBuilder.fromJson(
+                                response.body().toString(),
+                                RegistrationFail::class.java
+                            )
+                            Log.i(TAG_REGISTRATION, body.message)
                         }
-                    registrationSuccessful.value = CallBackState.RESPONSE_FAIL
+                        registrationSuccessful.value = CallBackState.RESPONSE_FAIL
+                    }
                 }
-
-
-
-                        }
-                   /*     is RegistrationFail -> {
-                            registrationSuccessful.value = CallBackState.RESPONSE_FAIL
-                            Log.i(TAG_LOGIN, body.message)
-                        }*/
-
-
             })
         return registrationSuccessful
     }
@@ -100,39 +77,47 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
         val loginSuccessful = MutableLiveData<CallBackState>()
 
         retrofitInstance.loginUser(registrationLoginInfo)
-            .enqueue(object : Callback<LoginReturnedAPI> {
-                override fun onFailure(call: Call<LoginReturnedAPI>, t: Throwable) {
+            .enqueue(object : Callback<LoginSuccess> {
+                override fun onFailure(call: Call<LoginSuccess>, t: Throwable) {
                     loginSuccessful.value = CallBackState.ONFAIL
                     Log.i(TAG_LOGIN, "no response from backend...", t)
                 }
 
                 override fun onResponse(
-                    call: Call<LoginReturnedAPI>,
-                    response: Response<LoginReturnedAPI>
+                    call: Call<LoginSuccess>,
+                    response: Response<LoginSuccess>
                 ) {
-                    val body = response.body()
-                    when (body) {
-                        is LoginSuccess -> {
-                            prefs.createLoginCredentialEntry(
-                                LoginSuccess(
-                                    body.userId,
-                                    body.username,
-                                    body.token
-                                )
+                    val gsonBuilder = Gson()
+
+                    if (response.body() is LoginSuccess) {
+                        val body = response.body() as LoginSuccess
+                        loginSuccessful.value = CallBackState.RESPONSE_SUCCESS
+                        prefs.createLoginCredentialEntry(
+                            LoginSuccess(
+                                body.userId,
+                                body.username,
+                                body.token
                             )
-                            loginSuccessful.value = CallBackState.RESPONSE_SUCCESS
-                        }
-                        is LoginFail -> {
-                            loginSuccessful.value = CallBackState.RESPONSE_FAIL
+                        )
+                    } else {
+                        if (response.body() != null) {
+                            val body = gsonBuilder.fromJson(
+                                response.body().toString(),
+                                LoginFail::class.java
+                            )
                             Log.i(TAG_LOGIN, body.message)
-                            }
+                        }
+                        loginSuccessful.value = CallBackState.RESPONSE_FAIL
                     }
                 }
             })
         return loginSuccessful
     }
 
-    override fun createDevLib(devLibCreate: DevLibCreate, authToken: String): LiveData<CallBackState> {
+    override fun createDevLib(
+        devLibCreate: DevLibCreate,
+        authToken: String
+    ): LiveData<CallBackState> {
         val createSuccessful = MutableLiveData<CallBackState>()
 
         retrofitInstance.createDevLib(devLibCreate, authToken)
@@ -164,7 +149,10 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
         return createSuccessful
     }
 
-    override fun updateDevLib(devLibUpdate: DevLibBackend, authToken: String): LiveData<CallBackState> {
+    override fun updateDevLib(
+        devLibUpdate: DevLibBackend,
+        authToken: String
+    ): LiveData<CallBackState> {
         val updateSuccessful = MutableLiveData<CallBackState>()
 
         retrofitInstance.updateDevLib(devLibUpdate, authToken)
@@ -181,7 +169,7 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
                     ))*/
 
                     updateSuccessful.value = CallBackState.ONFAIL
-                    Log.i(TAG_CREATE, "no response from backend...", t)
+                    Log.i(TAG_UPDATE, "no response from backend...", t)
                 }
 
                 override fun onResponse(
@@ -196,7 +184,10 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
         return updateSuccessful
     }
 
-    override fun deleteDevLib(devLibDelete: DevLibDelete, authToken: String): LiveData<CallBackState> {
+    override fun deleteDevLib(
+        devLibDelete: DevLibDelete,
+        authToken: String
+    ): LiveData<CallBackState> {
         val deleteSuccessful = MutableLiveData<CallBackState>()
 
         retrofitInstance.deleteDevLib(devLibDelete, authToken)
@@ -213,7 +204,7 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
                     ))*/
 
                     deleteSuccessful.value = CallBackState.ONFAIL
-                    Log.i(TAG_CREATE, "no response from backend...", t)
+                    Log.i(TAG_DELETE, "no response from backend...", t)
                 }
 
                 override fun onResponse(
@@ -238,7 +229,7 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
                     // nothing needs to happen as all our views will be using data from our
                     //  database with Observers set on them.
                     getSuccessful.value = CallBackState.ONFAIL
-                    Log.i(TAG_CREATE, "no response from backend...", t)
+                    Log.i(TAG_GET, "no response from backend...", t)
                 }
 
                 override fun onResponse(
@@ -308,8 +299,8 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
     companion object {
 
         // Table: dev_lib_backend
-        class CreateDevLibBackendAsyncTask(private val dbDao: DatabaseDAO)
-            : AsyncTask<DevLibBackend, Unit, Unit>() {
+        class CreateDevLibBackendAsyncTask(private val dbDao: DatabaseDAO) :
+            AsyncTask<DevLibBackend, Unit, Unit>() {
 
             override fun doInBackground(vararg devLibBackend: DevLibBackend?) {
                 devLibBackend[0]?.let {
@@ -318,8 +309,8 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
             }
         }
 
-        class UpdateDevLibBackendAsyncTask(private val dbDao: DatabaseDAO)
-            : AsyncTask<DevLibBackend, Unit, Unit>() {
+        class UpdateDevLibBackendAsyncTask(private val dbDao: DatabaseDAO) :
+            AsyncTask<DevLibBackend, Unit, Unit>() {
 
             override fun doInBackground(vararg devLibBackend: DevLibBackend?) {
                 devLibBackend[0]?.let {
@@ -328,8 +319,8 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
             }
         }
 
-        class DeleteDevLibBackendAsyncTask(private val dbDao: DatabaseDAO)
-            : AsyncTask<DevLibBackend, Unit, Unit>() {
+        class DeleteDevLibBackendAsyncTask(private val dbDao: DatabaseDAO) :
+            AsyncTask<DevLibBackend, Unit, Unit>() {
 
             override fun doInBackground(vararg devLibBackend: DevLibBackend?) {
                 devLibBackend[0]?.let {
@@ -339,8 +330,8 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
         }
 
         // Table: dev_lib_local
-        class CreateDevLibLocalAsyncTask(private val dbDao: DatabaseDAO)
-            : AsyncTask<DevLibLocal, Unit, Unit>() {
+        class CreateDevLibLocalAsyncTask(private val dbDao: DatabaseDAO) :
+            AsyncTask<DevLibLocal, Unit, Unit>() {
 
             override fun doInBackground(vararg devLibLocal: DevLibLocal?) {
                 devLibLocal[0]?.let {
@@ -349,8 +340,8 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
             }
         }
 
-        class UpdateDevLibLocalAsyncTask(private val dbDao: DatabaseDAO)
-            : AsyncTask<DevLibLocal, Unit, Unit>() {
+        class UpdateDevLibLocalAsyncTask(private val dbDao: DatabaseDAO) :
+            AsyncTask<DevLibLocal, Unit, Unit>() {
 
             override fun doInBackground(vararg devLibLocal: DevLibLocal?) {
                 devLibLocal[0]?.let {
@@ -359,8 +350,8 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
             }
         }
 
-        class DeleteDevLibLocalAsyncTask(private val dbDao: DatabaseDAO)
-            : AsyncTask<DevLibLocal, Unit, Unit>() {
+        class DeleteDevLibLocalAsyncTask(private val dbDao: DatabaseDAO) :
+            AsyncTask<DevLibLocal, Unit, Unit>() {
 
             override fun doInBackground(vararg devLibLocal: DevLibLocal?) {
                 devLibLocal[0]?.let {
