@@ -52,12 +52,12 @@ class SplashController() : ViewModelController() {
 
 
         //TESTING PLEASE DELETE OR COMMMENT OUT
-        val fakecreds = LoginSuccess(token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoxMywidXNlcm5hbWUiOiJ0aGlyZHRpb" +
+      /* val fakecreds = LoginSuccess(token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoxMywidXNlcm5hbWUiOiJ0aGlyZHRpb" +
                 "WUiLCJpYXQiOjE1NzE3NzQ2MjgsImV4cCI6MTU3MTg2MTAyOH0.-Kpa9U_NxTWb-rTdlI" +
                 "UCRMYMUWHHkTPkr3sOvy-d13E",
 
                 userId = 1,
-                username = "thirdtime")
+                username = "thirdtime")*/
         val prefs = Prefs(view!!.context)
         val loginCredentials = prefs.getLoginCredentials()
 
@@ -81,7 +81,7 @@ class SplashController() : ViewModelController() {
                             }
                             CallBackState.RESPONSE_FAIL -> {
                                 onAuthDecision(view.context, false)
-                                Toast.makeText(view.context, "Failed to login with toke (response fail)", Toast.LENGTH_SHORT)
+                                Toast.makeText(view.context, "Failed to login with token (response fail)", Toast.LENGTH_SHORT)
                                         .show()
                             }
                             else -> {
@@ -98,7 +98,7 @@ class SplashController() : ViewModelController() {
                     .show()
         }
     }
-
+/*
    fun fakeLoginToken() {
         viewModel.tryTokenLogin(fakecreds.token).observe(this, Observer {
             if (it == CallBackState.RESPONSE_SUCCESS) {
@@ -114,12 +114,13 @@ class SplashController() : ViewModelController() {
                         .show()
             }
         })
-    }
-
         fakeLoginToken()
         // or tryLoginToken()
+    }*/
 
 
+
+tryLoginToken()
 
 
     return view
