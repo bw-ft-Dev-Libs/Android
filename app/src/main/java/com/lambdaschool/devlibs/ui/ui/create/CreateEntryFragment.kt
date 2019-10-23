@@ -13,8 +13,10 @@ import com.lambdaschool.devlibs.model.DevLibLocal
 import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.arrayOfNeeded
 import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.arrayOfProvided
 import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.template
+import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.text
 import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.vmCategory
 import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.vmPosition
+import kotlinx.android.synthetic.main.fragment_create_sub.view.*
 
 class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :Fragment() {
 
@@ -53,7 +55,7 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
 
 
         //handle the spinner
-        val spinner = root.findViewById<Spinner>(R.id.create_sub_spinner)
+        val spinner:Spinner = root.create_sub_spinner
         if (spinner != null) {
             val arrayAdapter = ArrayAdapter(root.context, R.layout.support_simple_spinner_dropdown_item ,CATEGORIES)
             spinner.adapter = arrayAdapter
@@ -127,12 +129,12 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
         //make a mad lib object or at least pass the the completed lib to where ever it needs to go
     if (arrayOfProvided.size == template.size) {
         //make the string out of it's pieces
-        var finalString = ""
+        text = ""
         for (i in 0 until arrayOfProvided.size) {
-            finalString = finalString + template[i] + arrayOfProvided[i]
+            text = text + template[i] + arrayOfProvided[i]
         }
         //make the madlib obj itself
-        var finalObj = DevLibLocal(finalString,
+        var finalObj = DevLibLocal(text,
                 prefs.getLoginCredentials()!!.userId, // there never should be a time where userID hasn't been saved after login
                 vmPosition)  //position should be equivilent to category
         //and whatever else needs to get done

@@ -26,7 +26,8 @@
 
     <fragment
         android:id="@+id/navigation_create"
-        android:name="com.lambdaschool.devlibs.ui.ui.create.CreateFragment"
+        android:name="com.lambdaschool.devlibs.ui.ui.create.CreateParentFragment"
         android:label="@string/list_madlibs"
         tools:layout="@layout/fragment_create" />
+
 </navigation>

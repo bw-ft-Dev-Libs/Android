@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 
 import com.lambdaschool.devlibs.R
 
-class CreateFragment : Fragment() {
+class CreateParentFragment : Fragment() {
 /*
 *
 *

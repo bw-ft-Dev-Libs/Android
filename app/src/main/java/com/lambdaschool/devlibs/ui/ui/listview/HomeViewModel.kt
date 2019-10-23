@@ -13,6 +13,6 @@ class HomeViewModel : ViewModel() {
 
     init {
         mText = MutableLiveData()
-        mText.value = "This is home fragment"
+        mText.value = "Some Introductory text about madlibs"
     }
 }
