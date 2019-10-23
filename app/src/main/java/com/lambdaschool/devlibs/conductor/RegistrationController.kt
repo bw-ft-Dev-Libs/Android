@@ -16,16 +16,13 @@ import com.lambdaschool.devlibs.viewmodel.LoginActivityViewModel
 import kotlinx.android.synthetic.main.registration_controller_layout.view.*
 import work.beltran.conductorviewmodel.ViewModelController
 
-/*
+/**
 *
 * login controller should:
 * 1: ask for new usre info
 * 2: display a loading indicator showLoading()
 * 3: indicate to user errors with registration after hideLoading()
 * 4: finally let user know they're registered and offer a way to click
-*
-*
-*
 * */
 class RegistrationController() : ViewModelController() {
 
@@ -67,14 +64,14 @@ class RegistrationController() : ViewModelController() {
             val logPassword = view.registration_et_password.text.toString()
             if (logUserName.isNotEmpty() && logPassword.isNotEmpty()) {
                 showLoading()
-                viewModel.tryToRegister(logUserName, logPassword).observe(this, Observer {
+                viewModel.registerUser(logUserName, logPassword).observe(this, Observer {
 
                     if (it == CallBackState.RESPONSE_SUCCESS) {
                         hideLoading()
                         router.popController(this)
                         Toast.makeText(view.context, "Registration Successful, please log in!", Toast.LENGTH_SHORT).show()
                     }
-                    viewModel.tryToRegister(logUserName, logPassword).observe(this, Observer {
+                    viewModel.registerUser(logUserName, logPassword).observe(this, Observer {
 
                         // response is successful so notify user and return to login screen,
                         if (it == CallBackState.RESPONSE_SUCCESS) {

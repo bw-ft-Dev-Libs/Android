@@ -16,6 +16,10 @@ class DevLibDelete(
     @SerializedName("user_id") val userId: Int
     )
 
+class DevLibListDataObject(
+    val data: List<DevLibBackend>
+)
+
 @Entity(tableName = "dev_lib_backend")
 data class DevLibBackend(
 

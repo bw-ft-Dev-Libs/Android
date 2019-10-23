@@ -223,9 +223,9 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
         val getSuccessful = MutableLiveData<CallBackState>()
 
         retrofitInstance.getDevLibs(authToken)
-            .enqueue(object : Callback<List<DevLibBackend>> {
+            .enqueue(object : Callback<DevLibListDataObject> {
 
-                override fun onFailure(call: Call<List<DevLibBackend>>, t: Throwable) {
+                override fun onFailure(call: Call<DevLibListDataObject>, t: Throwable) {
                     // nothing needs to happen as all our views will be using data from our
                     //  database with Observers set on them.
                     getSuccessful.value = CallBackState.ONFAIL
@@ -233,8 +233,8 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
                 }
 
                 override fun onResponse(
-                    call: Call<List<DevLibBackend>>,
-                    response: Response<List<DevLibBackend>>
+                    call: Call<DevLibListDataObject>,
+                    response: Response<DevLibListDataObject>
                 ) {
                     val body = response.body()
                     // TODO: check agains dev_lib_backend schema && update appropriately
