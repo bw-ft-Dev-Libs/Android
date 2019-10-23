@@ -18,13 +18,13 @@ val CATEGORIES = listOf<String> (
 
 
 )
-val tempWordNeeds = listOf<List<String>>(
+val tempWordNeeds = listOf<Array<String>>(
       //cat 1
-        listOf("Noun", "Verb","Noun","Verb","Adjective"),
-     //cat 1
-    listOf("Adjective", "Noun", "Verb","Verb","Noun","Adjective", "Noun"),
-    //cat 1
-    listOf("Verb","Adjective","Noun", "Verb","Noun","Noun"))
+        arrayOf("Noun", "Verb","Noun","Verb","Adjective"),
+     //cat 2
+        arrayOf("Adjective", "Noun", "Verb","Verb","Noun","Adjective", "Noun"),
+    //cat 3
+        arrayOf("Verb","Adjective","Noun", "Verb","Noun","Noun"))
 
 
 //what is an adjective... descriptive word? maybe

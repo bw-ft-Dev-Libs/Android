@@ -47,7 +47,7 @@ class CreateFragment : Fragment() {
 
 
 
-        createViewModel.text.observe(this, Observer { s -> textView.text = s })
+        createViewModel.createString.observe(this, Observer { s -> textView.text = s })
         createViewModel.settext("orig")
 
         supportFragmentManager.beginTransaction()
