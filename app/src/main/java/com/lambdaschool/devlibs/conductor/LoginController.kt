@@ -12,29 +12,22 @@ import androidx.constraintlayout.widget.Group
 import androidx.lifecycle.Observer
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
-import com.lambdaschool.devlibs.Prefs
-import com.lambdaschool.devlibs.R
+import com.lambdaschool.devlibs.*
 import com.lambdaschool.devlibs.model.CallBackState
-import com.lambdaschool.devlibs.openSoftKeyboard
 import com.lambdaschool.devlibs.ui.MainActivity
 import com.lambdaschool.devlibs.viewmodel.LiveDataVMFactory
 import com.lambdaschool.devlibs.viewmodel.LoginActivityViewModel
 import kotlinx.android.synthetic.main.login_controller_layout.view.*
 import work.beltran.conductorviewmodel.ViewModelController
 
-/*
-*
+/**
 * login controller should:
 * 1: ask for info
 * 2: display a loading indicator showLoading()
 * 3: indicate to user errors when logging in after hideLoading()
 * 4: and allow the user to move on to the registration
-*
-*
-*
-*
 * */
-class LoginController() : ViewModelController() {
+class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
 
     private val viewGroup: Group by lazy {
         view!!.findViewById<Group>(R.id.login_group)
@@ -54,40 +47,41 @@ class LoginController() : ViewModelController() {
         // viewGroup.visibility = View.VISIBLE
     }
 
-
+    constructor(communicatedString: String? = null) : this(Bundle().apply {
+        putString(AUTH_STRING_KEY, communicatedString)
+    })
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         val view = inflater.inflate(R.layout.login_controller_layout, container, false)
 
         mProgressDialog = view!!.findViewById<ProgressBar>(R.id.login_progressbar)
+        view.login_btn_signin.setOnClickListener { showLoading() }
+        mProgressDialog.setOnClickListener { hideLoading() }
 
-
-
-        val btn = view.login_btn_signin
+        val loginButton = view.login_btn_signin
         val editTextUserName = view.login_et_username
         val editTextPassword = view.login_et_password
 
-
-        val tvFoot = view.findViewById<TextView>(R.id.login_tv_footer)
-
+        val textViewFooter = view.findViewById<TextView>(R.id.login_tv_footer)
 
         val viewModelFactory = LiveDataVMFactory(this.activity!!.application)
         viewModel = activity.run {
             viewModelProvider(viewModelFactory).get(LoginActivityViewModel::class.java)
         }
 
-        this.applicationContext?.openSoftKeyboard(editTextUserName)
-
         //get preferences and try to login,
         val prefs = Prefs(view.context)
         val loginCredentials = prefs.getLoginCredentials()
 
         if (loginCredentials != null) {
-            if (loginCredentials.username != "") {
+            if (loginCredentials.username != Prefs.INVALID_STRING) {
                 editTextUserName.setText(loginCredentials.username)
+                this.applicationContext?.openSoftKeyboard(editTextPassword)
             }
+        } else {
+            this.applicationContext?.openSoftKeyboard(editTextUserName)
         }
-            btn.setOnClickListener {
+            loginButton.setOnClickListener {
 
                 // get username and password from edittexts and try to login
                 val logUserName = view.login_et_username.text.toString()
@@ -99,17 +93,16 @@ class LoginController() : ViewModelController() {
                         if (it == CallBackState.RESPONSE_SUCCESS) {
                             val intent = Intent(view.context, MainActivity::class.java)
                             startActivity(intent)
-                            Toast.makeText(view.context, "Login Success", Toast.LENGTH_SHORT).show()
+                            this.applicationContext?.showToast("Login Success")
                         }
                         else {
-                            Toast.makeText(view.context, "Failed", Toast.LENGTH_SHORT)
-                                    .show()
+                            this.applicationContext?.showToast("Login Failed")
                         }
                     })
                 }
             }
 
-        tvFoot.setOnClickListener {
+        textViewFooter.setOnClickListener {
             router.pushController(RouterTransaction.with(RegistrationController())
                     .pushChangeHandler(HorizontalChangeHandler())
                     .popChangeHandler(HorizontalChangeHandler()))
@@ -117,22 +110,5 @@ class LoginController() : ViewModelController() {
         }
 
         return view
-
     }
-
-}     /*val loginObserver = Observer<CallBackState> { state ->
-            if (state == null){
-                        Toast.makeText(view.context,"null",Toast.LENGTH_SHORT).show()
-                        Log.i("Jackdebug","state=null")
-                    }
-            if(state == CallBackState.ONFAIL) {
-                Toast.makeText(view.context,"fail",Toast.LENGTH_SHORT).show()
-                Log.i("Jackdebug","state=fail")
-            }
-            else if(state==CallBackState.RESPONSE_SUCCESS){
-                Toast.makeText(view.context,"success",Toast.LENGTH_SHORT).show()
-                Log.i("Jackdebug","state=success")
-            }
-
-
-        }*/
+}
