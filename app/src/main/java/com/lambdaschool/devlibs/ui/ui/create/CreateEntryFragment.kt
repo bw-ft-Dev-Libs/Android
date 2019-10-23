@@ -8,10 +8,12 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
-import com.lambdaschool.devlibs.CATEGORIES
-import com.lambdaschool.devlibs.R
-import com.lambdaschool.devlibs.tempWordNeeds
+import com.lambdaschool.devlibs.*
+import com.lambdaschool.devlibs.model.DevLibLocal
 import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.arrayOfNeeded
+import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.arrayOfProvided
+import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.template
+import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.vmCategory
 import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.vmPosition
 
 class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :Fragment() {
@@ -50,7 +52,7 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
         button.visibility=View.INVISIBLE
 
 
-
+        //handle the spinner
         val spinner = root.findViewById<Spinner>(R.id.create_sub_spinner)
         if (spinner != null) {
             val arrayAdapter = ArrayAdapter(root.context, R.layout.support_simple_spinner_dropdown_item ,CATEGORIES)
@@ -63,29 +65,89 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
                 }
                     else {
                     // set the position in the viewmodel
-                    vmPosition = position
+                    vmPosition = 0
+
+                    //set the category
+                    vmCategory = position
 
                     // sett the words needed in the viewmodel
                     arrayOfNeeded = tempWordNeeds[position]
+                    //set array provided to array of needed simply for sizing
+                    arrayOfProvided= arrayOfNeeded
+                    //set the template to the appropriate template
+                    template= tempTemplatesToInject[position]
                     // hide the spinner and reveal the edit text
                     spinner.visibility=View.GONE
                     editView.visibility=View.VISIBLE
                     button.visibility=View.VISIBLE
                    //set text/edit view text appropiately
                     textView.text= "Enter a:"
-                            editView.setText(arrayOfNeeded[0])
+                            editView.hint=arrayOfNeeded[0]
                     Toast.makeText(view.context, arrayOfNeeded[position].toString(), Toast.LENGTH_SHORT).show()
                 }
-
-
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
-                    // Code to perform some action when nothing is selected
                 }
             }
         }
 
+        //handle the words
+
+        button.setOnClickListener {
+            val input = editView.text.toString()
+
+            // if the input isn't blank, add the word
+            if (input != ""){
+                addAWord(input)
+                // if we have enough words in the list, wrap up
+                if (arrayOfProvided.size == vmPosition){
+                    // we have all the words now
+                    // exit
+                    finish()
+                    Toast.makeText(view!!.context,"complete",Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    editView.hint=arrayOfNeeded[vmPosition]
+                    editView.setText("")
+                    Toast.makeText(view!!.context,"now enter a " + arrayOfProvided[vmPosition],Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+
+
+
+
+
         return root
+    }
+    fun finish(){
+
+        //make a mad lib object or at least pass the the completed lib to where ever it needs to go
+    if (arrayOfProvided.size == template.size) {
+        //make the string out of it's pieces
+        var finalString = ""
+        for (i in 0 until arrayOfProvided.size) {
+            finalString = finalString + template[i] + arrayOfProvided[i]
+        }
+        //make the madlib obj itself
+        var finalObj = DevLibLocal(finalString,
+                prefs.getLoginCredentials()!!.userId, // there never should be a time where userID hasn't been saved after login
+                vmPosition)  //position should be equivilent to category
+        //and whatever else needs to get done
+
+        //send it on to appropriate calls to database,retro or a fragment to view it in
+
+        //todo 1: IMPLEMENT REDIRECT
+
+
+    }
+
+    }
+    fun addAWord(word:String){
+        arrayOfProvided[vmPosition]=word
+        vmPosition++
+
     }
 }

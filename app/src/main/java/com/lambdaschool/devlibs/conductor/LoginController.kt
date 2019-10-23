@@ -27,7 +27,7 @@ import work.beltran.conductorviewmodel.ViewModelController
 * 3: indicate to user errors when logging in after hideLoading()
 * 4: and allow the user to move on to the registration
 * */
-class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
+class LoginController() : ViewModelController() {
 
     private val viewGroup: Group by lazy {
         view!!.findViewById<Group>(R.id.login_group)
@@ -47,16 +47,12 @@ class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
         // viewGroup.visibility = View.VISIBLE
     }
 
-    constructor(communicatedString: String? = null) : this(Bundle().apply {
-        putString(AUTH_STRING_KEY, communicatedString)
-    })
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         val view = inflater.inflate(R.layout.login_controller_layout, container, false)
 
         mProgressDialog = view!!.findViewById<ProgressBar>(R.id.login_progressbar)
-        view.login_btn_signin.setOnClickListener { showLoading() }
-        mProgressDialog.setOnClickListener { hideLoading() }
+
 
         val loginButton = view.login_btn_signin
         val editTextUserName = view.login_et_username

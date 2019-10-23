@@ -32,24 +32,24 @@ val tempWordNeeds = listOf<Array<String>>(
 val tempTemplatesToInject = listOf<List<String>>(
         //cat 1
         listOf("Noun Verb Noun Adjective Adjective Noun Adjective Noun ",
-                "VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun",
-                "Noun Verb Noun Adjective Adjective Noun Adjective Noun",
-                "Verb",
-                "AdjectiveVerb Noun Adjective Adjective"),
+                " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
+                " Noun Verb Noun Adjective Adjective Noun Adjective Noun ",
+                " Verb ",
+                " AdjectiveVerb Noun Adjective Adjective"),
 
         //cat 1
-        listOf("Noun Verb Noun Adjective Adjective Noun Adjective Noun",
-                "Noun Verb Noun Adjective Adjective Noun Adjective Noun",
-                "VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun",
-                "VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun",
-                "Verb",
-                "Verb",
-                "Noun"),
+        listOf("Noun Verb Noun Adjective Adjective Noun Adjective Noun ",
+                " Noun Verb Noun Adjective Adjective Noun Adjective Noun ",
+                " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
+                " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
+                " Verb",
+                " Verb",
+                " Noun"),
         //cat 1
-        listOf("Noun Verb Noun Adjective Adjective Noun Adjective Noun"
-                ,"Verb",
-                "VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun",
-                "VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun",
-                "VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun",
-                "Noun"))
+        listOf("Noun Verb Noun Adjective Adjective Noun Adjective Noun "
+                ," Verb ",
+                " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
+                " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
+                " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
+                " Noun"))
 

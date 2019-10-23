@@ -14,8 +14,10 @@ class CreateViewModel : ViewModel() {
     companion object {
         var text = "init"
         var vmPosition = 0
+        var vmCategory = 0
         var arrayOfNeeded = arrayOf<String>()
         var arrayOfProvided = arrayOf<String>()
+        var template = listOf<String>()
 
 
     }
