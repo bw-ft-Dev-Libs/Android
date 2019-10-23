@@ -4,21 +4,34 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/create_sub_frag_tv"
-    android:textSize="100sp"
-    android:text="nos"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="12sp"
+        android:text="enter a"
+        app:layout_constraintBottom_toBottomOf="@id/create_sub_frag_ev"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
 
-    />
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/create_sub_frag_ev"
+        android:hint="default"
+        app:layout_constraintBottom_toTopOf="@id/create_sub_frag_btn"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
 
 
     <androidx.appcompat.widget.AppCompatButton
         android:text="madlib"
+        android:id="@+id/create_sub_frag_btn"
         android:layout_width="wrap_content"
         android:background="@color/colorAccent"
         android:layout_height="wrap_content"
@@ -27,6 +40,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
