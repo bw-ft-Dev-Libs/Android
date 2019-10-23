@@ -18,7 +18,7 @@ interface DevLibsAPI {
 
     @POST("auth/login")
     fun loginUser(@Body registrationLoginInfo: RegistrationLoginSendAPI)
-            : Call<LoginReturnedAPI>
+            : Call<LoginSuccess>
 
     @POST("devLib")
     fun createDevLib(@Body devLibCreate: DevLibCreate, @Header("authorization") Value: String)
