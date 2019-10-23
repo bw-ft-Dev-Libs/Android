@@ -94,7 +94,7 @@ class LoginController(bundle: Bundle?) : ViewModelController(bundle) {
 
         if (loginCredentials != null) {
             if (loginCredentials.username != "") {
-                editTextUserName.hint = loginCredentials.username
+                editTextUserName.setText(loginCredentials.username)
             }
         }
             btn.setOnClickListener {
