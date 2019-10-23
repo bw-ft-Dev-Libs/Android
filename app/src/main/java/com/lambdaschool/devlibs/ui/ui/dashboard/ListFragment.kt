@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 
 import com.lambdaschool.devlibs.R
 
-class DashboardFragment : Fragment() {
+class ListFragment : Fragment() {
 
     private var dashboardViewModel: DashboardViewModel? = null
 
@@ -20,7 +20,7 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
+        val root = inflater.inflate(R.layout.fragment_list, container, false)
         val textView = root.findViewById<TextView>(R.id.text_dashboard)
         dashboardViewModel!!.text.observe(this, Observer { s -> textView.text = s })
         return root

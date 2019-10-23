@@ -9,19 +9,17 @@
         android:id="@+id/navigation_home"
         android:name="com.lambdaschool.devlibs.ui.ui.listview.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" >
-
-    </fragment>
+        tools:layout="@layout/fragment_home"/>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.lambdaschool.devlibs.ui.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_create"
+        android:name="com.lambdaschool.devlibs.ui.ui.dashboard.ListFragment"
+        android:label="@string/create"
+        tools:layout="@layout/fragment_list" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.lambdaschool.devlibs.ui.ui.create.NotificationsFragment"
+        android:id="@+id/navigation_list"
+        android:name="com.lambdaschool.devlibs.ui.ui.create.CreateFragment"
         android:label="@string/list_madlibs"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_create" />
 </navigation>

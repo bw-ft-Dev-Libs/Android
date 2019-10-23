@@ -2,6 +2,6 @@
     <string name="app_name">Dev Libs</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="create">Create a Dev-Lib</string>
     <string name="list_madlibs">View Dev Libs!</string>
 </resources>
