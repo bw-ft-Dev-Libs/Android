@@ -71,7 +71,8 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
                 if (!init && position ==0) {
                     init = true
                 }
-                    else {
+                    //make sure they're not choosing "choose a category"
+                    else if (position!=0) {
                     // set the position in the viewmodel
                     vmPosition = 0
 

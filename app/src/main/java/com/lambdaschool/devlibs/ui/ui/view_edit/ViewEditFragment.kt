@@ -49,7 +49,7 @@ class ViewEditFragment () : Fragment() {
           Toast.makeText(view!!.context,recieved.lib,Toast.LENGTH_SHORT ).show()
       }*/
 
-        Toast.makeText(root.context,recieved.userId.toString(),Toast.LENGTH_SHORT).show()
+        Toast.makeText(root.context,recieved.lib,Toast.LENGTH_SHORT).show()
 
 
 
