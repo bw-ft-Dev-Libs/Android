@@ -38,7 +38,7 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
             .enqueue(object : Callback<RegistrationSuccess> {
 
                 override fun onFailure(call: Call<RegistrationSuccess>, t: Throwable) {
-                    registrationSuccessful.value = CallBackState.ONFAIL
+                    registrationSuccessful.value = CallBackState.ON_FAILURE
                     Log.i(TAG_REGISTRATION, "no response from backend...", t)
                 }
 
@@ -50,7 +50,7 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
 
                     if (response.body() is RegistrationSuccess) {
                         val body = response.body() as RegistrationSuccess
-                        registrationSuccessful.value = CallBackState.RESPONSE_SUCCESS
+                        registrationSuccessful.value = CallBackState.ON_RESPONSE_SUCCESS
                         prefs.createLoginCredentialEntry(
                             LoginSuccess(
                                 Prefs.INVALID_INT,
@@ -66,7 +66,7 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
                             )
                             Log.i(TAG_REGISTRATION, body.message)
                         }
-                        registrationSuccessful.value = CallBackState.RESPONSE_FAIL
+                        registrationSuccessful.value = CallBackState.ON_RESPONSE_FAIL
                     }
                 }
             })
@@ -80,7 +80,7 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
         retrofitInstance.loginUser(registrationLoginInfo)
             .enqueue(object : Callback<LoginSuccess> {
                 override fun onFailure(call: Call<LoginSuccess>, t: Throwable) {
-                    loginSuccessful.value = CallBackState.ONFAIL
+                    loginSuccessful.value = CallBackState.ON_FAILURE
                     Log.i(TAG_LOGIN, "no response from backend...", t)
                 }
 
@@ -92,7 +92,7 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
 
                     if (response.body() is LoginSuccess) {
                         val body = response.body() as LoginSuccess
-                        loginSuccessful.value = CallBackState.RESPONSE_SUCCESS
+                        loginSuccessful.value = CallBackState.ON_RESPONSE_SUCCESS
                         prefs.createLoginCredentialEntry(
                             LoginSuccess(
                                 body.userId,
@@ -109,7 +109,7 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
                             )
                             Log.i(TAG_LOGIN, body.message)
                         }
-                        loginSuccessful.value = CallBackState.RESPONSE_FAIL
+                        loginSuccessful.value = CallBackState.ON_RESPONSE_FAIL
                     }
                 }
             })
@@ -135,7 +135,7 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
                         // TODO: enum class key CREATE
                     ))*/
 
-                    createSuccessful.value = CallBackState.ONFAIL
+                    createSuccessful.value = CallBackState.ON_FAILURE
                     Log.i(TAG_CREATE, "no response from backend...", t)
                 }
 
@@ -145,7 +145,7 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
                 ) {
                     val body = response.body() as DevLibBackend
                     createDevLibBackend(body)
-                    createSuccessful.value = CallBackState.RESPONSE_SUCCESS
+                    createSuccessful.value = CallBackState.ON_RESPONSE_SUCCESS
                 }
             })
         return createSuccessful
@@ -170,7 +170,7 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
                         // TODO: enum class key UPDATE
                     ))*/
 
-                    updateSuccessful.value = CallBackState.ONFAIL
+                    updateSuccessful.value = CallBackState.ON_FAILURE
                     Log.i(TAG_UPDATE, "no response from backend...", t)
                 }
 
@@ -180,7 +180,7 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
                 ) {
                     val body = response.body() as DevLibBackend
                     updateDevLibBackend(body)
-                    updateSuccessful.value = CallBackState.RESPONSE_SUCCESS
+                    updateSuccessful.value = CallBackState.ON_RESPONSE_SUCCESS
                 }
             })
         return updateSuccessful
@@ -205,7 +205,7 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
                         // TODO: enum class key DELETE
                     ))*/
 
-                    deleteSuccessful.value = CallBackState.ONFAIL
+                    deleteSuccessful.value = CallBackState.ON_FAILURE
                     Log.i(TAG_DELETE, "no response from backend...", t)
                 }
 
@@ -215,7 +215,7 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
                 ) {
                     val body = response.body() as DevLibBackend
                     deleteDevLibBackend(body)
-                    deleteSuccessful.value = CallBackState.RESPONSE_SUCCESS
+                    deleteSuccessful.value = CallBackState.ON_RESPONSE_SUCCESS
                 }
             })
         return deleteSuccessful
@@ -230,7 +230,7 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
                 override fun onFailure(call: Call<DevLibListDataObject>, t: Throwable) {
                     // nothing needs to happen as all our views will be using data from our
                     //  database with Observers set on them.
-                    getSuccessful.value = CallBackState.ONFAIL
+                    getSuccessful.value = CallBackState.ON_FAILURE
                     Log.i(TAG_GET, "no response from backend...", t)
                 }
 
@@ -257,7 +257,7 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
 
                     }).execute()
 
-                    getSuccessful.value = CallBackState.RESPONSE_SUCCESS
+                    getSuccessful.value = CallBackState.ON_RESPONSE_SUCCESS
                 }
             })
         return getSuccessful

@@ -64,13 +64,13 @@ class RegistrationController : ViewModelController() {
 
                     when (it) {
                         // response is successful so notify user and return to login screen
-                        CallBackState.RESPONSE_SUCCESS -> {
+                        CallBackState.ON_RESPONSE_SUCCESS -> {
                             hideLoading()
                             router.popController(this)
                             (view.context).showToast("Registration Successful, please log in")
                         }
                         // response failed due to user already existing
-                        CallBackState.RESPONSE_FAIL -> {
+                        CallBackState.ON_RESPONSE_FAIL -> {
                             hideLoading()
                             (view.context).showToast("User already exists, please try again")
 

@@ -39,15 +39,14 @@ interface DevLibsAPI {
     class Factory {
 
         companion object {
-            val BASE_URL = "https://dev-libs-test.herokuapp.com/api/"
-            val gson = Gson()
-            val logger = HttpLoggingInterceptor().apply {
+            private val BASE_URL = "https://dev-libs-test.herokuapp.com/api/"
+            private val gson = Gson()
+            private val logger = HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BASIC
                 level = HttpLoggingInterceptor.Level.BODY
             }
 
-
-            val okHttpClient = OkHttpClient.Builder()
+            private val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(logger)
                 .retryOnConnectionFailure(false)
                 .readTimeout(10, TimeUnit.SECONDS)
@@ -65,5 +64,4 @@ interface DevLibsAPI {
             }
         }
     }
-
 }

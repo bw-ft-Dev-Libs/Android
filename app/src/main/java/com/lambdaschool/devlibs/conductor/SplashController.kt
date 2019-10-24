@@ -55,7 +55,7 @@ class SplashController : ViewModelController() {
                 ) {
                     viewModel.getDevLibs(loginCredentials.token).observe(this, Observer {
                         when (it) {
-                            CallBackState.RESPONSE_SUCCESS -> {
+                            CallBackState.ON_RESPONSE_SUCCESS -> {
                                 onAuthDecision(view.context, true)
                                 (view.context).showToast("Welcome!")
                             }

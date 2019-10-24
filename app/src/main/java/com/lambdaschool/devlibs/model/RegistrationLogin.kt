@@ -6,7 +6,7 @@ package com.lambdaschool.devlibs.model
  * The POST call for both registration or login requires:
  * @param username
  * @param password
-* */
+ * */
 class RegistrationLoginSendAPI(
     val username: String,
     val password: String
@@ -60,5 +60,5 @@ data class LoginFail(
  * Because of this we cannot use booleans if returning live data, so we must use an enum
  * */
 enum class CallBackState {
-    ONFAIL, RESPONSE_FAIL, RESPONSE_SUCCESS
+    ON_FAILURE, ON_RESPONSE_FAIL, ON_RESPONSE_SUCCESS
 }

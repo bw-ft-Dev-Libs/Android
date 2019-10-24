@@ -1,13 +1,11 @@
 package com.lambdaschool.devlibs.conductor
 
 import android.content.Intent
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.constraintlayout.widget.Group
 import androidx.lifecycle.Observer
 import com.bluelinelabs.conductor.RouterTransaction
@@ -86,7 +84,7 @@ class LoginController : ViewModelController() {
 
                     viewModel.loginUser(logUserName, logPassword).observe(this, Observer {
 
-                        if (it == CallBackState.RESPONSE_SUCCESS) {
+                        if (it == CallBackState.ON_RESPONSE_SUCCESS) {
                             val intent = Intent(view.context, MainActivity::class.java)
                             startActivity(intent)
                             this.applicationContext?.showToast("Login Success")
