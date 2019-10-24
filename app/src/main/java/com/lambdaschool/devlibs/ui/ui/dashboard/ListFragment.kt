@@ -33,7 +33,7 @@ class ListFragment : Fragment() {
     ): View? {
         listViewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_list_layout, container, false)
-        val textView = root.findViewById<TextView>(R.id.text_dashboard)
+        val textView = root.findViewById<TextView>(R.id.view_edit_header_tv)
         listViewModel!!.text.observe(this, Observer { s -> textView.text = s })
         return root
     }

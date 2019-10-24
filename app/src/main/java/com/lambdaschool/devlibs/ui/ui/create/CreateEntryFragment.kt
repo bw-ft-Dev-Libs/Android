@@ -80,11 +80,11 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
                     vmCategory = position -1
 
                     // sett the words needed in the viewmodel
-                    arrayOfNeeded = tempWordNeeds[position]
+                    arrayOfNeeded = tempWordNeeds[position-1]
                     //set array of provided to array of needed simply for sizing
                     arrayOfProvided= arrayOfNeeded
                     //set the template to the appropriate template
-                    template= tempTemplatesToInject[position]
+                    template= tempTemplatesToInject[position-1]
                     // hide the spinner and reveal the edit text
                     spinner.visibility=View.GONE
                     editView.visibility=View.VISIBLE
@@ -92,7 +92,7 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
                    //set text/edit view text appropiately
                     textView.text= "Enter a:"
                             editView.hint=arrayOfNeeded[0]
-                    Toast.makeText(view.context, arrayOfNeeded[position].toString(), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(view.context, arrayOfNeeded[position-1].toString(), Toast.LENGTH_SHORT).show()
                 }
                 }
 

@@ -4,23 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.EditText
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.NavHostFragment
+import com.lambdaschool.devlibs.App.Companion.prefs
 import com.lambdaschool.devlibs.R
 import com.lambdaschool.devlibs.model.DevLibLocal
+import com.lambdaschool.devlibs.showToast
 import com.lambdaschool.devlibs.tempTemplatesToInject
 import com.lambdaschool.devlibs.ui.ui.create.CreateVMFactory
 import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel
-import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.arrayOfProvided
-import okio.utf8Size
+import kotlinx.android.synthetic.main.fragment_view_edit_layout.view.*
 
 
 class ViewEditFragment () : Fragment() {
     lateinit var createViewModel: CreateViewModel
      var fieldLength:Int = 0
-
-
+    var isUsers=false
+    var listOfTemplateText = listOf<String>()
+    var listOfInjectableText = listOf<String>()
         /*
         }
         *
@@ -43,22 +47,57 @@ class ViewEditFragment () : Fragment() {
             container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_view_edit_layout, container, false)
-     //    val textView = root.findViewById<TextView>(R.id.text_home)
-       // homeViewModel!!.text.observe(this, Observer { s -> textView.text = s })
+        val linearLayout = root.view_edit_linear_layout
         createViewModel =activity?.run {
             ViewModelProviders.of(this, CreateVMFactory).get(CreateViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
+
+
+
+        //get the lib sent to this fragment
         val recieved:DevLibLocal = arguments?.getSerializable("const") as DevLibLocal
-
-
-        Toast.makeText(root.context,arrayOfProvided[0],Toast.LENGTH_SHORT).show()
-
+        //if lib is blank or null, redirect as something went wrong
+        if (recieved.lib.isNullOrEmpty()) {
+            root.context.showToast("something went wrong, please try again")
+            NavHostFragment.findNavController(this).navigate(R.id.navigation_home)
+        }
+        //get the users Id
+        val userID = prefs!!.getLoginCredentials()!!.userId  //should never be null if user has gotten this far
+        // if userID from prefs matches the lib sent here, makes isUsers? true
+        if (recieved.userId==userID) {isUsers = true}
         //set the required number of fields via the category id, if multiple libs were implemented,
         // with varying number of fields, this could be changed to a DevLibID either in the model or
         // by checking the begining word or similar
-        tempTemplatesToInject[0].size
         fieldLength = tempTemplatesToInject[recieved.categoryId].size
+        // grab the correct text list template based on category id
+        listOfTemplateText=  tempTemplatesToInject[recieved.categoryId]
+        //build a list of user vars based on the template text
+
+        //make an alias for context for ease of my typing
+        val contxt=root.context
+
+
+
+        //start building the display
+        if (isUsers){
+        for (i in 0 until fieldLength) {
+            //grab the appropriate bit of text
+            val textField = TextView(context)
+            textField.setText(listOfTemplateText[i])
+            linearLayout.addView(textField)
+
+
+                val editField = EditText(contxt)
+              //  editField.setText()
+            }
+        }
+
+
+
+
+
+
 
 
         return root
