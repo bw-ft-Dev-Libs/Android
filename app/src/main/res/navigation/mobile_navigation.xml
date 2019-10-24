@@ -31,7 +31,10 @@
         tools:layout="@layout/fragment_create_layout" >
         <action
             android:id="@+id/action_navigation_create_to_navigation_view_edit"
-            app:destination="@id/navigation_view_edit" />
+            app:destination="@id/navigation_view_edit"
+            app:popUpTo="@+id/navigation_home"
+            app:popUpToInclusive="true"
+            />
     </fragment>
 
     <fragment

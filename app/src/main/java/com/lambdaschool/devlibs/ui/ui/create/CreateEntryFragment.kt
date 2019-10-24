@@ -40,6 +40,8 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
     lateinit var createViewModel:CreateViewModel
     lateinit var supportFragmentManager:FragmentManager
     var init =true
+
+
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?, savedInstanceState: Bundle?
@@ -141,7 +143,12 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
         var finalObj = DevLibLocal(text,
                 prefs.getLoginCredentials()!!.userId, // there never should be a time where userID hasn't been saved after login
                 vmPosition)  //position should be equivilent to category
+        //reset the views
+
+
         //and whatever else needs to get done
+
+
 
         //send it on to appropriate calls to database,retro or a fragment to view it in
 
