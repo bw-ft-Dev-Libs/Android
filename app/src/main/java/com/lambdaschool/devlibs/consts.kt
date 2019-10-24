@@ -34,18 +34,18 @@ val tempWordNeeds = listOf<Array<String>>(
 
 val tempTemplatesToInject = listOf<List<String>>(
         //cat 1
-        listOf("Noun Verb Noun Adjective Adjective Noun Adjective Noun ",
-                " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
-                " Noun Verb Noun Adjective Adjective Noun Adjective Noun ",
+        listOf("Noun Verb Noun Adjective Adjective Noun  ",
+                " VerbNoun Verb Noun Adjective Adjective ",
+                " Noun Verb Noun Adjective Adjective  ",
                 " Verb noun verb ",
                 " AdjectiveVerb Noun Adjective verb ",
                 " AdjectiveVerb Noun "),
 
         //cat 1
-        listOf("Noun Verb Noun Adjective Adjective Noun Adjective Noun ",
-                " Noun Verb Noun Adjective Adjective Noun Adjective Noun ",
-                " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
-                " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
+        listOf("Noun Verb Noun Adjective Adjective Noun ",
+                " Noun Verb Noun Adjective Noun Adjective Noun ",
+                " VerbNoun Verb  Noun Adjective Noun ",
+                " VerbNoun Verb Noun Noun Adjective Noun ",
                 " Verb noun verb ",
                 " Verb adjective ",
                 " adjective verb Noun ",
@@ -53,9 +53,9 @@ val tempTemplatesToInject = listOf<List<String>>(
         //cat 1
         listOf("Noun Verb Noun Adjective Adjective Noun Adjective Noun "
                 ," Verb ",
-                " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
-                " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
-                " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
+                " VerbNoun Verb NounNoun Adjective Noun ",
+                " VerbNoun Verb Noun Adjective Noun Adjective Noun ",
+                " VerbNoun Verb Noun  Adjective Noun Adjective Noun ",
                 " Noun verb ",
                 " AdjectiveVerb Noun Adjective Adjective"))
 
