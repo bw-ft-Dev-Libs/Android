@@ -12,6 +12,7 @@ package com.lambdaschool.devlibs
 
 const val tempMadlibCategory = "a Category"
 val CATEGORIES = arrayOf<String> (
+        "choose a category",
         "category 1",
         "category 2",
         "category 3"
@@ -29,27 +30,32 @@ val tempWordNeeds = listOf<Array<String>>(
 
 //what is an adjective... descriptive word? maybe
 
+//templates should have a begining and end, and words needed should be one less than the # of lines in a template
+
 val tempTemplatesToInject = listOf<List<String>>(
         //cat 1
-        listOf("Noun Verb Noun Adjective Adjective Noun Adjective Noun ",
-                " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
-                " Noun Verb Noun Adjective Adjective Noun Adjective Noun ",
-                " Verb ",
-                " AdjectiveVerb Noun Adjective Adjective"),
+        listOf("Noun Verb Noun Adjective Adjective Noun  ",
+                " VerbNoun Verb Noun Adjective Adjective ",
+                " Noun Verb Noun Adjective Adjective  ",
+                " Verb noun verb ",
+                " AdjectiveVerb Noun Adjective verb ",
+                " AdjectiveVerb Noun "),
 
         //cat 1
-        listOf("Noun Verb Noun Adjective Adjective Noun Adjective Noun ",
-                " Noun Verb Noun Adjective Adjective Noun Adjective Noun ",
-                " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
-                " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
-                " Verb",
-                " Verb",
-                " Noun"),
+        listOf("Noun Verb Noun Adjective Adjective Noun ",
+                " Noun Verb Noun Adjective Noun Adjective Noun ",
+                " VerbNoun Verb  Noun Adjective Noun ",
+                " VerbNoun Verb Noun Noun Adjective Noun ",
+                " Verb noun verb ",
+                " Verb adjective ",
+                " adjective verb Noun ",
+                " AdjectiveVerb Noun Adjective Adjective"),
         //cat 1
         listOf("Noun Verb Noun Adjective Adjective Noun Adjective Noun "
                 ," Verb ",
-                " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
-                " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
-                " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
-                " Noun"))
+                " VerbNoun Verb NounNoun Adjective Noun ",
+                " VerbNoun Verb Noun Adjective Noun Adjective Noun ",
+                " VerbNoun Verb Noun  Adjective Noun Adjective Noun ",
+                " Noun verb ",
+                " AdjectiveVerb Noun Adjective Adjective"))
 

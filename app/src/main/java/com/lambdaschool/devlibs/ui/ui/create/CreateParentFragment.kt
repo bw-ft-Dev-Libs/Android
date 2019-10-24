@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 
 import com.lambdaschool.devlibs.R
@@ -38,7 +37,7 @@ class CreateParentFragment : Fragment() {
     ): View? {
        // createViewModel = ViewModelProviders.of(this).get(CreateViewModel::class.java)
         supportFragmentManager=fragmentManager as FragmentManager
-        val root = inflater.inflate(R.layout.fragment_create, container, false)
+        val root = inflater.inflate(R.layout.fragment_create_layout, container, false)
         val textView = root.findViewById<TextView>(R.id.text_notifications)
         createViewModel =activity?.run {
             ViewModelProviders.of(this,CreateVMFactory).get(CreateViewModel::class.java)

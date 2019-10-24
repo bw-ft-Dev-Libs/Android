@@ -4,6 +4,7 @@ import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 class DevLibCreate(
     val lib: String,
@@ -47,7 +48,7 @@ class DevLibLocal(
 
     @PrimaryKey(autoGenerate = true) @NonNull
     val id: Int = 0
-)
+):Serializable
 
 // TODO: add to dev_lib_local schema an additional string paramater to hold an enum
 //  key for operation that needs to happen with backend (create, update, delete)

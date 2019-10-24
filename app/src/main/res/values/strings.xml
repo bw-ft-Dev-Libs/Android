@@ -4,4 +4,5 @@
     <string name="title_home">Home</string>
     <string name="create">Create a Dev-Lib</string>
     <string name="list_madlibs">View Dev Libs!</string>
+    <string name="view_devlib">view an individual lib</string>
 </resources>
