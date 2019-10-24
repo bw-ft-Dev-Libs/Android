@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.lambdaschool.devlibs.*
 import com.lambdaschool.devlibs.model.DevLibLocal
 import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.arrayOfNeeded
@@ -16,7 +18,7 @@ import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.template
 import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.text
 import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.vmCategory
 import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.vmPosition
-import kotlinx.android.synthetic.main.fragment_create_sub.view.*
+import kotlinx.android.synthetic.main.fragment_create_sub_layout.view.*
 
 class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :Fragment() {
 
@@ -28,7 +30,7 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
   *   1. if created without arguments, should prompt user to select a devlibs category
   *   2. then pass on to requesting words based on catergory chosen,
   *   3.  then just keep doing this til we've got a full list
-  *    4. finally redirect to view fragment
+  *    4. finally redirect to view fragment using onfinish()
   *
   *
   *
@@ -46,8 +48,8 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
             ViewModelProviders.of(this,CreateVMFactory).get(CreateViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
         supportFragmentManager=fragmentManager as FragmentManager
-        val root = inflater.inflate(R.layout.fragment_create_sub, container, false)
-        val editView = root.findViewById<EditText>(R.id.create_sub_frag_et)
+        val root = inflater.inflate(R.layout.fragment_create_sub_layout, container, false)
+        val editView:EditText = root.findViewById<EditText>(R.id.create_sub_frag_et)
         val textView = root.findViewById<TextView>(R.id.create_sub_frag_tv)
         val button = root.findViewById<Button>(R.id.create_sub_frag_btn)
         editView.visibility=View.INVISIBLE
@@ -62,7 +64,7 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
 
             spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                if (init) {
+                if (init && position !=0) {
                     init=false
                 }
                     else {
@@ -70,11 +72,11 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
                     vmPosition = 0
 
                     //set the category
-                    vmCategory = position
+                    vmCategory = position -1
 
                     // sett the words needed in the viewmodel
                     arrayOfNeeded = tempWordNeeds[position]
-                    //set array provided to array of needed simply for sizing
+                    //set array of provided to array of needed simply for sizing
                     arrayOfProvided= arrayOfNeeded
                     //set the template to the appropriate template
                     template= tempTemplatesToInject[position]
@@ -110,7 +112,9 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
                     Toast.makeText(view!!.context,"complete",Toast.LENGTH_SHORT).show()
                 }
                 else {
+                    //set the hint to the appropriate word
                     editView.hint=arrayOfNeeded[vmPosition]
+                    //empty the text
                     editView.setText("")
                     Toast.makeText(view!!.context,"now enter a " + arrayOfProvided[vmPosition],Toast.LENGTH_SHORT).show()
                 }
@@ -142,6 +146,10 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
         //send it on to appropriate calls to database,retro or a fragment to view it in
 
         //todo 1: IMPLEMENT REDIRECT
+        var bundle = bundleOf( "const" to finalObj)
+
+        findNavController(this).navigate(R.id.action_navigation_create_to_navigation_view_edit, bundle)
+
 
 
     }

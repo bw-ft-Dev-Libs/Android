@@ -9,7 +9,7 @@
         android:id="@+id/navigation_home"
         android:name="com.lambdaschool.devlibs.ui.ui.listview.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home">
+        tools:layout="@layout/fragment_home_layout">
         <action
             android:id="@+id/action_navigation_home_to_navigation_list"
             app:destination="@id/navigation_list" />
@@ -19,15 +19,29 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_list"
-        android:name="com.lambdaschool.devlibs.ui.ui.dashboard.ListFragment"
+        android:id="@+id/navigation_view_edit"
+        android:name="com.lambdaschool.devlibs.ui.ui.view_edit.ViewEditFragment"
         android:label="@string/create"
-        tools:layout="@layout/fragment_list" />
+        tools:layout="@layout/fragment_view_edit_layout" />
 
     <fragment
         android:id="@+id/navigation_create"
         android:name="com.lambdaschool.devlibs.ui.ui.create.CreateParentFragment"
         android:label="@string/list_madlibs"
-        tools:layout="@layout/fragment_create" />
+        tools:layout="@layout/fragment_create_layout" >
+        <action
+            android:id="@+id/action_navigation_create_to_navigation_view_edit"
+            app:destination="@id/navigation_view_edit" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_list"
+        android:name="com.lambdaschool.devlibs.ui.ui.dashboard.ListFragment"
+        android:label="@string/create"
+        tools:layout="@layout/fragment_list_layout" >
+        <action
+            android:id="@+id/action_navigation_list_to_navigation_view_edit"
+            app:destination="@id/navigation_view_edit" />
+    </fragment>
 
 </navigation>

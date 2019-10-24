@@ -12,6 +12,7 @@ package com.lambdaschool.devlibs
 
 const val tempMadlibCategory = "a Category"
 val CATEGORIES = arrayOf<String> (
+        "",
         "category 1",
         "category 2",
         "category 3"

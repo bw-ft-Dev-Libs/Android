@@ -13,7 +13,7 @@ import com.lambdaschool.devlibs.Prefs
 
 import com.lambdaschool.devlibs.R
 import com.lambdaschool.devlibs.ui.MainActivity
-import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home_layout.*
 
 
 class HomeFragment : Fragment() {
@@ -40,7 +40,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
+        val root = inflater.inflate(R.layout.fragment_home_layout, container, false)
         val textView = root.findViewById<TextView>(R.id.text_home)
         homeViewModel!!.text.observe(this, Observer { s -> textView.text = s })
         return root

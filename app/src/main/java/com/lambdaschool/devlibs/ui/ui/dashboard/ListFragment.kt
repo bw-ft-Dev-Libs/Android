@@ -32,7 +32,7 @@ class ListFragment : Fragment() {
         container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         listViewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_list, container, false)
+        val root = inflater.inflate(R.layout.fragment_list_layout, container, false)
         val textView = root.findViewById<TextView>(R.id.text_dashboard)
         listViewModel!!.text.observe(this, Observer { s -> textView.text = s })
         return root
