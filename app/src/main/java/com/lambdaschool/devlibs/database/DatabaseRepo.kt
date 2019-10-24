@@ -30,7 +30,8 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
 
     lateinit var contents: DevLibBackend
 
-    override fun registerUser(registrationLoginInfo: RegistrationLoginSendAPI): LiveData<CallBackState> {
+    override fun registerUser(registrationLoginInfo: RegistrationLoginSendAPI)
+            : LiveData<CallBackState> {
         val registrationSuccessful = MutableLiveData<CallBackState>()
 
         retrofitInstance.registerUser(registrationLoginInfo)
@@ -72,7 +73,8 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
         return registrationSuccessful
     }
 
-    override fun loginUser(registrationLoginInfo: RegistrationLoginSendAPI): MutableLiveData<CallBackState> {
+    override fun loginUser(registrationLoginInfo: RegistrationLoginSendAPI)
+            : MutableLiveData<CallBackState> {
         val loginSuccessful = MutableLiveData<CallBackState>()
 
         retrofitInstance.loginUser(registrationLoginInfo)

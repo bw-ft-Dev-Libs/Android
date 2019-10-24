@@ -1,35 +1,34 @@
 package com.lambdaschool.devlibs.conductor
 
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.constraintlayout.widget.Group
 import androidx.lifecycle.Observer
 import com.lambdaschool.devlibs.R
 import com.lambdaschool.devlibs.model.CallBackState
+import com.lambdaschool.devlibs.showToast
 import com.lambdaschool.devlibs.viewmodel.LiveDataVMFactory
 import com.lambdaschool.devlibs.viewmodel.LoginActivityViewModel
 import kotlinx.android.synthetic.main.registration_controller_layout.view.*
 import work.beltran.conductorviewmodel.ViewModelController
 
 /**
-*
-* login controller should:
-* 1: ask for new usre info
-* 2: display a loading indicator showLoading()
-* 3: indicate to user errors with registration after hideLoading()
-* 4: finally let user know they're registered and offer a way to click
-* */
-class RegistrationController() : ViewModelController() {
+ *
+ * login controller should:
+ * 1: ask for new usre info
+ * 2: display a loading indicator showLoading()
+ * 3: indicate to user errors with registration after hideLoading()
+ * 4: finally let user know they're registered and offer a way to click
+ * */
+class RegistrationController : ViewModelController() {
 
-
-    val viewGroup: Group by lazy {
+    private val viewGroup: Group by lazy {
         view!!.findViewById<Group>(R.id.registration_group)
     }
+
     lateinit var mProgressDialog: ProgressBar
     lateinit var viewModel: LoginActivityViewModel
 
@@ -44,18 +43,15 @@ class RegistrationController() : ViewModelController() {
         // viewGroup.visibility = View.VISIBLE
     }
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         val viewModelFactory = LiveDataVMFactory(this.activity!!.application)
         viewModel = activity.run {
             viewModelProvider(viewModelFactory).get(LoginActivityViewModel::class.java)
         }
 
-
         val view = inflater.inflate(R.layout.registration_controller_layout, container, false)
         val btn = view.registration_btn_submit
         mProgressDialog = view.findViewById(R.id.registration_progressbar)
-
 
         btn.setOnClickListener {
 
@@ -66,38 +62,30 @@ class RegistrationController() : ViewModelController() {
                 showLoading()
                 viewModel.registerUser(logUserName, logPassword).observe(this, Observer {
 
-                    if (it == CallBackState.RESPONSE_SUCCESS) {
-                        hideLoading()
-                        router.popController(this)
-                        Toast.makeText(view.context, "Registration Successful, please log in!", Toast.LENGTH_SHORT).show()
-                    }
-                    viewModel.registerUser(logUserName, logPassword).observe(this, Observer {
-
-                        // response is successful so notify user and return to login screen,
-                        if (it == CallBackState.RESPONSE_SUCCESS) {
+                    when (it) {
+                        // response is successful so notify user and return to login screen
+                        CallBackState.RESPONSE_SUCCESS -> {
                             hideLoading()
                             router.popController(this)
-                            Toast.makeText(view.context, "Registration Successful, please log in!", Toast.LENGTH_SHORT).show()
+                            (view.context).showToast("Registration Successful, please log in")
                         }
-                        //repsonse failed due to user already existing
-                        else if (it == CallBackState.RESPONSE_FAIL) {
+                        // response failed due to user already existing
+                        CallBackState.RESPONSE_FAIL -> {
                             hideLoading()
-                            Toast.makeText(view.context, "User already exists, please try again", Toast.LENGTH_SHORT).show()
+                            (view.context).showToast("User already exists, please try again")
 
                         }
-                        //site unreachable or other errror
-                        else {
+                        // site unreachable or other error
+                        else -> {
                             hideLoading()
-                            Toast.makeText(view.context, "Failed, please try again", Toast.LENGTH_SHORT).show()
+                            (view.context).showToast("Failed, please try again")
                         }
-                    })
+                    }
                 })
-
             }
         }
         return view
     }
-
 }
 
 
