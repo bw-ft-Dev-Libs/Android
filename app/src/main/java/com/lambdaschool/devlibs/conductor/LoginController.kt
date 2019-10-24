@@ -1,13 +1,11 @@
 package com.lambdaschool.devlibs.conductor
 
 import android.content.Intent
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.constraintlayout.widget.Group
 import androidx.lifecycle.Observer
 import com.bluelinelabs.conductor.RouterTransaction
@@ -27,13 +25,14 @@ import work.beltran.conductorviewmodel.ViewModelController
 * 3: indicate to user errors when logging in after hideLoading()
 * 4: and allow the user to move on to the registration
 * */
-class LoginController() : ViewModelController() {
+class LoginController : ViewModelController() {
 
     private val viewGroup: Group by lazy {
         view!!.findViewById<Group>(R.id.login_group)
     }
+
     private lateinit var mProgressDialog: ProgressBar
-    lateinit var viewModel: LoginActivityViewModel
+    private lateinit var viewModel: LoginActivityViewModel
 
 
     private fun showLoading() {
@@ -51,8 +50,7 @@ class LoginController() : ViewModelController() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         val view = inflater.inflate(R.layout.login_controller_layout, container, false)
 
-        mProgressDialog = view!!.findViewById<ProgressBar>(R.id.login_progressbar)
-
+        mProgressDialog = view!!.findViewById(R.id.login_progressbar)
 
         val loginButton = view.login_btn_signin
         val editTextUserName = view.login_et_username
@@ -65,7 +63,7 @@ class LoginController() : ViewModelController() {
             viewModelProvider(viewModelFactory).get(LoginActivityViewModel::class.java)
         }
 
-        //get preferences and try to login,
+        // Get preferences and try to login,
         val prefs = Prefs(view.context)
         val loginCredentials = prefs.getLoginCredentials()
 
@@ -86,7 +84,7 @@ class LoginController() : ViewModelController() {
 
                     viewModel.loginUser(logUserName, logPassword).observe(this, Observer {
 
-                        if (it == CallBackState.RESPONSE_SUCCESS) {
+                        if (it == CallBackState.ON_RESPONSE_SUCCESS) {
                             val intent = Intent(view.context, MainActivity::class.java)
                             startActivity(intent)
                             this.applicationContext?.showToast("Login Success")

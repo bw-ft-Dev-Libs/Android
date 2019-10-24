@@ -5,14 +5,12 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
 import com.lambdaschool.devlibs.Prefs
 import com.lambdaschool.devlibs.R
 import com.lambdaschool.devlibs.model.CallBackState
-import com.lambdaschool.devlibs.openSoftKeyboard
 import com.lambdaschool.devlibs.showToast
 import com.lambdaschool.devlibs.ui.MainActivity
 import com.lambdaschool.devlibs.viewmodel.LiveDataVMFactory
@@ -57,16 +55,10 @@ class SplashController : ViewModelController() {
                 ) {
                     viewModel.getDevLibs(loginCredentials.token).observe(this, Observer {
                         when (it) {
-                            CallBackState.RESPONSE_SUCCESS -> {
+                            CallBackState.ON_RESPONSE_SUCCESS -> {
                                 onAuthDecision(view.context, true)
                                 (view.context).showToast("Welcome!")
                             }
-
-                            /*CallBackState.RESPONSE_FAIL -> {
-                                onAuthDecision(view.context, false)
-                                (view.context).showToast("Invalid credentials, please login")
-                            }*/
-
                             else -> {
                                 onAuthDecision(view.context, false)
                                 (view.context).showToast("Invalid credentials, please login")
@@ -94,10 +86,12 @@ class SplashController : ViewModelController() {
     }
 
     private fun sendToLoginController() {
-        router.pushController((
-                RouterTransaction.with(LoginController())
-                    .pushChangeHandler(HorizontalChangeHandler())
-                    .popChangeHandler(HorizontalChangeHandler())
-                ))
+        router.pushController(
+            (
+                    RouterTransaction.with(LoginController())
+                        .pushChangeHandler(HorizontalChangeHandler())
+                        .popChangeHandler(HorizontalChangeHandler())
+                    )
+        )
     }
 }

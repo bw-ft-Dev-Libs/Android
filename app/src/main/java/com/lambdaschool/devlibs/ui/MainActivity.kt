@@ -3,8 +3,6 @@ package com.lambdaschool.devlibs.ui
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import androidx.appcompat.app.AlertDialog
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lambdaschool.devlibs.R
