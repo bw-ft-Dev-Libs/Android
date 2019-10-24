@@ -22,7 +22,16 @@
         android:id="@+id/navigation_view_edit"
         android:name="com.lambdaschool.devlibs.ui.ui.view_edit.ViewEditFragment"
         android:label="@string/create"
-        tools:layout="@layout/fragment_view_edit_layout" />
+        tools:layout="@layout/fragment_view_edit_layout" >
+        <action
+            android:id="@+id/action_navigation_view_edit_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/navigation_home" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_create"
@@ -34,10 +43,7 @@
             app:destination="@id/navigation_view_edit"
             app:popUpTo="@+id/navigation_home"
             />
-        <action
-            android:id="@+id/action_navigation_create_to_navigation_home"
-            app:destination="@id/navigation_home"
-            app:popUpTo="@id/navigation_home" />
+
     </fragment>
 
     <fragment

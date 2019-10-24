@@ -8,11 +8,19 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
+import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 import com.lambdaschool.devlibs.App.Companion.prefs
+import com.lambdaschool.devlibs.R
+import com.lambdaschool.devlibs.database.DatabaseRepo
 import com.lambdaschool.devlibs.getTwitterIntent
+import com.lambdaschool.devlibs.model.DevLibBackend
+import com.lambdaschool.devlibs.model.DevLibCreate
+import com.lambdaschool.devlibs.model.DevLibDelete
 import com.lambdaschool.devlibs.model.DevLibLocal
 import com.lambdaschool.devlibs.showToast
 import com.lambdaschool.devlibs.tempTemplatesToInject
@@ -58,6 +66,8 @@ class ViewEditFragment() : Fragment() {
         val btn_twitter=root.create_sub_twitter_btn
         val btn_edit=root.create_sub_edit_button
         val flexLayout = root.view_edit_linear_layout
+        val repo = DatabaseRepo(root.context)
+        val token = prefs!!.getLoginCredentials()!!.token
         createViewModel = activity?.run {
             ViewModelProviders.of(this, CreateVMFactory).get(CreateViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
@@ -142,8 +152,9 @@ class ViewEditFragment() : Fragment() {
                 }
             }
 
-            //local functions for handling inputs
+            //local functions
 
+            //method for checking inputs and creating a new devlib string
             fun getANewLib(): String {
                 var finalDevLib = ""
                 for (i in 0 until listOfEditViews.size) {
@@ -154,7 +165,7 @@ class ViewEditFragment() : Fragment() {
                     if (currentText.matches("[\\p{L}\\p{No}]+".toRegex())) {
                         finalDevLib = finalDevLib + listOfTemplateText[i] + currentText
                     } else {
-                        root.context.showToast("please reneter strings without any odd characters or spaces")
+                        root.context.showToast("please reenter all fields without any odd characters or spaces")
                         return ""
                     }
                     if (i == listOfEditViews.size - 1) {
@@ -166,6 +177,33 @@ class ViewEditFragment() : Fragment() {
                 return finalDevLib
             }
 
+            //update method
+            fun editDevLib() {
+                if (getANewLib() != "") {
+                repo.updateDevLib(DevLibBackend(recieved.id,
+                        getANewLib(),
+                        recieved.userId,
+                        recieved.categoryId),
+                        token)
+
+                }
+                else{
+                    root.context.showToast("please reenter all fields without any odd characters or spaces")
+                }
+
+            }
+
+            //delete method
+            fun deleteDevLib () {
+      /*
+                repo.deleteDevLib(DevLibDelete(
+                        recieved.id,
+                        recieved.userId
+                ) ,
+                        token)*/
+                root.context.showToast("deleted")
+                NavHostFragment.findNavController(this).navigate(R.id.action_navigation_view_edit_to_navigation_home)
+            }
 
             //handle buttons
 
@@ -179,6 +217,15 @@ class ViewEditFragment() : Fragment() {
                         val intent = context!!.getTwitterIntent(getANewLib())
                         startActivity(intent)
                     }
+                }
+
+                btn_edit.setOnClickListener{
+
+                    editDevLib()
+                }
+
+                btn_delete.setOnClickListener {
+                    deleteDevLib()
 
                 }
             }
@@ -192,6 +239,12 @@ class ViewEditFragment() : Fragment() {
             val textField = TextView(context)
             textField.setText(recieved.lib)
             flexLayout.addView(textField)
+            btn_twitter.visibility = View.VISIBLE
+
+            btn_twitter.setOnClickListener{
+                val intent = context!!.getTwitterIntent(recieved.lib)
+                startActivity(intent)
+            }
         }
 
 

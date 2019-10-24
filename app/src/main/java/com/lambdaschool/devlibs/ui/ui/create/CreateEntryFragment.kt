@@ -56,10 +56,11 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
         } ?: throw Exception("Invalid Activity")
         supportFragmentManager=fragmentManager as FragmentManager
         val root = inflater.inflate(R.layout.fragment_create_sub_layout, container, false)
-        val editView:EditText = root.findViewById<EditText>(R.id.create_sub_frag_et)
+        val editView = root.findViewById<EditText>(R.id.create_sub_frag_et)
         val textView = root.findViewById<TextView>(R.id.create_sub_frag_tv)
         val button = root.findViewById<Button>(R.id.create_sub_frag_btn)
         val repo = DatabaseRepo(root.context)
+
         editView.visibility=View.INVISIBLE
         button.visibility=View.INVISIBLE
 
@@ -144,7 +145,7 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
     }
 
     fun finish() {
-
+        val token = prefs.getLoginCredentials()!!.token
         //make a mad lib object or at least pass the the completed lib to where ever it needs to go
         if (arrayOfProvided.size == template.size -1) {
             //make the string out of it's pieces
@@ -153,10 +154,13 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
                 text = text + template[i] + arrayOfProvided[i]
             }
             //make the madlib obj itself
-            var finalObj = DevLibCreate(text,
+            var finalObj = DevLibLocal(text,
                     prefs.getLoginCredentials()!!.userId, // there never should be a time where userID hasn't been saved after login
                     vmCategory)  // HAHAHA no position is not the category ID, categoryID is the categorID hahahaah position should be equivilent to category
-            repo.createDevLib(finalObj)
+
+   //   TODO: FIND OUT WHY THIS IS CRASHING SOMETIMES
+         //   repo.createDevLib(finalObj,token)
+
             //reset the views
 
 

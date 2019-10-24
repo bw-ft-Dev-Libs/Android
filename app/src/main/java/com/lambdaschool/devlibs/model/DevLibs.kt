@@ -10,7 +10,7 @@ class DevLibCreate(
     val lib: String,
     @SerializedName("user_id") val userId: Int,
     @SerializedName("category_id") val categoryId: Int
-):Serializable
+)
 
 class DevLibDelete(
     @SerializedName("id") val devLibBackendId: Int,
@@ -48,7 +48,7 @@ class DevLibLocal(
 
     @PrimaryKey(autoGenerate = true) @NonNull
     val id: Int = 0
-)
+):Serializable
 
 // TODO: add to dev_lib_local schema an additional string paramater to hold an enum
 //  key for operation that needs to happen with backend (create, update, delete)
