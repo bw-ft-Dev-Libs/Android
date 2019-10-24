@@ -146,7 +146,7 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
         //make the madlib obj itself
         var finalObj = DevLibLocal(text,
                 prefs.getLoginCredentials()!!.userId, // there never should be a time where userID hasn't been saved after login
-                vmPosition)  //position should be equivilent to category
+                vmCategory)  // HAHAHA no position is not the category ID, categoryID is the categorID hahahaah position should be equivilent to category
         //reset the views
 
 
