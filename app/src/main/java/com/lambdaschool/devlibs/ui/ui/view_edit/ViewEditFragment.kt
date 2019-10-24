@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -95,15 +96,21 @@ class ViewEditFragment () : Fragment() {
             //define the toBeChopped
             var toBeChoppedBegin  = listOfTemplateText[0].length
             val toBeChopped2 = listOfTemplateText[1]
+
         for (i in 0 until fieldLength) {
 
             //grab the appropriate bit of text from the template
             val textField = TextView(context)
+            val subLayout = LinearLayout(context)
+
+            textField.setLayoutParams(LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT))
             textField.setText(listOfTemplateText[i])
+
             linearLayout.addView(textField)
 
+
             //if we're not on the last iteration of the loop, get the user's word as well
-            if (i != fieldLength) {
+            if (i+1 != fieldLength) {
                 //drop the length of the template off the begining of the completed string
                 val toBeChoppedBegin  = listOfTemplateText[i].length
                 madLibWorking=madLibWorking.drop(toBeChoppedBegin)
@@ -114,9 +121,11 @@ class ViewEditFragment () : Fragment() {
                 //make an editText field and assign the word to it
                 val editField = EditText(contxt)
                 editField.setText(word)
-                //attach editText to the layout
-                linearLayout.addView(editField)
 
+                editField.setLayoutParams(LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT))
+                //attach editText to the layout
+             //   subLayout.addView(editField)
+                linearLayout.addView(editField)
             }
 
 

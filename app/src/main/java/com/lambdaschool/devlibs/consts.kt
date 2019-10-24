@@ -37,18 +37,18 @@ val tempTemplatesToInject = listOf<List<String>>(
         listOf("Noun Verb Noun Adjective Adjective Noun Adjective Noun ",
                 " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
                 " Noun Verb Noun Adjective Adjective Noun Adjective Noun ",
-                " Verb ",
-                " AdjectiveVerb Noun Adjective Adjective",
-                " AdjectiveVerb Noun Adjective Adjective"),
+                " Verb noun verb ",
+                " AdjectiveVerb Noun Adjective verb ",
+                " AdjectiveVerb Noun "),
 
         //cat 1
         listOf("Noun Verb Noun Adjective Adjective Noun Adjective Noun ",
                 " Noun Verb Noun Adjective Adjective Noun Adjective Noun ",
                 " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
                 " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
-                " Verb",
-                " Verb",
-                " Noun",
+                " Verb noun verb ",
+                " Verb adjective ",
+                " adjective verb Noun ",
                 " AdjectiveVerb Noun Adjective Adjective"),
         //cat 1
         listOf("Noun Verb Noun Adjective Adjective Noun Adjective Noun "
@@ -56,6 +56,6 @@ val tempTemplatesToInject = listOf<List<String>>(
                 " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
                 " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
                 " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
-                " Noun",
+                " Noun verb ",
                 " AdjectiveVerb Noun Adjective Adjective"))
 

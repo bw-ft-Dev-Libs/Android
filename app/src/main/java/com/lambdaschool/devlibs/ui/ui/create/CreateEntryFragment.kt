@@ -93,7 +93,7 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
                         //set text/edit view text appropiately
                         textView.text = "Enter a:"
                         editView.hint = arrayOfNeeded[0]
-                        Toast.makeText(view.context, arrayOfNeeded[position - 1].toString(), Toast.LENGTH_SHORT).show()
+                        root.context.showToast("now enter a " + arrayOfNeeded[vmPosition])
                     }
                 }
 
@@ -122,7 +122,7 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
                     editView.hint = arrayOfNeeded[vmPosition]
                     //empty the text
                     editView.setText("")
-                    root.context.showToast("now enter a " + arrayOfProvided[vmPosition])
+                    root.context.showToast("now enter a " + arrayOfNeeded[vmPosition])
                 }
             } else {
                 root.context.showToast("Please enter a word without spaces or special characters")
