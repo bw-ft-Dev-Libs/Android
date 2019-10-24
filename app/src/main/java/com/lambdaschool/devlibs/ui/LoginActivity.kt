@@ -1,5 +1,6 @@
 package com.lambdaschool.devlibs.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ViewGroup
@@ -112,6 +113,12 @@ class LoginActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if(!router.handleBack()) {
             super.onBackPressed()
+        } else if (router.backstackSize < 3) {
+            val intent = Intent(Intent.ACTION_MAIN)
+            intent.addCategory(Intent.CATEGORY_HOME)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+            finish()
         }
     }
 

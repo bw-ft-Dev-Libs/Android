@@ -1,7 +1,10 @@
 package com.lambdaschool.devlibs.ui
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AlertDialog
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lambdaschool.devlibs.R
@@ -54,6 +57,22 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnHomeFragmentInteraction
         val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
         NavigationUI.setupWithNavController(navView, navController)
+    }
+
+    override fun onBackPressed() {
+        android.app.AlertDialog.Builder(this)
+            .setMessage("Do you really want to exit Dev Libs?")
+            .setCancelable(true)
+            .setPositiveButton(android.R.string.yes,
+                DialogInterface.OnClickListener { _, _ ->
+                    val intent = Intent(Intent.ACTION_MAIN)
+                    intent.addCategory(Intent.CATEGORY_HOME)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                })
+            .setNegativeButton(android.R.string.no,
+                DialogInterface.OnClickListener { _, _ -> })
+            .show()
     }
 
 }
