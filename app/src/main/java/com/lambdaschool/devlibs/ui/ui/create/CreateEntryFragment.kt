@@ -69,32 +69,32 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
 
             spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                if (!init && position ==0) {
-                    init = true
-                }
+                    if (!init && position == 0) {
+                        init = true
+                    }
                     //make sure they're not choosing "choose a category"
-                    else if (position!=0) {
-                    // set the position in the viewmodel
-                    vmPosition = 0
+                    else if (position != 0) {
+                        // set the position in the viewmodel
+                        vmPosition = 0
 
-                    //set the category
-                    vmCategory = position -1
+                        //set the category
+                        vmCategory = position - 1
 
-                    // sett the words needed in the viewmodel
-                    arrayOfNeeded = tempWordNeeds[position-1]
-                    //set array of provided to array of needed simply for sizing
-                    arrayOfProvided= arrayOfNeeded
-                    //set the template to the appropriate template
-                    template= tempTemplatesToInject[position-1]
-                    // hide the spinner and reveal the edit text
-                    spinner.visibility=View.GONE
-                    editView.visibility=View.VISIBLE
-                    button.visibility=View.VISIBLE
-                   //set text/edit view text appropiately
-                    textView.text= "Enter a:"
-                            editView.hint=arrayOfNeeded[0]
-                    Toast.makeText(view.context, arrayOfNeeded[position-1].toString(), Toast.LENGTH_SHORT).show()
-                }
+                        // sett the words needed in the viewmodel
+                        arrayOfNeeded = tempWordNeeds[position - 1]
+                        //set array of provided to array of needed simply for sizing
+                        arrayOfProvided = arrayOfNeeded
+                        //set the template to the appropriate template
+                        template = tempTemplatesToInject[position-1]
+                        // hide the spinner and reveal the edit text
+                        spinner.visibility = View.GONE
+                        editView.visibility = View.VISIBLE
+                        button.visibility = View.VISIBLE
+                        //set text/edit view text appropiately
+                        textView.text = "Enter a:"
+                        editView.hint = arrayOfNeeded[0]
+                        Toast.makeText(view.context, arrayOfNeeded[position - 1].toString(), Toast.LENGTH_SHORT).show()
+                    }
                 }
 
 
@@ -109,28 +109,26 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
             val input = editView.text.toString()
 
             // if input is a word without spaces or weird chars
-                if (input.matches("[\\p{L}\\p{No}]+".toRegex())) {
+            if (input.matches("[\\p{L}\\p{No}]+".toRegex())) {
                 addAWord(input)
                 // if we have enough words in the list, wrap up
-                if (arrayOfProvided.size == vmPosition){
+                if (arrayOfProvided.size == vmPosition) {
                     // we have all the words now
                     // exit
                     finish()
-                    Toast.makeText(view!!.context,"complete",Toast.LENGTH_SHORT).show()
-                }
-                else {
+                    Toast.makeText(view!!.context, "complete", Toast.LENGTH_SHORT).show()
+                } else {
                     //set the hint to the appropriate word
-                    editView.hint=arrayOfNeeded[vmPosition]
+                    editView.hint = arrayOfNeeded[vmPosition]
                     //empty the text
                     editView.setText("")
                     root.context.showToast("now enter a " + arrayOfProvided[vmPosition])
                 }
+            } else {
+                root.context.showToast("Please enter a word without spaces or special characters")
+                editView.setText("")
+                editView.hint = arrayOfNeeded[vmPosition]
             }
-            else {
-                    root.context.showToast("Please enter a word without spaces or special characters")
-                    editView.setText("")
-                    editView.hint=arrayOfNeeded[vmPosition]
-                }
         }
 
 
@@ -140,20 +138,21 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
 
         return root
     }
-    fun finish(){
+
+    fun finish() {
 
         //make a mad lib object or at least pass the the completed lib to where ever it needs to go
-    if (arrayOfProvided.size == template.size) {
-        //make the string out of it's pieces
-        text = ""
-        for (i in 0 until arrayOfProvided.size) {
-            text = text + template[i] + arrayOfProvided[i]
-        }
-        //make the madlib obj itself
-        var finalObj = DevLibLocal(text,
-                prefs.getLoginCredentials()!!.userId, // there never should be a time where userID hasn't been saved after login
-                vmCategory)  // HAHAHA no position is not the category ID, categoryID is the categorID hahahaah position should be equivilent to category
-        //reset the views
+        if (arrayOfProvided.size == template.size -1) {
+            //make the string out of it's pieces
+            text = ""
+            for (i in 0 until arrayOfProvided.size) {
+                text = text + template[i] + arrayOfProvided[i]
+            }
+            //make the madlib obj itself
+            var finalObj = DevLibLocal(text,
+                    prefs.getLoginCredentials()!!.userId, // there never should be a time where userID hasn't been saved after login
+                    vmCategory)  // HAHAHA no position is not the category ID, categoryID is the categorID hahahaah position should be equivilent to category
+            //reset the views
 
 
         //and whatever else needs to get done

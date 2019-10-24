@@ -81,6 +81,8 @@ class ViewEditFragment () : Fragment() {
 
         //start building the display
         //if it belongs to the user we can deconstruct it based on the template we have
+        var madLibWorking = recieved.lib
+
 
         val regex = """\W+""".toRegex()
         val beautiful = "Roses are red, Violets are blue"
@@ -102,13 +104,24 @@ class ViewEditFragment () : Fragment() {
 
             //if we're not on the last iteration of the loop, get the user's word as well
             if (i != fieldLength) {
-
+                //drop the length of the template off the begining of the completed string
+                val toBeChoppedBegin  = listOfTemplateText[i].length
+                madLibWorking=madLibWorking.drop(toBeChoppedBegin)
+                //split up our working string by spaces and get the first word, which will be the users entry
+                val word = madLibWorking.split(" ")[0]
+                //drop the lengths of the
+                madLibWorking = madLibWorking.drop(word.length)
+                //make an editText field and assign the word to it
+                val editField = EditText(contxt)
+                editField.setText(word)
+                //attach editText to the layout
+                linearLayout.addView(editField)
 
             }
 
 
 
-                val editField = EditText(contxt)
+
               //  editField.setText()
             }
         }
