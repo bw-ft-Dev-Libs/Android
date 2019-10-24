@@ -1,6 +1,7 @@
 package com.lambdaschool.devlibs.ui.ui.listview
 
 import android.content.Context
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -43,11 +44,18 @@ class HomeFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_home_layout, container, false)
         val textView = root.findViewById<TextView>(R.id.text_home)
         homeViewModel!!.text.observe(this, Observer { s -> textView.text = s })
+
+
+
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val mp = MediaPlayer.create(context, R.raw.beepboop)
+        mp.start()
+
 
         prefs = Prefs(context!!)
 
