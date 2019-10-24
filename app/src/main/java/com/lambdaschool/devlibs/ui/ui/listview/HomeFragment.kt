@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.lambdaschool.devlibs.Prefs
 
 import com.lambdaschool.devlibs.R
+import com.lambdaschool.devlibs.playBeepBoop
 import com.lambdaschool.devlibs.ui.MainActivity
 import kotlinx.android.synthetic.main.fragment_home_layout.*
 
@@ -53,8 +54,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val mp = MediaPlayer.create(context, R.raw.beepboop)
-        mp.start()
+        view.context.playBeepBoop()
 
 
         prefs = Prefs(context!!)

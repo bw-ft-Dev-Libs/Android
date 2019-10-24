@@ -1,12 +1,7 @@
-package com.lambdaschool.devlibs.ui.ui.create
+package com.lambdaschool.devlibs.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.lambdaschool.devlibs.tempWordNeeds
-import com.lambdaschool.devlibs.viewmodel.LoginActivityViewModel
 import java.util.HashMap
 
 class CreateViewModel : ViewModel() {

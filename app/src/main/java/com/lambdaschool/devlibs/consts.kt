@@ -12,19 +12,19 @@ package com.lambdaschool.devlibs
 
 const val tempMadlibCategory = "a Category"
 val CATEGORIES = arrayOf<String> (
-        "choose a category",
-        "category 1",
-        "category 2",
-        "category 3"
+        "choose a Madlib",
+        "Architecture",
+        "Software",
+        "Hardware"
 
 
 )
 val tempWordNeeds = listOf<Array<String>>(
-      //cat 1
+      //"Architecture"
         arrayOf("Noun", "Verb","Noun","Verb","Adjective"),
-     //cat 2
+     //"Software"
         arrayOf("Adjective", "Noun", "Verb","Verb","Noun","Adjective", "Noun"),
-    //cat 3
+    //"Hardware"
         arrayOf("Verb","Adjective","Noun", "Verb","Noun","Noun"))
 
 
@@ -33,7 +33,7 @@ val tempWordNeeds = listOf<Array<String>>(
 //templates should have a begining and end, and words needed should be one less than the # of lines in a template
 
 val tempTemplatesToInject = listOf<List<String>>(
-        //cat 1
+        //lib 1
         listOf("Noun Verb Noun Adjective Adjective Noun  ",
                 " VerbNoun Verb Noun Adjective Adjective ",
                 " Noun Verb Noun Adjective Adjective  ",
@@ -41,7 +41,7 @@ val tempTemplatesToInject = listOf<List<String>>(
                 " AdjectiveVerb Noun Adjective verb ",
                 " AdjectiveVerb Noun "),
 
-        //cat 1
+        //lib 2
         listOf("Noun Verb Noun Adjective Adjective Noun ",
                 " Noun Verb Noun Adjective Noun Adjective Noun ",
                 " VerbNoun Verb  Noun Adjective Noun ",
@@ -50,7 +50,7 @@ val tempTemplatesToInject = listOf<List<String>>(
                 " Verb adjective ",
                 " adjective verb Noun ",
                 " AdjectiveVerb Noun Adjective Adjective"),
-        //cat 1
+        //lib 3
         listOf("Noun Verb Noun Adjective Adjective Noun Adjective Noun "
                 ," Verb ",
                 " VerbNoun Verb NounNoun Adjective Noun ",

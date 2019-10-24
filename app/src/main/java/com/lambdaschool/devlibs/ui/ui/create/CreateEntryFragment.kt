@@ -12,17 +12,16 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.lambdaschool.devlibs.*
 import com.lambdaschool.devlibs.database.DatabaseRepo
-import com.lambdaschool.devlibs.model.DevLibCreate
 import com.lambdaschool.devlibs.model.DevLibLocal
-import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.arrayOfNeeded
-import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.arrayOfProvided
-import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.template
-import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.text
-import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.vmCategory
-import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.vmPosition
-import kotlinx.android.synthetic.main.fragment_create_sub_layout.*
+import com.lambdaschool.devlibs.viewmodel.CreateVMFactory
+import com.lambdaschool.devlibs.viewmodel.CreateViewModel
+import com.lambdaschool.devlibs.viewmodel.CreateViewModel.Companion.arrayOfNeeded
+import com.lambdaschool.devlibs.viewmodel.CreateViewModel.Companion.arrayOfProvided
+import com.lambdaschool.devlibs.viewmodel.CreateViewModel.Companion.template
+import com.lambdaschool.devlibs.viewmodel.CreateViewModel.Companion.text
+import com.lambdaschool.devlibs.viewmodel.CreateViewModel.Companion.vmCategory
+import com.lambdaschool.devlibs.viewmodel.CreateViewModel.Companion.vmPosition
 import kotlinx.android.synthetic.main.fragment_create_sub_layout.view.*
-import java.util.regex.Pattern
 
 class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :Fragment() {
 
@@ -41,7 +40,7 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
   *
   *
   * */
-    lateinit var createViewModel:CreateViewModel
+    lateinit var createViewModel: CreateViewModel
     lateinit var supportFragmentManager:FragmentManager
     var init =false
 
@@ -52,7 +51,7 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
     ): View? {
 
         createViewModel =activity?.run {
-            ViewModelProviders.of(this,CreateVMFactory).get(CreateViewModel::class.java)
+            ViewModelProviders.of(this, CreateVMFactory).get(CreateViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
         supportFragmentManager=fragmentManager as FragmentManager
         val root = inflater.inflate(R.layout.fragment_create_sub_layout, container, false)
