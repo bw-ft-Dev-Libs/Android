@@ -33,8 +33,11 @@
             android:id="@+id/action_navigation_create_to_navigation_view_edit"
             app:destination="@id/navigation_view_edit"
             app:popUpTo="@+id/navigation_home"
-            app:popUpToInclusive="true"
             />
+        <action
+            android:id="@+id/action_navigation_create_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:popUpTo="@id/navigation_home" />
     </fragment>
 
     <fragment

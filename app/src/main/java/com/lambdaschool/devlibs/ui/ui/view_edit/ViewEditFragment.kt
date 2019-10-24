@@ -8,16 +8,18 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
 import com.lambdaschool.devlibs.App.Companion.prefs
+import com.lambdaschool.devlibs.getTwitterIntent
 import com.lambdaschool.devlibs.model.DevLibLocal
 import com.lambdaschool.devlibs.showToast
 import com.lambdaschool.devlibs.tempTemplatesToInject
 import com.lambdaschool.devlibs.ui.ui.create.CreateVMFactory
 import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel
+import kotlinx.android.synthetic.main.fragment_home_layout.view.*
+import kotlinx.android.synthetic.main.fragment_view_edit_layout.*
 import kotlinx.android.synthetic.main.fragment_view_edit_layout.view.*
 
 
@@ -52,7 +54,10 @@ class ViewEditFragment() : Fragment() {
             container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(com.lambdaschool.devlibs.R.layout.fragment_view_edit_layout, container, false)
-        val linearLayout = root.view_edit_linear_layout
+        val btn_delete= root.create_sub_delete_btn
+        val btn_twitter=root.create_sub_twitter_btn
+        val btn_edit=root.create_sub_edit_button
+        val flexLayout = root.view_edit_linear_layout
         createViewModel = activity?.run {
             ViewModelProviders.of(this, CreateVMFactory).get(CreateViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
@@ -88,27 +93,20 @@ class ViewEditFragment() : Fragment() {
         var madLibWorking = recieved.lib
 
 
-        val regex = """\W+""".toRegex()
-        val beautiful = "Roses are red, Violets are blue"
 
-        // W+ is non word
-
-        val pattern = "\\W+".toRegex()
 
         if (isUsers) {
 
-            val constraintLayout = root.view_edit_linear_layout
             val listOfViews = mutableListOf<View>()
-            /*  var toBeChoppedBegin  = listOfTemplateText[0].length
-              val toBeChopped2 = listOfTemplateText[1]
-  */
+            val listOfEditViews = mutableListOf<EditText>()
+
             for (i in 0 until fieldLength) {
 
                 //grab the appropriate bit of text from the template
                 val textField = TextView(context)
                 val relativeLayout =RelativeLayout(context)
                 textField.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                textField.setText(listOfTemplateText[i])
+                textField.text = listOfTemplateText[i]
                 textField.textSize=14f
                 listOfViews.add(textField)
 
@@ -127,9 +125,11 @@ class ViewEditFragment() : Fragment() {
                     //make an editText field and assign the word to it
                     val editField = EditText(contxt)
                     editField.setText(word)
+                    editField.id= i
                         editField.textSize=14f
                     editField.setLayoutParams(LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT))
                     listOfViews.add(editField)
+                    listOfEditViews.add(editField)
                     //attach editText to the layout
                     //   subLayout.addView(editField)
                     //     linearLayout.addView(editField)
@@ -137,10 +137,53 @@ class ViewEditFragment() : Fragment() {
 
                 if (i==fieldLength -1) {
                     listOfViews.forEach{
-                        linearLayout.addView(it)
+                        flexLayout.addView(it)
                     }
                 }
             }
+
+            //local functions for handling inputs
+
+            fun getANewLib(): String {
+                var finalDevLib = ""
+                for (i in 0 until listOfEditViews.size) {
+
+                    val currentTextView = listOfEditViews[i]
+                    val currentText = currentTextView.text.toString()
+                    //if the editview has bad data, prompt user to reenter
+                    if (currentText.matches("[\\p{L}\\p{No}]+".toRegex())) {
+                        finalDevLib = finalDevLib + listOfTemplateText[i] + currentText
+                    } else {
+                        root.context.showToast("please reneter strings without any odd characters or spaces")
+                        return ""
+                    }
+                    if (i == listOfEditViews.size - 1) {
+                        finalDevLib = finalDevLib + listOfTemplateText[i + 1]
+                    }
+
+
+                }
+                return finalDevLib
+            }
+
+
+            //handle buttons
+
+            if (isUsers) {
+                btn_delete.visibility = View.VISIBLE
+                btn_edit.visibility = View.VISIBLE
+                btn_twitter.visibility = View.VISIBLE
+
+                btn_twitter.setOnClickListener {
+                    if (getANewLib() != "") {
+                        val intent = context!!.getTwitterIntent(getANewLib())
+                        startActivity(intent)
+                    }
+
+                }
+            }
+
+
 
 
         }
@@ -148,8 +191,10 @@ class ViewEditFragment() : Fragment() {
         else {
             val textField = TextView(context)
             textField.setText(recieved.lib)
-            linearLayout.addView(textField)
+            flexLayout.addView(textField)
         }
+
+
 
 
 

@@ -11,6 +11,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.lambdaschool.devlibs.*
+import com.lambdaschool.devlibs.database.DatabaseRepo
+import com.lambdaschool.devlibs.model.DevLibCreate
 import com.lambdaschool.devlibs.model.DevLibLocal
 import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.arrayOfNeeded
 import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.arrayOfProvided
@@ -48,6 +50,7 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
             inflater: LayoutInflater,
             container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+
         createViewModel =activity?.run {
             ViewModelProviders.of(this,CreateVMFactory).get(CreateViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
@@ -56,6 +59,7 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
         val editView:EditText = root.findViewById<EditText>(R.id.create_sub_frag_et)
         val textView = root.findViewById<TextView>(R.id.create_sub_frag_tv)
         val button = root.findViewById<Button>(R.id.create_sub_frag_btn)
+        val repo = DatabaseRepo(root.context)
         editView.visibility=View.INVISIBLE
         button.visibility=View.INVISIBLE
 
@@ -149,9 +153,10 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
                 text = text + template[i] + arrayOfProvided[i]
             }
             //make the madlib obj itself
-            var finalObj = DevLibLocal(text,
+            var finalObj = DevLibCreate(text,
                     prefs.getLoginCredentials()!!.userId, // there never should be a time where userID hasn't been saved after login
                     vmCategory)  // HAHAHA no position is not the category ID, categoryID is the categorID hahahaah position should be equivilent to category
+            repo.createDevLib(finalObj)
             //reset the views
 
 
