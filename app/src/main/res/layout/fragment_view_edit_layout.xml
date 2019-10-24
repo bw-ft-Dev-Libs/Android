@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
         <com.google.android.flexbox.FlexboxLayout
             android:layout_width="match_parent"
-            android:layout_height="600sp"
+            android:layout_height="500sp"
             app:flexWrap="wrap"
             app:alignItems="flex_start"
             app:alignContent="flex_start"
@@ -34,4 +34,41 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_edit_header_tv">
         </com.google.android.flexbox.FlexboxLayout>
+
+    <Button
+        android:id="@+id/create_sub_twitter_btn"
+        android:text="share to twitter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/create_sub_bottom_spacer"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+    <Button
+        android:id="@+id/create_sub_delete_btn"
+        android:text="Delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/create_sub_bottom_spacer"
+        app:layout_constraintEnd_toStartOf="@id/create_sub_edit_button"
+        />
+    <Button
+        android:id="@+id/create_sub_edit_button"
+        android:text="Submit Edits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/create_sub_bottom_spacer"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/create_sub_bottom_spacer"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+      />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
