@@ -18,6 +18,7 @@ import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.template
 import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.text
 import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.vmCategory
 import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.vmPosition
+import kotlinx.android.synthetic.main.fragment_create_sub_layout.*
 import kotlinx.android.synthetic.main.fragment_create_sub_layout.view.*
 
 class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :Fragment() {
@@ -39,7 +40,7 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
   * */
     lateinit var createViewModel:CreateViewModel
     lateinit var supportFragmentManager:FragmentManager
-    var init =true
+    var init =false
 
 
     override fun onCreateView(
@@ -60,14 +61,15 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
 
         //handle the spinner
         val spinner:Spinner = root.create_sub_spinner
+
         if (spinner != null) {
             val arrayAdapter = ArrayAdapter(root.context, R.layout.support_simple_spinner_dropdown_item ,CATEGORIES)
             spinner.adapter = arrayAdapter
 
             spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                if (init && position !=0) {
-                    init=false
+                if (!init && position ==0) {
+                    init = true
                 }
                     else {
                     // set the position in the viewmodel
@@ -92,6 +94,7 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
                     Toast.makeText(view.context, arrayOfNeeded[position].toString(), Toast.LENGTH_SHORT).show()
                 }
                 }
+
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
                 }
@@ -158,6 +161,10 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
         findNavController(this).navigate(R.id.action_navigation_create_to_navigation_view_edit, bundle)
 
 
+
+    }
+        //this triggers if somehow we have two few words in provided
+        else {
 
     }
 
