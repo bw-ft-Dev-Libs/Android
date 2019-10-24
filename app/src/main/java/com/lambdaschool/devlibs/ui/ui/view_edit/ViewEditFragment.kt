@@ -80,17 +80,43 @@ class ViewEditFragment () : Fragment() {
 
 
         //start building the display
+        //if it belongs to the user we can deconstruct it based on the template we have
+
+        val regex = """\W+""".toRegex()
+        val beautiful = "Roses are red, Violets are blue"
+
+        // W+ is non word
+
+        val pattern = "\\W+".toRegex()
+
         if (isUsers){
+            //define the toBeChopped
+            var toBeChoppedBegin  = listOfTemplateText[0].length
+            val toBeChopped2 = listOfTemplateText[1]
         for (i in 0 until fieldLength) {
-            //grab the appropriate bit of text
+
+            //grab the appropriate bit of text from the template
             val textField = TextView(context)
             textField.setText(listOfTemplateText[i])
             linearLayout.addView(textField)
+
+            //if we're not on the last iteration of the loop, get the user's word as well
+            if (i != fieldLength) {
+
+
+            }
+
 
 
                 val editField = EditText(contxt)
               //  editField.setText()
             }
+        }
+        //else it's not and we can't reasonably deconstruct it as we can not be sure of the template
+        else {
+            val textField = TextView(context)
+            textField.setText(recieved.lib)
+            linearLayout.addView(textField)
         }
 
 

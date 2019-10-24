@@ -20,6 +20,7 @@ import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.vmCategor
 import com.lambdaschool.devlibs.ui.ui.create.CreateViewModel.Companion.vmPosition
 import kotlinx.android.synthetic.main.fragment_create_sub_layout.*
 import kotlinx.android.synthetic.main.fragment_create_sub_layout.view.*
+import java.util.regex.Pattern
 
 class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :Fragment() {
 
@@ -107,8 +108,8 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
         button.setOnClickListener {
             val input = editView.text.toString()
 
-            // if the input isn't blank, add the word
-            if (input != ""){
+            // if input is a word without spaces or weird chars
+                if (input.matches("[\\p{L}\\p{No}]+".toRegex())) {
                 addAWord(input)
                 // if we have enough words in the list, wrap up
                 if (arrayOfProvided.size == vmPosition){
@@ -122,9 +123,14 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
                     editView.hint=arrayOfNeeded[vmPosition]
                     //empty the text
                     editView.setText("")
-                    Toast.makeText(view!!.context,"now enter a " + arrayOfProvided[vmPosition],Toast.LENGTH_SHORT).show()
+                    root.context.showToast("now enter a " + arrayOfProvided[vmPosition])
                 }
             }
+            else {
+                    root.context.showToast("Please enter a word without spaces or special characters")
+                    editView.setText("")
+                    editView.hint=arrayOfNeeded[vmPosition]
+                }
         }
 
 
@@ -176,3 +182,14 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
 
     }
 }
+//   input.replace("\\s".toRegex(), "")
+//replace non characters with blank
+/*  val regex = Pattern.compile("[$&+,:;=\\\\?@#|/'<>.^*()%!-]")
+
+  if (regex.matcher(input).find()){
+      input.replace("[$&+,:;=\\\\?@#|/'<>.^*()%!-].","")
+  }
+  if (input.matches("[\\p{L}\\p{No}\\p{Space}]+".toRegex())) {
+println(true)
+}
+  input.replace("\\W+".toRegex(), "")*/

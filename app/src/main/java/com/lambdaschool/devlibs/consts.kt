@@ -30,12 +30,15 @@ val tempWordNeeds = listOf<Array<String>>(
 
 //what is an adjective... descriptive word? maybe
 
+//templates should have a begining and end, and words needed should be one less than the # of lines in a template
+
 val tempTemplatesToInject = listOf<List<String>>(
         //cat 1
         listOf("Noun Verb Noun Adjective Adjective Noun Adjective Noun ",
                 " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
                 " Noun Verb Noun Adjective Adjective Noun Adjective Noun ",
                 " Verb ",
+                " AdjectiveVerb Noun Adjective Adjective",
                 " AdjectiveVerb Noun Adjective Adjective"),
 
         //cat 1
@@ -45,12 +48,14 @@ val tempTemplatesToInject = listOf<List<String>>(
                 " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
                 " Verb",
                 " Verb",
-                " Noun"),
+                " Noun",
+                " AdjectiveVerb Noun Adjective Adjective"),
         //cat 1
         listOf("Noun Verb Noun Adjective Adjective Noun Adjective Noun "
                 ," Verb ",
                 " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
                 " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
                 " VerbNoun Verb Noun Adjective Adjective Noun Adjective Noun ",
-                " Noun"))
+                " Noun",
+                " AdjectiveVerb Noun Adjective Adjective"))
 
