@@ -149,7 +149,7 @@ class CreateEntryFragment() :Fragment() {
     fun finish() {
         val token:String = prefs.getLoginCredentials()!!.token
         //make a mad lib object or at least pass the the completed lib to where ever it needs to go
-        if (arrayOfProvided.size == template.size -1) {
+
             //make the string out of it's pieces
             text = ""
             for (i in 0 until arrayOfProvided.size) {
@@ -160,41 +160,14 @@ class CreateEntryFragment() :Fragment() {
                     prefs.getLoginCredentials()!!.userId, // there never should be a time where userID hasn't been saved after login
                     vmCategory)
             val userId = prefs.getLoginCredentials()
-            val finalobjcreate = DevLibCreate(text,userId!!.userId, vmCategory
-
-            )
-            var something = hashMapOf<String,String>()
-            something.put ("authorization",token)
-
-   //   TODO: FIND OUT WHY THIS IS CRASHING SOMETIMES
-     repo.createDevLib(finalobjcreate, token)
-
-
-
-            //reset the views
-
-
-        //and whatever else needs to get done
-
-
-
-        //send it on to appropriate calls to database,retro or a fragment to view it in
-
-        //todo 1: IMPLEMENT REDIRECT
-        var bundle = bundleOf( SEND_DEV_LIB to finalObj)
-
-        //findNavController(this).navigate(R.id.action_navigation_create_to_navigation_view_edit, bundle)
-
-
-
-    }
-        //this triggers if somehow we have two few words in provided
-        else {
-
-    }
+            val finalobjcreate = DevLibCreate(text,userId!!.userId, vmCategory)
+             repo.createDevLib(finalobjcreate, token)
+             var bundle = bundleOf( SEND_DEV_LIB to finalObj)
+           findNavController(this).navigate(R.id.action_navigation_create_to_navigation_view_edit, bundle)
 
     }
     fun addAWord(word:String){
+
         arrayOfProvided[vmPosition]=word
         vmPosition++
 

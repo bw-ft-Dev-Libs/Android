@@ -12,6 +12,8 @@ import com.lambdaschool.devlibs.Prefs
 import com.lambdaschool.devlibs.model.*
 import com.lambdaschool.devlibs.prefs
 import com.lambdaschool.devlibs.retrofit.DevLibsAPI
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -343,9 +345,13 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
             AsyncTask<DevLibBackend, Unit, Unit>() {
 
             override fun doInBackground(vararg devLibBackend: DevLibBackend?) {
-                devLibBackend[0]?.let {
-                    dbDao.createDevLibBackend(it)
-                }
+               GlobalScope.launch {
+                   devLibBackend[0]?.let {
+                       if (it.lib!=null) {
+                           dbDao.createDevLibBackend(it)
+                       }
+                   }
+               }
             }
         }
 

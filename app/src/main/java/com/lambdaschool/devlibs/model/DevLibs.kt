@@ -24,10 +24,10 @@ class DevLibListDataObject(
 @Entity(tableName = "dev_lib_backend")
 data class DevLibBackend(
 
-    @PrimaryKey(autoGenerate = false) @NonNull
-    var id: Int,
+    @PrimaryKey(autoGenerate = false)
+    @SerializedName("id")var id: Int,
 
-    var lib: String,
+    @SerializedName("lib")var lib: String,
     @SerializedName("user_id") val userId: Int,
     @SerializedName("category_id") var categoryId: Int
 )
