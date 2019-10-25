@@ -41,7 +41,6 @@ data class DevLibBackend(
  * */
 @Entity(tableName = "dev_lib_local")
 class DevLibLocal(
-
     var lib: String,
     val userId: Int,
     var categoryId: Int,

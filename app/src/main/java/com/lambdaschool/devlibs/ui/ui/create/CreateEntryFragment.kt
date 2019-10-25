@@ -8,10 +8,13 @@ import android.widget.*
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.lambdaschool.devlibs.*
 import com.lambdaschool.devlibs.database.DatabaseRepo
+import com.lambdaschool.devlibs.model.CallBackState
+import com.lambdaschool.devlibs.model.DevLibCreate
 import com.lambdaschool.devlibs.model.DevLibLocal
 import com.lambdaschool.devlibs.viewmodel.CreateVMFactory
 import com.lambdaschool.devlibs.viewmodel.CreateViewModel
@@ -58,7 +61,7 @@ class CreateEntryFragment() :Fragment() {
         val editView = root.findViewById<EditText>(R.id.create_sub_frag_et)
         val textView = root.findViewById<TextView>(R.id.create_sub_frag_tv)
         val button = root.findViewById<Button>(R.id.create_sub_frag_btn)
-        val repo = DatabaseRepo(root.context)
+   //     val repo = DatabaseRepo(root.context)
 
         editView.visibility=View.INVISIBLE
         button.visibility=View.INVISIBLE
@@ -144,7 +147,7 @@ class CreateEntryFragment() :Fragment() {
     }
 
     fun finish() {
-        val token = prefs.getLoginCredentials()!!.token
+        val token:String = prefs.getLoginCredentials()!!.token
         //make a mad lib object or at least pass the the completed lib to where ever it needs to go
         if (arrayOfProvided.size == template.size -1) {
             //make the string out of it's pieces
@@ -155,10 +158,18 @@ class CreateEntryFragment() :Fragment() {
             //make the madlib obj itself
             var finalObj = DevLibLocal(text,
                     prefs.getLoginCredentials()!!.userId, // there never should be a time where userID hasn't been saved after login
-                    vmCategory)  // HAHAHA no position is not the category ID, categoryID is the categorID hahahaah position should be equivilent to category
+                    vmCategory)
+            val userId = prefs.getLoginCredentials()
+            val finalobjcreate = DevLibCreate(text,userId!!.userId, vmCategory
+
+            )
+            var something = hashMapOf<String,String>()
+            something.put ("authorization",token)
 
    //   TODO: FIND OUT WHY THIS IS CRASHING SOMETIMES
-         //   repo.createDevLib(finalObj,token)
+     repo.createDevLib(finalobjcreate, token)
+
+
 
             //reset the views
 
@@ -172,7 +183,7 @@ class CreateEntryFragment() :Fragment() {
         //todo 1: IMPLEMENT REDIRECT
         var bundle = bundleOf( SEND_DEV_LIB to finalObj)
 
-        findNavController(this).navigate(R.id.action_navigation_create_to_navigation_view_edit, bundle)
+        //findNavController(this).navigate(R.id.action_navigation_create_to_navigation_view_edit, bundle)
 
 
 

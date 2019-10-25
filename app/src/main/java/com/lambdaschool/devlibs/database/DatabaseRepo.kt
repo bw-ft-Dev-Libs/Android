@@ -30,6 +30,21 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
 
     lateinit var contents: DevLibBackend
 
+/*    suspend fun  altcreateDevLib (devLibCreate: DevLibCreate,
+                                authToken: String):Boolean {
+        retrofitInstance.createDevLib(devLibCreate,authToken).enqueue(object :Call<DevLibCreate>, Callback<DevLibBackend> {
+            override fun onFailure(call: Call<DevLibBackend>, t: Throwable) {
+                Log.i("failure", "onfailure retrofit altcreate devlib")
+            }
+
+            override fun onResponse(call: Call<DevLibBackend>, response: Response<DevLibBackend>) {
+                return true
+            }
+
+        })
+        return false
+    }*/
+
     override fun registerUser(registrationLoginInfo: RegistrationLoginSendAPI)
             : LiveData<CallBackState> {
         val registrationSuccessful = MutableLiveData<CallBackState>()
@@ -142,10 +157,15 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
                 override fun onResponse(
                     call: Call<DevLibBackend>,
                     response: Response<DevLibBackend>
-                ) {
-                    val body = response.body() as DevLibBackend
-                    createDevLibBackend(body)
+                ) {try {
+                    val body = response.body()
+                    createDevLibBackend(body as DevLibBackend)
                     createSuccessful.value = CallBackState.ON_RESPONSE_SUCCESS
+                }catch (e:Error){
+                    Log.i("error logging","error on response")
+                }
+
+
                 }
             })
         return createSuccessful

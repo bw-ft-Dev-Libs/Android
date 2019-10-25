@@ -9,8 +9,18 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 import java.util.concurrent.TimeUnit
+import retrofit2.http.QueryMap
+import retrofit2.http.HeaderMap
+import com.google.gson.JsonElement
+import kotlinx.coroutines.Deferred
+import okhttp3.Response
+import retrofit2.http.GET
+
+
 
 interface DevLibsAPI {
+    @POST("/user")
+    suspend fun altcreateDevLib(@Body devLibCreate: DevLibCreate, @Header("authorization")Value: String): Deferred<DevLibBackend>
 
     @POST("auth/register")
     fun registerUser(@Body registrationLoginInfo: RegistrationLoginSendAPI)
@@ -60,6 +70,7 @@ interface DevLibsAPI {
                     .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build()
+
                     .create(DevLibsAPI::class.java)
             }
         }

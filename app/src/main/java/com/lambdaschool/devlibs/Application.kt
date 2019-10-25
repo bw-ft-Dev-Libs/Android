@@ -18,7 +18,7 @@ val prefs: Prefs by lazy {
 class App : Application() {
 
     companion object {
-        var repo: DatabaseRepoInterface? = null
+        var repo: DatabaseRepo? = null
         var prefs: Prefs? = null
     }
 
