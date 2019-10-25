@@ -84,8 +84,6 @@ class ViewEditFragment() : Fragment() {
         listOfTemplateText = tempTemplatesToInject[recieved.categoryId]
         //build a list of user vars based on the template text
 
-        //make an alias for context for ease of my typing
-        val contxt = root.context
 
 
         //start building the display
@@ -107,7 +105,7 @@ class ViewEditFragment() : Fragment() {
                 val relativeLayout =RelativeLayout(context)
                 textField.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
                 textField.text = listOfTemplateText[i]
-                textField.textSize=14f
+                textField.textSize=16f
                 listOfViews.add(textField)
 
               //  linearLayout.addView(textField)

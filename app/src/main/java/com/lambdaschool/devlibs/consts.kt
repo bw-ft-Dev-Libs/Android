@@ -18,7 +18,7 @@ val CATEGORIES = arrayOf<String> (
         "choose a Madlib",
         "Architecture",
         "Software",
-        "Hardware"
+        "Breathless tech sales"
 
 
 )
@@ -28,7 +28,7 @@ val tempWordNeeds = listOf<Array<String>>(
      //"Software"
         arrayOf("Adjective", "Noun", "Verb","Verb","Noun","Adjective", "Noun"),
     //"Hardware"
-        arrayOf("Verb","Adjective","Noun", "Verb","Noun","Noun"))
+        arrayOf("Technology (Proper Noun) ","Technoglogic solution (noun)","Acronym", "Acronym","Technology (noun)","Adverb"))
 
 
 //what is an adjective... descriptive word? maybe
@@ -54,11 +54,11 @@ val tempTemplatesToInject = listOf<List<String>>(
                 " adjective verb Noun ",
                 " AdjectiveVerb Noun Adjective Adjective"),
         //lib 3
-        listOf("Noun Verb Noun Adjective Adjective Noun Adjective Noun "
-                ," Verb ",
-                " VerbNoun Verb NounNoun Adjective Noun ",
-                " VerbNoun Verb Noun Adjective Noun Adjective Noun ",
-                " VerbNoun Verb Noun  Adjective Noun Adjective Noun ",
-                " Noun verb ",
-                " AdjectiveVerb Noun Adjective Adjective"))
+        listOf(" we do",   //1
+                " for clients like you.", //2
+                " Tom, We offer a  ", //3
+                " based on ", //4
+                " that connects with your ", //5
+                " and makes it ", //6
+                " and allows you to leverage unhead of productivity!")) //7
 
