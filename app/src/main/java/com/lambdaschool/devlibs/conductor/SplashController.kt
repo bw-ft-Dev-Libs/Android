@@ -11,6 +11,7 @@ import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
 import com.lambdaschool.devlibs.Prefs
 import com.lambdaschool.devlibs.R
 import com.lambdaschool.devlibs.model.CallBackState
+import com.lambdaschool.devlibs.model.LoginSuccess
 import com.lambdaschool.devlibs.showToast
 import com.lambdaschool.devlibs.ui.MainActivity
 import com.lambdaschool.devlibs.viewmodel.LiveDataVMFactory
@@ -47,32 +48,10 @@ class SplashController : ViewModelController() {
             onAuthDecision(view.context, false)
         }
 
-        fun tryLoginToken() {
-            if (loginCredentials != null) {
+        if (loginCredentials != null) {
 
-                if (loginCredentials.userId != Prefs.INVALID_INT &&
-                    loginCredentials.token != Prefs.INVALID_STRING
-                ) {
-                    viewModel.getDevLibs(loginCredentials.token).observe(this, Observer {
-                        when (it) {
-                            CallBackState.ON_RESPONSE_SUCCESS -> {
-                                onAuthDecision(view.context, true)
-                                (view.context).showToast("Welcome!")
-                            }
-                            else -> {
-                                onAuthDecision(view.context, false)
-                                (view.context).showToast("Invalid credentials, please login")
-                            }
-                        }
-                    })
-                }
-            } else {
-                onAuthDecision(view.context, false)
-            }
+            tryLoginToken(loginCredentials,view.context)
         }
-
-        tryLoginToken()
-
         return view
     }
 
@@ -84,7 +63,31 @@ class SplashController : ViewModelController() {
             sendToLoginController()
         }
     }
+    fun tryLoginToken(loginCredentials: LoginSuccess,context: Context):Boolean {
 
+            Thread.sleep(500)
+            if (loginCredentials.userId != Prefs.INVALID_INT &&
+                    loginCredentials.token != Prefs.INVALID_STRING
+            ) {
+                viewModel.getDevLibs(loginCredentials.token).observe(this, Observer {
+                    when (it) {
+                        CallBackState.ON_RESPONSE_SUCCESS -> {
+                            onAuthDecision(context, true)
+                            (context).showToast("Welcome!")
+                        }
+                        else -> {
+                            onAuthDecision(context, false)
+                            (context).showToast("Invalid credentials, please login")
+                        }
+                    }
+                })
+                return true
+            }
+         else {
+            onAuthDecision(context, false)
+                return false
+        }
+    }
     private fun sendToLoginController() {
         router.pushController(
             (
@@ -94,4 +97,5 @@ class SplashController : ViewModelController() {
                     )
         )
     }
+
 }

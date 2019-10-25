@@ -26,6 +26,9 @@ android {
     defaultConfig {
         vectorDrawables.useSupportLibrary = true
     }
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
 }
 
 repositories {
@@ -67,13 +70,14 @@ dependencies {
 
     // Testing
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    testImplementation "androidx.test.ext:junit:1.1.1"
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     testImplementation 'androidx.test:core:1.2.0'
     testImplementation 'org.mockito:mockito-core:3.0.0'
-
-
-
+    testImplementation "androidx.test.ext:truth:1.2.0"
+    testImplementation "org.robolectric:robolectric:4.3"
+    // required if you want to use Mockito for Android tests
+    androidTestImplementation 'org.mockito:mockito-android:2.7.22'
 
     // these may be the issue as when enabled kicks back duplicated class
 

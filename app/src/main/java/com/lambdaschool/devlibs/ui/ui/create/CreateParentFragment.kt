@@ -10,6 +10,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
 
 import com.lambdaschool.devlibs.R
+import com.lambdaschool.devlibs.viewmodel.CreateVMFactory
+import com.lambdaschool.devlibs.viewmodel.CreateViewModel
 
 class CreateParentFragment : Fragment() {
 /*
@@ -29,7 +31,7 @@ class CreateParentFragment : Fragment() {
 *
 *
 * */
-   lateinit var createViewModel:CreateViewModel
+   lateinit var createViewModel: CreateViewModel
     lateinit var supportFragmentManager: FragmentManager
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +42,7 @@ class CreateParentFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_create_layout, container, false)
         val textView = root.findViewById<TextView>(R.id.text_notifications)
         createViewModel =activity?.run {
-            ViewModelProviders.of(this,CreateVMFactory).get(CreateViewModel::class.java)
+            ViewModelProviders.of(this, CreateVMFactory).get(CreateViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
 

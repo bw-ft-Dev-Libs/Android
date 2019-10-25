@@ -5,6 +5,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import android.content.Intent
+import android.media.MediaPlayer
 import android.net.Uri
 
 
@@ -16,6 +17,11 @@ fun Context.openSoftKeyboard(view: View?) {
     view?.requestFocus()
     val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+}
+
+fun Context.playBeepBoop() {
+    val mp = MediaPlayer.create(this, R.raw.beepboop)
+    mp.start()
 }
 
 fun Context.getTwitterIntent( shareText: String): Intent {
