@@ -108,7 +108,7 @@ class ViewEditFragment() : Fragment() {
                 textField.textSize=16f
                 listOfViews.add(textField)
 
-              //  linearLayout.addView(textField)
+              // linearLayout.addView(textField)
 
 
                 //if we're not on the last iteration of the loop, get the user's word as well
