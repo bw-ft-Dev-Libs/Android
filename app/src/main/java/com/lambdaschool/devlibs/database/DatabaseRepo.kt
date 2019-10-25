@@ -200,9 +200,16 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
                     call: Call<DevLibBackend>,
                     response: Response<DevLibBackend>
                 ) {
-                    val body = response.body() as DevLibBackend
-                    updateDevLibBackend(body)
-                    updateSuccessful.value = CallBackState.ON_RESPONSE_SUCCESS
+                    try {
+                        val body = response.body()
+                        updateDevLibBackend(body as DevLibBackend)
+                        updateSuccessful.value = CallBackState.ON_RESPONSE_SUCCESS
+                    }catch (e:Error){
+                        Log.i("error logging","error on response")
+                    }
+
+
+
                 }
             })
         return updateSuccessful

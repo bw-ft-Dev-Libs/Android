@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.lambdaschool.devlibs.Prefs
 import com.lambdaschool.devlibs.database.DatabaseRepo
+import com.lambdaschool.devlibs.model.DevLibBackend
 import com.lambdaschool.devlibs.model.DevLibLocal
 import com.lambdaschool.devlibs.model.LoginSuccess
 
@@ -14,10 +15,9 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
     private val mText: MutableLiveData<String>
     private val prefs = Prefs(application.applicationContext)
     private val user = prefs.getLoginCredentials() as LoginSuccess
-    private val mlist =MutableLiveData<List<DevLibLocal>>()
-            val list:LiveData<List<DevLibLocal>>
+    private val mlist =MutableLiveData<List<DevLibBackend>>()
+            val list:LiveData<List<DevLibBackend>>
                 get() = mlist
-
     val text: LiveData<String>
         get() = mText
 
@@ -28,8 +28,8 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun getDevLibs():LiveData<List<DevLibLocal>>{
-        return repo.getAllDevLibsLocal()
+    fun getDevLibs():LiveData<List<DevLibBackend>>{
+        return repo.getAllDevLibsBackend()
     }
 
 
