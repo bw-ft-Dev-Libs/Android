@@ -121,7 +121,7 @@ class ViewEditFragment() : Fragment() {
                     //drop the lengths of the
                     madLibWorking = madLibWorking.drop(word.length)
                     //make an editText field and assign the word to it
-                    val editField = EditText(contxt)
+                    val editField = EditText(context)
                     editField.setText(word)
                     editField.id= i
                         editField.textSize=14f
