@@ -1,4 +1,4 @@
-package com.lambdaschool.devlibs.ui.ui.dashboard
+package com.lambdaschool.devlibs.ui.ui.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 
 import com.lambdaschool.devlibs.R
@@ -33,8 +32,10 @@ class ListFragment : Fragment() {
     ): View? {
         listViewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_list_layout, container, false)
-        val textView = root.findViewById<TextView>(R.id.view_edit_header_tv)
-        listViewModel!!.text.observe(this, Observer { s -> textView.text = s })
+        val textView = root.findViewById<TextView>(R.id.list_tv)
+
+
+       // listViewModel!!.list.observe(this, Observer { s -> textView.text = s.toString() })
         return root
     }
 }

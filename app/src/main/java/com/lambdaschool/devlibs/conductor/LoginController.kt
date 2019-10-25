@@ -35,12 +35,12 @@ class LoginController : ViewModelController() {
     private lateinit var viewModel: LoginActivityViewModel
 
 
-    private fun showLoading() {
+    fun showLoading() {
         viewGroup.visibility = View.INVISIBLE
         mProgressDialog.visibility = View.VISIBLE
     }
 
-    private fun hideLoading() {
+    fun hideLoading() {
         viewGroup.visibility = View.VISIBLE
         mProgressDialog.visibility = View.GONE
         // viewGroup.visibility = View.VISIBLE

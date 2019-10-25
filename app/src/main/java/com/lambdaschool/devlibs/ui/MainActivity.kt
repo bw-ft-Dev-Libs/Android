@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import com.lambdaschool.devlibs.ui.ui.listview.HomeFragment
+import com.lambdaschool.devlibs.ui.ui.home.HomeFragment
 
 
 class MainActivity : AppCompatActivity(), HomeFragment.OnHomeFragmentInteractionListener {
