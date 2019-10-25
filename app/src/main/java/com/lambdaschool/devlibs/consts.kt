@@ -16,7 +16,7 @@ const val SEND_DEV_LIB ="moremagicwords"
 const val tempMadlibCategory = "a Category"
 val CATEGORIES = arrayOf<String> (
         "choose a Madlib",
-        "Architecture",
+        "Famous Tech personalities",
         "Security",
         "Breathless tech sales"
 
@@ -24,15 +24,27 @@ val CATEGORIES = arrayOf<String> (
 )
 val tempWordNeeds = listOf<Array<String>>(
       //"Architecture"
-        arrayOf("Noun", "Verb","Noun","Verb","Adjective"),
+        arrayOf("Person (proper noun, \"thought leader\")",
+                "Place (proper nound)",
+                "Expensive technological device",
+                "Other Person (tech personality)",
+                "Negative Judgement (adjective)"),
      //"Software"
         arrayOf("Software technology (noun)",
                 "\"Cool\" Approach or Feature (noun)",
                 "Response (stop, detect, etc)",
-                "Type of threat (noun)","Adverb","Action you don't want to do(Verb,)",
+                "Type of threat (noun)","Adverb",
+                "Action you don't want to do(Verb,)",
                 "Action you'd like to do more of (verb)"),
     //"Hardware"
-        arrayOf("Technology (Proper Noun) ","Technoglogic solution (noun)","Brand", "Acronym (serrvice)","Technology (noun)","Adverb"))
+        arrayOf("Technology (Proper Noun) ",
+                "Technoglogic solution (noun)",
+                "Brand",
+                "Acronym (service)",
+                "Technology (noun)",
+                "Adverb"))
+
+
 
 
 
@@ -42,12 +54,12 @@ val tempWordNeeds = listOf<Array<String>>(
 
 val tempTemplatesToInject = listOf<List<String>>(
         //lib 1
-        listOf("Noun Verb Noun Adjective Adjective Noun  ",
-                " VerbNoun Verb Noun Adjective Adjective ",
-                " Noun Verb Noun Adjective Adjective  ",
-                " Verb noun verb ",
-                " AdjectiveVerb Noun Adjective verb ",
-                " AdjectiveVerb Noun "),
+        listOf("The swarm of cameras following  ",
+                " on their progress through a ", //place
+                " airport. Those familiar with the expensive   ", //new physical tech
+                " followed eagerly hoping for a glimpse. ",
+                " was heard to remark that this was merely a",
+                " way of doing things and not worth anyone's time "),
 
         //lib 2
         listOf(" we are changing how CISOs do ",
