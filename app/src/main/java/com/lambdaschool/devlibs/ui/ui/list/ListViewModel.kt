@@ -17,7 +17,7 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
     private val user = prefs.getLoginCredentials() as LoginSuccess
     private val mlist =MutableLiveData<List<DevLibBackend>>()
             val list:LiveData<List<DevLibBackend>>
-                get() = mlist
+                get() = getDevLibs()
     val text: LiveData<String>
         get() = mText
 

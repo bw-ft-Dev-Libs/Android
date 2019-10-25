@@ -161,8 +161,10 @@ class DatabaseRepo(contxt: Context) : DatabaseRepoInterface {
                     response: Response<DevLibBackend>
                 ) {try {
                     val body = response.body()
-                    createDevLibBackend(body as DevLibBackend)
+                    if (body!=null){
+                    createDevLibBackend(body )
                     createSuccessful.value = CallBackState.ON_RESPONSE_SUCCESS
+                        }
                 }catch (e:Error){
                     Log.i("error logging","error on response")
                 }

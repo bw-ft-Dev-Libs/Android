@@ -33,7 +33,6 @@ class ReAdapter(val parentFragment: Fragment) :
             }
         }
     }
-    var list: List<DevLibBackend> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewGroup = LayoutInflater.from(parent.context).inflate(R.layout.devlib_list_layout, parent, false)
@@ -45,7 +44,7 @@ class ReAdapter(val parentFragment: Fragment) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         //get the current lib
-        val currentSelection = list[position]
+        val currentSelection = getItem(position)
 
         //set the text to the current lib
         holder.firstTV.text= currentSelection.lib
@@ -63,7 +62,7 @@ class ReAdapter(val parentFragment: Fragment) :
     }
 
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+  inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
        val parentView=view.devlib_list_parent
         val firstTV: TextView = view.devlib_list_tv_one
         val secondTV: TextView = view.devlib_List_tv_two

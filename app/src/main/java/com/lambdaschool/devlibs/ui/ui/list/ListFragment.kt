@@ -4,16 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lambdaschool.devlibs.R
 import com.lambdaschool.devlibs.model.DevLibBackend
-import com.lambdaschool.devlibs.model.DevLibLocal
 import kotlinx.android.synthetic.main.fragment_list_layout.view.*
 
 class ListFragment : Fragment() {
@@ -37,17 +34,20 @@ class ListFragment : Fragment() {
             inflater: LayoutInflater,
             container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        listViewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
+
         val root = inflater.inflate(R.layout.fragment_list_layout, container, false)
-        val textView = root.findViewById<TextView>(R.id.list_tv)
+        // val textView = root.findViewById<TextView>(R.id.list_tv)
+        listViewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
         recyclerView = root.recycle_view
 
-
-        val manager = LinearLayoutManager(context)
         setupRecyclerView()
 
         return root
 
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
     fun setupRecyclerView() {
@@ -57,16 +57,17 @@ class ListFragment : Fragment() {
         adapter = ReAdapter(this)
 
         recyclerView.adapter = adapter
-
-
-        listViewModel.getDevLibs().observe(this, Observer<List<DevLibBackend>> {
-            updateRecyclerView(adapter, it as MutableList<DevLibBackend>)
+       /*  val test =listOf<DevLibBackend>(DevLibBackend(1,"asdf",1,3),DevLibBackend(1,"asdf",1,3),DevLibBackend(1,"asdf",1,3),DevLibBackend(1,"asdf",1,3))
+        adapter.submitList(test)
+        adapter.notifyDataSetChanged()*/
+        listViewModel.list.observe(this, Observer<List<DevLibBackend>> {
+            updateRecyclerView(adapter, it)
         })
 
 
     }
-    fun updateRecyclerView(adapter: ReAdapter, devLibBackendlist: MutableList<DevLibBackend>) {
-        adapter.submitList(devLibBackendlist as List<DevLibBackend>)
+    fun updateRecyclerView(adapter: ReAdapter, devLibBackendlist: List<DevLibBackend>) {
+        adapter.submitList(devLibBackendlist)
         adapter.notifyDataSetChanged()
     }
 }
