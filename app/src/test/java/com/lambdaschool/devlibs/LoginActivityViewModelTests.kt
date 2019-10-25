@@ -3,6 +3,7 @@ package com.lambdaschool.devlibs
 import android.app.Application
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.platform.app.InstrumentationRegistry
 import com.lambdaschool.devlibs.viewmodel.LoginActivityViewModel
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -10,11 +11,13 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 
+
 @RunWith(MockitoJUnitRunner::class)
 class LoginActivityViewModelTests {
     @Mock
     private lateinit var mockContext: Context
     private lateinit var mockApplication: Application
+    val instrumentationContext = InstrumentationRegistry.getInstrumentation().context
     val context = ApplicationProvider.getApplicationContext<Context>()
     val FAKE_STRING = "blah blah blah"
     @Test
@@ -38,6 +41,7 @@ class LoginActivityViewModelTests {
 
 
     @Test
+
     fun testGetDevLibs() {
 
         val username ="asdfg"

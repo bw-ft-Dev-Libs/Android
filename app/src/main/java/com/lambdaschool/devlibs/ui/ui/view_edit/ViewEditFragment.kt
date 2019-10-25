@@ -11,14 +11,11 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
+import com.lambdaschool.devlibs.*
 import com.lambdaschool.devlibs.App.Companion.prefs
-import com.lambdaschool.devlibs.R
 import com.lambdaschool.devlibs.database.DatabaseRepo
-import com.lambdaschool.devlibs.getTwitterIntent
 import com.lambdaschool.devlibs.model.DevLibBackend
 import com.lambdaschool.devlibs.model.DevLibLocal
-import com.lambdaschool.devlibs.showToast
-import com.lambdaschool.devlibs.tempTemplatesToInject
 import com.lambdaschool.devlibs.viewmodel.CreateVMFactory
 import com.lambdaschool.devlibs.viewmodel.CreateViewModel
 import kotlinx.android.synthetic.main.fragment_view_edit_layout.view.*
@@ -67,7 +64,7 @@ class ViewEditFragment() : Fragment() {
 
 
         //get the lib sent to this fragment
-        val recieved: DevLibLocal = arguments?.getSerializable("const") as DevLibLocal
+        val recieved: DevLibLocal = arguments?.getSerializable(SEND_DEV_LIB) as DevLibLocal
         //if lib is blank or null, redirect as something went wrong
         if (recieved.lib.isNullOrEmpty()) {
             context!!.showToast("something went wrong, please try again")

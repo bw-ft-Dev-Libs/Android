@@ -5,6 +5,9 @@ package com.lambdaschool.devlibs
 //const val AUTH_STRING_KEY = "MAGICWORDS"
 
 
+//for sending devlibs to vieweditfragment
+const val SEND_DEV_LIB ="moremagicwords"
+
 
 //fake ol mock fake datas
 // somet of these things could probably just get filled out

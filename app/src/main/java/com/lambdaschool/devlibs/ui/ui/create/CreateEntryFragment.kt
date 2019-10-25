@@ -23,7 +23,7 @@ import com.lambdaschool.devlibs.viewmodel.CreateViewModel.Companion.vmCategory
 import com.lambdaschool.devlibs.viewmodel.CreateViewModel.Companion.vmPosition
 import kotlinx.android.synthetic.main.fragment_create_sub_layout.view.*
 
-class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :Fragment() {
+class CreateEntryFragment() :Fragment() {
 
     /*
   *
@@ -170,7 +170,7 @@ class CreateEntryFragment(list: MutableList<String> = mutableListOf<String>()) :
         //send it on to appropriate calls to database,retro or a fragment to view it in
 
         //todo 1: IMPLEMENT REDIRECT
-        var bundle = bundleOf( "const" to finalObj)
+        var bundle = bundleOf( SEND_DEV_LIB to finalObj)
 
         findNavController(this).navigate(R.id.action_navigation_create_to_navigation_view_edit, bundle)
 
